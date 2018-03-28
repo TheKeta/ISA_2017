@@ -1,21 +1,17 @@
 package model;
 
-public class Institution {
+public class InstitutionType {
 	
 	private int id;
 	
 	private String name;
-	 
-	private String address;
-	
 
-	public Institution(int id, String name, String address) {
+	public InstitutionType(int id, String name) {
 		super();
 		this.id = id;
 		this.name = name;
-		this.address = address;
 	}
-
+ 
 	public int getId() {
 		return id;
 	}
@@ -31,12 +27,4 @@ public class Institution {
 	public void setName(String name) {
 		this.name = name;
 	}
-
-	public String getAddress() {
-		return address;
-	}
-
-	public void setAddress(String address) {
-		this.address = address;
-	}	
 }

@@ -1,6 +1,6 @@
 package model;
 
-public class Rating {
+public class ShowRating {
 
 	private int id;
 	
@@ -8,12 +8,14 @@ public class Rating {
 	
 	private int rating;
  
-	
-	public Rating(int id, int userId, int rating) {
+	private int showId;
+
+	public ShowRating(int id, int userId, int rating, int showId) {
 		super();
 		this.id = id;
 		this.userId = userId;
 		this.rating = rating;
+		this.showId = showId;
 	}
 
 	public int getId() {
@@ -39,7 +41,14 @@ public class Rating {
 	public void setRating(int rating) {
 		this.rating = rating;
 	}
-	
+
+	public int getShowId() {
+		return showId;
+	}
+
+	public void setShowId(int showId) {
+		this.showId = showId;
+	}
 	
 	
 }

@@ -1,24 +1,22 @@
 package model;
 
-import java.util.HashMap;
-
 public class Show {
 	private int id;
 	
 	private String name;
-	
-	private int ratingId;
 
 	private int genreId;
 	
+	private int typeId;
+	
 	private int length;
 
-	public Show(int id, String name, int ratingId, int genreId, int length) {
+	public Show(int id, String name, int genreId, int typeId, int length) {
 		super();
 		this.id = id;
 		this.name = name;
-		this.ratingId = ratingId;
 		this.genreId = genreId;
+		this.typeId = typeId;
 		this.length = length;
 	}
 
@@ -38,20 +36,20 @@ public class Show {
 		this.name = name;
 	}
 
-	public int getRatingId() {
-		return ratingId;
-	}
-
-	public void setRatingId(int ratingId) {
-		this.ratingId = ratingId;
-	}
-
 	public int getGenreId() {
 		return genreId;
-	} 
+	}
 
 	public void setGenreId(int genreId) {
 		this.genreId = genreId;
+	}
+
+	public int getShowId() {
+		return typeId;
+	}
+
+	public void setShowId(int showId) {
+		this.typeId = showId;
 	}
 
 	public int getLength() {
@@ -61,4 +59,6 @@ public class Show {
 	public void setLength(int length) {
 		this.length = length;
 	}
+
+	
 }
