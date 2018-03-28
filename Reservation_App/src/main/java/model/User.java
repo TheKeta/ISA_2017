@@ -15,7 +15,7 @@ public class User {
 	private String lastName;
 	
 	private int userTypeId;
-
+ 
 	public User(int id, String email, String username, String password, String firstName, String lastName,
 			int userTypeId) {
 		super();

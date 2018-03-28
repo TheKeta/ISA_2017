@@ -5,10 +5,6 @@ public class Hall {
 	private int id;
 	
 	private int institutionId;
-	
-	public Hall(){
-		
-	}
 
 	public Hall(int id, int institutionId) {
 		super();

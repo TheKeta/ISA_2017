@@ -5,9 +5,7 @@ public class Genre {
 	private int id;
 	
 	private String name;
-
-	
-	
+ 
 	public Genre(int id, String name) {
 		super();
 		this.id = id;

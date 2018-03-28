@@ -10,7 +10,7 @@ public class Reservation {
 	
 	private int eventId;
 	
-	private int userId;
+	private int userId; 
 
 	public Reservation(double Price, int SeatId, int EventId, int UserId) {
 		super();

@@ -7,7 +7,7 @@ public class Rating {
 	private int userId;
 	
 	private int rating;
-
+ 
 	
 	public Rating(int id, int userId, int rating) {
 		super();

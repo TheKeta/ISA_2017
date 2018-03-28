@@ -4,7 +4,7 @@ public class UserType {
 
 	private int id;
 	
-	private int name;
+	private int name; 
 
 	public UserType(int id, int name) {
 		super();

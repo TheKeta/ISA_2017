@@ -9,7 +9,7 @@ public class Seat {
 	private int seatNumber;
 	
 	private int seatTypeId;
-
+ 
 	public Seat(int id, int row, int seatNumber, int seatTypeId) {
 		super();
 		this.id = id;
