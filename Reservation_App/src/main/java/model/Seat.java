@@ -2,49 +2,54 @@ package model;
 
 public class Seat {
 	
-	private int Id;
+	private int id;
 	
-	private int Row;
+	private int row;
 	
-	private int SeatNumber;
+	private int seatNumber;
 	
-	private int SeatTypeId;
-	
-	
-	public Seat(int row, int seatNumber, int seatTypeId) {
+	private int seatTypeId;
+
+	public Seat(int id, int row, int seatNumber, int seatTypeId) {
 		super();
-		Row = row;
-		SeatNumber = seatNumber;
-		SeatTypeId = seatTypeId;
+		this.id = id;
+		this.row = row;
+		this.seatNumber = seatNumber;
+		this.seatTypeId = seatTypeId;
 	}
 
 	public int getId() {
-		return Id;
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public int getRow() {
-		return Row;
+		return row;
 	}
 
 	public void setRow(int row) {
-		Row = row;
+		this.row = row;
 	}
 
 	public int getSeatNumber() {
-		return SeatNumber;
+		return seatNumber;
 	}
 
 	public void setSeatNumber(int seatNumber) {
-		SeatNumber = seatNumber;
+		this.seatNumber = seatNumber;
 	}
 
 	public int getSeatTypeId() {
-		return SeatTypeId;
+		return seatTypeId;
 	}
 
 	public void setSeatTypeId(int seatTypeId) {
-		SeatTypeId = seatTypeId;
+		this.seatTypeId = seatTypeId;
 	}
 	
 	
+
 }

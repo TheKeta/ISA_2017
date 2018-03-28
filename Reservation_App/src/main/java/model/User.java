@@ -2,89 +2,87 @@ package model;
 
 public class User {
 
-	private int Id;
+	private int id;
 	
-	private String Email;
+	private String email;
 	
-	private String Username;
+	private String username;
 	
-	private String Password;
+	private String password;
 	
-	private String FirstName;
+	private String firstName;
 	
-	private String LastName;
+	private String lastName;
 	
-	private int UserTypeId;
+	private int userTypeId;
 
-	
-	public User(){
-		
+	public User(int id, String email, String username, String password, String firstName, String lastName,
+			int userTypeId) {
+		super();
+		this.id = id;
+		this.email = email;
+		this.username = username;
+		this.password = password;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.userTypeId = userTypeId;
 	}
-	
-	public User(String email, String username, String password, String firstName, String lastName, int userTypeId){
-		Email = email;
-		Username = username;
-		Password = password;
-		FirstName = firstName;
-		LastName = lastName;
-		UserTypeId = userTypeId;
-	}
-	
-	
-	
+
 	public int getId() {
-		return Id;
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public String getEmail() {
-		return Email;
+		return email;
 	}
 
 	public void setEmail(String email) {
-		Email = email;
+		this.email = email;
 	}
 
 	public String getUsername() {
-		return Username;
+		return username;
 	}
 
 	public void setUsername(String username) {
-		Username = username;
+		this.username = username;
 	}
 
 	public String getPassword() {
-		return Password;
+		return password;
 	}
 
 	public void setPassword(String password) {
-		Password = password;
+		this.password = password;
 	}
 
 	public String getFirstName() {
-		return FirstName;
+		return firstName;
 	}
 
 	public void setFirstName(String firstName) {
-		FirstName = firstName;
+		this.firstName = firstName;
 	}
 
 	public String getLastName() {
-		return LastName;
+		return lastName;
 	}
 
 	public void setLastName(String lastName) {
-		LastName = lastName;
+		this.lastName = lastName;
 	}
 
 	public int getUserTypeId() {
-		return UserTypeId;
+		return userTypeId;
 	}
 
 	public void setUserTypeId(int userTypeId) {
-		UserTypeId = userTypeId;
+		this.userTypeId = userTypeId;
 	}
-	
-	
-	
-	
+
+		
 }

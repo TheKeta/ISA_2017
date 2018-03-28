@@ -2,27 +2,37 @@ package model;
 
 public class Genre {
 
-	private int Id;
+	private int id;
 	
-	private String Name;
-	
-	
+	private String name;
 
-	public Genre(String name) {
-		Name = name;
+	
+	
+	public Genre(int id, String name) {
+		super();
+		this.id = id;
+		this.name = name;
 	}
 
 	public int getId() {
-		return Id;
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public String getName() {
-		return Name;
+		return name;
 	}
 
 	public void setName(String name) {
-		Name = name;
+		this.name = name;
 	}
+	
+	
+
+	
 	
 	
 	

@@ -1,57 +1,57 @@
 package model;
-import java.util.HashMap;
 
 public class Institution {
 	
-	private int Id;
+	private int id;
 	
-	private String Name;
+	private String name;
 	
-	private String Address;
+	private String address;
 	
-	private HashMap<Integer, Integer> Ratings;
+	private int ratingId;
 
-	
-	public Institution(){
-		Ratings = new HashMap<Integer, Integer>();
-	}
-	
-	
-	
-	public Institution(String name, String address) {
+	public Institution(int id, String name, String address, int ratingId) {
 		super();
-		Name = name;
-		Address = address;
-		Ratings = new HashMap<Integer, Integer>();
+		this.id = id;
+		this.name = name;
+		this.address = address;
+		this.ratingId = ratingId;
 	}
 
 	public int getId() {
-		return Id;
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public String getName() {
-		return Name;
+		return name;
 	}
 
 	public void setName(String name) {
-		Name = name;
+		this.name = name;
 	}
 
 	public String getAddress() {
-		return Address;
+		return address;
 	}
 
 	public void setAddress(String address) {
-		Address = address;
+		this.address = address;
 	}
 
-	public HashMap<Integer, Integer> getRatings() {
-		return Ratings;
+	public int getRatingId() {
+		return ratingId;
 	}
 
-	public void setRatings(HashMap<Integer, Integer> ratings) {
-		Ratings = ratings;
+	public void setRatingId(int ratingId) {
+		this.ratingId = ratingId;
 	}
+
+	
+	
 	
 	
 	

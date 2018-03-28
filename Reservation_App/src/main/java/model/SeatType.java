@@ -1,27 +1,33 @@
 package model;
 
 public class SeatType {
-	private int Id;
 	
-	private String Name;
+	private int id;
+	
+	private String name;
 
-	
-	public SeatType(String name) {
+	public SeatType(int id, String name) {
 		super();
-		Name = name;
+		this.id = id;
+		this.name = name;
 	}
 
 	public int getId() {
-		return Id;
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public String getName() {
-		return Name;
+		return name;
 	}
 
 	public void setName(String name) {
-		Name = name;
+		this.name = name;
 	}
-	
+
+
 	
 }

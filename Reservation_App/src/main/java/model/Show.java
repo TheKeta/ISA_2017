@@ -3,69 +3,62 @@ package model;
 import java.util.HashMap;
 
 public class Show {
-	private int Id;
+	private int id;
 	
-	private String Name;
+	private String name;
 	
-	private HashMap<Integer, Integer> Ratings;
+	private int ratingId;
 
-	private int GenreId;
+	private int genreId;
 	
-	private int Length;
-	
-	
-	public Show(){
-		Ratings = new HashMap<Integer, Integer>();
-	}
+	private int length;
 
-	public Show(String name, int genreId, int length) {
-		Name = name;
-		GenreId = genreId;
-		Length = length;
-		Ratings = new HashMap<Integer, Integer>();
+	public Show(int id, String name, int ratingId, int genreId, int length) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.ratingId = ratingId;
+		this.genreId = genreId;
+		this.length = length;
 	}
 
 	public int getId() {
-		return Id;
+		return id;
 	}
 
 	public void setId(int id) {
-		Id = id;
+		this.id = id;
 	}
 
 	public String getName() {
-		return Name;
+		return name;
 	}
 
 	public void setName(String name) {
-		Name = name;
+		this.name = name;
 	}
 
-	public HashMap<Integer, Integer> getRatings() {
-		return Ratings;
+	public int getRatingId() {
+		return ratingId;
 	}
 
-	public void setRatings(HashMap<Integer, Integer> ratings) {
-		Ratings = ratings;
-	}
-	
-	public int getGenre() {
-		return GenreId;
+	public void setRatingId(int ratingId) {
+		this.ratingId = ratingId;
 	}
 
-	public void setGenre(int genreId) {
-		GenreId = genreId;
+	public int getGenreId() {
+		return genreId;
 	}
 
+	public void setGenreId(int genreId) {
+		this.genreId = genreId;
+	}
 
 	public int getLength() {
-		return Length;
+		return length;
 	}
 
 	public void setLength(int length) {
-		Length = length;
+		this.length = length;
 	}
-
-	
-	
 }

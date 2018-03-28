@@ -2,30 +2,37 @@ package model;
 
 public class Hall {
 
-	private int Id;
+	private int id;
 	
-	private int InstitutionId;
+	private int institutionId;
 	
 	public Hall(){
 		
 	}
 
-	public Hall(int institutionId) {
+	public Hall(int id, int institutionId) {
 		super();
-		InstitutionId = institutionId;
+		this.id = id;
+		this.institutionId = institutionId;
 	}
 
 	public int getId() {
-		return Id;
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public int getInstitutionId() {
-		return InstitutionId;
+		return institutionId;
 	}
 
 	public void setInstitutionId(int institutionId) {
-		InstitutionId = institutionId;
+		this.institutionId = institutionId;
 	}
+
+	
 	
 	
 }

@@ -4,48 +4,54 @@ import java.util.Date;
 
 public class Event {
 	
-	private int Id;
+	private int id;
 	
-	private int InstitutionId;
+	private int institutionId;
 	
-	private int ShowId;
+	private int showId;
 	
-	private Date Date;
+	private Date eventDate;
 	
-	public Event(int institutionId, int showId, java.util.Date date) {
+	public Event(int InstitutionId, int ShowId, Date EventDate) {
 		super();
-		InstitutionId = institutionId;
-		ShowId = showId;
-		Date = date;
+		institutionId = InstitutionId;
+		showId = ShowId;
+		eventDate = EventDate;
 	}
-	
-	public int getId(){
-		return Id;
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public int getInstitutionId() {
-		return InstitutionId;
+		return institutionId;
 	}
 
 	public void setInstitutionId(int institutionId) {
-		InstitutionId = institutionId;
+		this.institutionId = institutionId;
 	}
 
 	public int getShowId() {
-		return ShowId;
+		return showId;
 	}
 
 	public void setShowId(int showId) {
-		ShowId = showId;
+		this.showId = showId;
 	}
 
-	public Date getDate() {
-		return Date;
+	public Date getEventDate() {
+		return eventDate;
 	}
 
-	public void setDate(Date date) {
-		Date = date;
+	public void setEventDate(Date eventDate) {
+		this.eventDate = eventDate;
 	}
+	
+	
 	
 	
 	

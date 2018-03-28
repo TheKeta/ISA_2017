@@ -2,60 +2,64 @@ package model;
 
 public class Reservation {
 
-	private int Id;
+	private int id;
 	
-	private double Price;
+	private double price;
 	
-	private int SeatId;
+	private int seatId;
 	
-	private int EventId;
+	private int eventId;
 	
-	private int UserId;
+	private int userId;
 
-	public Reservation(double price, int seatId, int eventId, int userId) {
+	public Reservation(double Price, int SeatId, int EventId, int UserId) {
 		super();
-		Price = price;
-		SeatId = seatId;
-		EventId = eventId;
-		UserId = userId;
+		price = Price;
+		seatId = SeatId;
+		eventId = EventId;
+		userId = UserId;
 	}
 
 	public int getId() {
-		return Id;
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public double getPrice() {
-		return Price;
+		return price;
 	}
 
 	public void setPrice(double price) {
-		Price = price;
+		this.price = price;
 	}
 
 	public int getSeatId() {
-		return SeatId;
+		return seatId;
 	}
 
 	public void setSeatId(int seatId) {
-		SeatId = seatId;
+		this.seatId = seatId;
 	}
 
 	public int getEventId() {
-		return EventId;
+		return eventId;
 	}
 
 	public void setEventId(int eventId) {
-		EventId = eventId;
+		this.eventId = eventId;
 	}
 
 	public int getUserId() {
-		return UserId;
+		return userId;
 	}
 
 	public void setUserId(int userId) {
-		UserId = userId;
+		this.userId = userId;
 	}
-	
+
 	
 	
 }
