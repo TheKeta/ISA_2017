@@ -1,39 +1,57 @@
-package model;
+package com.reservationapp.model;
 
-public class User {
+import java.io.Serializable;
 
-	private int id;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+
+@Entity
+public class User implements Serializable{
+
+	private static final long serialVersionUID = 1L;
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long id;
 	
+	@Column(nullable = false)
 	private String email;
 	
+	@Column(nullable = false)
 	private String username;
 	
+	@Column(nullable = false)
 	private String password;
 	
+	@Column(nullable = false)
 	private String firstName;
 	
+	@Column(nullable = false)
 	private String lastName;
 	
-	private int userTypeId;
- 
-	public User(int id, String email, String username, String password, String firstName, String lastName,
-			int userTypeId) {
+	@ManyToOne(optional = true)
+	private UserType userType;
+	
+	public User(){
+		
+	}
+
+	public User(String email, String username, String password, String firstName, String lastName, UserType userType) {
 		super();
-		this.id = id;
 		this.email = email;
 		this.username = username;
 		this.password = password;
 		this.firstName = firstName;
 		this.lastName = lastName;
-		this.userTypeId = userTypeId;
+		this.userType = userType;
 	}
 
-	public int getId() {
+	public Long getId() {
 		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
 	}
 
 	public String getEmail() {
@@ -76,13 +94,12 @@ public class User {
 		this.lastName = lastName;
 	}
 
-	public int getUserTypeId() {
-		return userTypeId;
+	public UserType getUserType() {
+		return userType;
 	}
 
-	public void setUserTypeId(int userTypeId) {
-		this.userTypeId = userTypeId;
+	public void setUserType(UserType userType) {
+		this.userType = userType;
 	}
-
 		
 }
