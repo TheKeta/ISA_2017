@@ -19,6 +19,10 @@ public class UserType implements Serializable{
 	
 	@Column(nullable = false)
 	private String name; 
+	
+	public UserType() {
+		
+	}
 
 	public UserType(String name) {
 		super();

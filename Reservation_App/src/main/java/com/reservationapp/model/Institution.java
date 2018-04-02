@@ -25,19 +25,15 @@ public class Institution implements Serializable {
 	 
 	@Column(nullable = false)
 	private String address;
-	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "institution")
-	private Set<InstitutionRating> rating;
 
 	public Institution(){
 		
 	}
 	
-	public Institution(String name, String address, Set<InstitutionRating> rating) {
+	public Institution(String name, String address) {
 		super();
 		this.name = name;
 		this.address = address;
-		this.rating = rating;
 	}
 
 	public Long getId() {
@@ -58,17 +54,5 @@ public class Institution implements Serializable {
 
 	public void setAddress(String address) {
 		this.address = address;
-	}
-
-	public Set<InstitutionRating> getRating() {
-		return rating;
-	}
-
-	public void setRating(Set<InstitutionRating> rating) {
-		this.rating = rating;
-	}
-
-	
-	
-	
+	}	
 }
