@@ -2,9 +2,8 @@ package com.reservationapp.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.reservationapp.model.User;
+import com.reservationapp.model.Show;
 
-
-public interface UserRepository extends JpaRepository<User, Long>{
+public interface ShowRepository extends JpaRepository<Show, Long>{
 
 }

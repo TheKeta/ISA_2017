@@ -42,7 +42,7 @@ public class UserTypeServiceImpl implements UserTypeService{
 		UserType userType = userTypeRepository.findById(id).get();
 		if(userType == null){
 			throw new IllegalArgumentException("Tried to delete"
-					+ "non-existant country");
+					+ "non-existant user type");
 		}
 		userTypeRepository.delete(userType);
 		return userType;

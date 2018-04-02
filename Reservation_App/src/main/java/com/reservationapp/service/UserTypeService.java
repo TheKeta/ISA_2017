@@ -7,13 +7,12 @@ import com.reservationapp.model.UserType;
 public interface UserTypeService {
 
 	UserType findOne(Long id);
-	
 
 	List<UserType> findAll();
 	
-	UserType save(UserType country);
+	UserType save(UserType userType);
 	
-	List<UserType> save(List<UserType> countries);
+	List<UserType> save(List<UserType> userTypes);
 	
 	UserType delete(Long id);
 	

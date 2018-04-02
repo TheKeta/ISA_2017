@@ -1,9 +1,9 @@
 package com.reservationapp.repository;
 
-import org.springframework.data.repository.Repository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.reservationapp.model.Institution;
 
-public interface InstitutionRepository extends Repository<Institution, Long>{
+public interface InstitutionRepository extends JpaRepository<Institution, Long>{
 
 }
