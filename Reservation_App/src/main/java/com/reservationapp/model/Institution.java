@@ -1,15 +1,13 @@
 package com.reservationapp.model;
 
 import java.io.Serializable;
-import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class Institution implements Serializable {
@@ -25,15 +23,31 @@ public class Institution implements Serializable {
 	 
 	@Column(nullable = false)
 	private String address;
+	
+	@Column(nullable = false)
+	private String description;
+	
+	@ManyToOne(optional = false)
+	private InstitutionType type;
 
 	public Institution(){
 		
 	}
 	
-	public Institution(String name, String address) {
+	public Institution(String name, String address, String description, InstitutionType type) {
 		super();
 		this.name = name;
 		this.address = address;
+		this.type = type;
+		this.description = description;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 	public Long getId() {
@@ -54,5 +68,15 @@ public class Institution implements Serializable {
 
 	public void setAddress(String address) {
 		this.address = address;
+	}
+
+	public InstitutionType getType() {
+		return type;
+	}
+
+	public void setType(InstitutionType type) {
+		this.type = type;
 	}	
+	
+	
 }

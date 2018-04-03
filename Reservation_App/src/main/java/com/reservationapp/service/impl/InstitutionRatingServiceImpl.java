@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.reservationapp.model.Institution;
 import com.reservationapp.model.InstitutionRating;
 import com.reservationapp.repository.InstitutionRatingRepository;
 import com.reservationapp.service.InstitutionRatingService;
@@ -54,4 +55,19 @@ public class InstitutionRatingServiceImpl implements InstitutionRatingService{
 			this.delete(id);
 		}
 	}
+
+	@Override
+	public List<InstitutionRating> searchByInstitution(Institution institution) {
+		return institutionRatingRepository.searchByInstitution(institution);
+	}
+
+	@Override
+	public double calculateRating(List<InstitutionRating> ratings) {
+		double sum = 0;
+		for(InstitutionRating rating : ratings) {
+			sum += rating.getRating();
+		}
+		return sum/ratings.size();
+	}
+	
 }

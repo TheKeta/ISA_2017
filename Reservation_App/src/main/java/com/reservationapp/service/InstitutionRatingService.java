@@ -2,6 +2,7 @@ package com.reservationapp.service;
 
 import java.util.List;
 
+import com.reservationapp.model.Institution;
 import com.reservationapp.model.InstitutionRating;
 
 public interface InstitutionRatingService {
@@ -17,4 +18,9 @@ public interface InstitutionRatingService {
 	InstitutionRating delete(Long id);
 	
 	void delete(List<Long> ids);
+	
+	List<InstitutionRating> searchByInstitution(Institution institution);
+	
+	double calculateRating(List<InstitutionRating> ratings);
+	
 }

@@ -7,7 +7,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.reservationapp.model.Institution;
+import com.reservationapp.model.InstitutionType;
 import com.reservationapp.repository.InstitutionRepository;
+import com.reservationapp.repository.InstitutionTypeRepository;
 import com.reservationapp.service.InstitutionService;
 
 @Service
@@ -17,6 +19,9 @@ public class InstitutionServiceImpl implements InstitutionService {
 
 	@Autowired
 	private InstitutionRepository institutionRepository;
+	
+	@Autowired
+	private InstitutionTypeRepository typeRepository;
 
 	@Override
 	public Institution findOne(Long id) {
@@ -54,6 +59,18 @@ public class InstitutionServiceImpl implements InstitutionService {
 		for(Long id : ids){
 			this.delete(id);
 		}
+	}
+
+	@Override
+	public List<Institution> searchByType(String type) {
+		InstitutionType instType = typeRepository.findByName(type);
+		return institutionRepository.findByType(instType);
+	}
+
+	@Override
+	public List<Institution> searchByNameAndType(InstitutionType type, String name) {
+		
+		return institutionRepository.findByNameAndType(type, name);
 	}
 
 }

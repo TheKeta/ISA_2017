@@ -22,7 +22,7 @@ public class UserController {
 	private UserServiceImpl userService;
 	
 	
-	@RequestMapping(value="/getUser", method = RequestMethod.GET)
+	@RequestMapping(value="/getUsers", method = RequestMethod.GET)
 	public ResponseEntity<List<User>> getUsers(){
 		return new ResponseEntity<>(userService.findAll(), HttpStatus.OK);
 	}
