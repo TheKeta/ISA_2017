@@ -69,7 +69,6 @@ public class InstitutionServiceImpl implements InstitutionService {
 
 	@Override
 	public List<Institution> searchByNameAndType(InstitutionType type, String name) {
-		
 		return institutionRepository.findByNameAndType(type, name);
 	}
 

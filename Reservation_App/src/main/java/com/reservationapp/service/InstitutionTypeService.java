@@ -17,4 +17,6 @@ public interface InstitutionTypeService {
 	InstitutionType delete(Long id);
 	
 	void delete(List<Long> ids);
+	
+	InstitutionType findByName(String name);
 }

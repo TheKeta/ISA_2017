@@ -1,4 +1,9 @@
 $(document).ready(function() {
+	defaultElements();
+});
+
+
+function defaultElements(){
 	var url = window.location.href;
 	var str = url.split("=");
 	document.title = str[1] + "s";
@@ -14,7 +19,7 @@ $(document).ready(function() {
 			$('#institutionDetails').html(str);
 		}
 	});
-});
+}
 
 function createInstitutionElements(data){
 	var str = "";
@@ -37,8 +42,13 @@ function createInstitutionElements(data){
 }
 
 
+
 function search(){
 	var searchText = document.getElementById("searchInstitutions").value;
+	if(searchText === ""){
+		defaultElements();
+		return;
+	}
 	var url = window.location.href;
 	var str = url.split("=");
 	$.ajax({

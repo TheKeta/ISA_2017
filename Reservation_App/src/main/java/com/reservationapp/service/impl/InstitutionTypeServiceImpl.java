@@ -55,4 +55,9 @@ public class InstitutionTypeServiceImpl implements InstitutionTypeService{
 			this.delete(id);
 		}
 	}
+
+	@Override
+	public InstitutionType findByName(String name) {
+		return institutionTypeRepository.findByName(name);
+	}
 }

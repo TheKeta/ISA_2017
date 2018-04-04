@@ -14,8 +14,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.reservationapp.DTOs.InstitutionRated;
 import com.reservationapp.model.Institution;
+import com.reservationapp.model.InstitutionType;
 import com.reservationapp.service.impl.InstitutionRatingServiceImpl;
 import com.reservationapp.service.impl.InstitutionServiceImpl;
+import com.reservationapp.service.impl.InstitutionTypeServiceImpl;
 
 @RestController
 @RequestMapping(value = "/institution")
@@ -27,6 +29,8 @@ public class InstitutionController {
 	@Autowired
 	private InstitutionRatingServiceImpl institutionRatingService;
 	
+	@Autowired
+	private InstitutionTypeServiceImpl institutionTypeService;
 	
 	@RequestMapping(value="/getInstitutions/{type}", method = RequestMethod.GET)
 	public ResponseEntity<List<InstitutionRated>> getInstitutions(@PathVariable String type){
@@ -65,15 +69,14 @@ public class InstitutionController {
 	
 	@RequestMapping(value ="/search/{type}/{searchText}", method = RequestMethod.GET)
 	public ResponseEntity<List<InstitutionRated>> getSearchResult(@PathVariable String type, @PathVariable String searchText){
-		List<Institution> tempList = institutionService.searchByType(type);
-		if(tempList == null) {
-			return new ResponseEntity<>(null, HttpStatus.OK);
-		}
+		
+		InstitutionType instType = institutionTypeService.findByName(type);
+		List<Institution> institutions = institutionService.searchByNameAndType(instType, searchText);
 		List<InstitutionRated> ratedList = new ArrayList<InstitutionRated>();
-		for(Institution inst : tempList) {
+		for(Institution inst : institutions) {
 			ratedList.add(new InstitutionRated(inst, institutionRatingService.calculateRating(institutionRatingService.searchByInstitution(inst))));
 		}
 		
-		return new ResponseEntity<>(null, HttpStatus.OK);
+		return new ResponseEntity<>(ratedList, HttpStatus.OK);
 	}
 }
