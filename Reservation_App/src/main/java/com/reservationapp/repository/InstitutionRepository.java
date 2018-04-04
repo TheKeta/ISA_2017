@@ -17,3 +17,4 @@ public interface InstitutionRepository extends JpaRepository<Institution, Long>{
 	@Query("SELECT p FROM Institution p where lower(p.type) = lower(:type) and lower(p.name) = lower(:name)")
 	public List<Institution> findByNameAndType(@Param("type") InstitutionType type, @Param("name") String name);
 }
+ 

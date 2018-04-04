@@ -42,7 +42,7 @@ public class InstitutionRatingServiceImpl implements InstitutionRatingService{
 	public InstitutionRating delete(Long id) {
 		InstitutionRating institutionRating = institutionRatingRepository.findById(id).get();
 		if(institutionRating == null){
-			throw new IllegalArgumentException("Tried to delete"
+			throw new IllegalArgumentException("Tried to delete" 
 					+ "non-existant user");
 		}
 		institutionRatingRepository.delete(institutionRating);

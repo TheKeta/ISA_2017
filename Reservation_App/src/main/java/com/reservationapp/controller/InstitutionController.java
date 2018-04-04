@@ -30,7 +30,7 @@ public class InstitutionController {
 	private InstitutionRatingServiceImpl institutionRatingService;
 	
 	@Autowired
-	private InstitutionTypeServiceImpl institutionTypeService;
+	private InstitutionTypeServiceImpl institutionTypeService; 
 	
 	@RequestMapping(value="/getInstitutions/{type}", method = RequestMethod.GET)
 	public ResponseEntity<List<InstitutionRated>> getInstitutions(@PathVariable String type){

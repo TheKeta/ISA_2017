@@ -25,7 +25,7 @@ public class InstitutionTypeServiceImpl implements InstitutionTypeService{
 	
 	@Override
 	public List<InstitutionType> findAll() {
-		return institutionTypeRepository.findAll();
+		return institutionTypeRepository.findAll(); 
 	}
 
 	@Override

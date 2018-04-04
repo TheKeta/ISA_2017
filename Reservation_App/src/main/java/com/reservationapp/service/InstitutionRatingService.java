@@ -23,4 +23,4 @@ public interface InstitutionRatingService {
 	
 	double calculateRating(List<InstitutionRating> ratings);
 	
-}
+} 

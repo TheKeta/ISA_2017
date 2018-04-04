@@ -20,3 +20,4 @@ public interface InstitutionTypeService {
 	
 	InstitutionType findByName(String name);
 }
+ 

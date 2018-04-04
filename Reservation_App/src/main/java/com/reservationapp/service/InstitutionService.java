@@ -23,3 +23,4 @@ public interface InstitutionService {
 
 	List<Institution> searchByNameAndType(InstitutionType type, String name);
 }
+ 

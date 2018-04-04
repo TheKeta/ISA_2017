@@ -29,7 +29,7 @@ public class InstitutionServiceImpl implements InstitutionService {
 	}
 	
 	@Override
-	public List<Institution> findAll() {
+	public List<Institution> findAll() { 
 		return institutionRepository.findAll();
 	}
 
@@ -69,7 +69,7 @@ public class InstitutionServiceImpl implements InstitutionService {
 
 	@Override
 	public List<Institution> searchByNameAndType(InstitutionType type, String name) {
-		return institutionRepository.findByNameAndType(type, name);
+		return institutionRepository.findByNameAndType(type, name);  
 	}
 
 }

@@ -15,3 +15,4 @@ public interface InstitutionRatingRepository extends JpaRepository<InstitutionRa
 	@Query("SELECT p FROM InstitutionRating p where lower(p.institution) = lower(:institution)")
 	public List<InstitutionRating> searchByInstitution(@Param("institution") Institution institution);
 }
+ 
