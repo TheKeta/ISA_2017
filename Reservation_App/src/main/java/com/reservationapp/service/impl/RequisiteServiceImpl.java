@@ -3,11 +3,13 @@ package com.reservationapp.service.impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.reservationapp.model.Requisite;
 import com.reservationapp.repository.RequisiteRepository;
 import com.reservationapp.service.RequisiteService;
 
+@Service
 public class RequisiteServiceImpl implements RequisiteService{
 	
 	@Autowired
