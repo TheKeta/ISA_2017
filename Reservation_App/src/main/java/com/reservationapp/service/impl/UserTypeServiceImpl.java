@@ -55,5 +55,11 @@ public class UserTypeServiceImpl implements UserTypeService{
 		}
 	}
 
+	@Override
+	public UserType findOneByName(String name) {
+		// TODO Auto-generated method stub
+		return userTypeRepository.findOneByName(name);
+	}
+
 	
 }

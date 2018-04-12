@@ -6,4 +6,6 @@ import com.reservationapp.model.UserType;
 
 public interface UserTypeRepository extends JpaRepository<UserType, Long>{
 
+	UserType findOneByName(String name);
+
 }

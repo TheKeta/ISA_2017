@@ -6,7 +6,9 @@ import com.reservationapp.model.User;
 
 public interface UserService {
 
-	User findOne(Long id);
+	User findOneById(Long id);
+	
+	User findOneByEmail(String email);
 
 	List<User> findAll();
 	

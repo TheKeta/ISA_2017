@@ -18,7 +18,7 @@ public class UserServiceImpl implements UserService{
 	private UserRepository userRepository;
 
 	@Override
-	public User findOne(Long id) {
+	public User findOneById(Long id) {
 		return userRepository.findById(id).get();
 	}
 	
@@ -53,5 +53,11 @@ public class UserServiceImpl implements UserService{
 		for(Long id : ids){
 			this.delete(id);
 		}
+	}
+
+	@Override
+	public User findOneByEmail(String email) {
+		// TODO Auto-generated method stub
+		return userRepository.findOneByEmail(email);
 	}
 }

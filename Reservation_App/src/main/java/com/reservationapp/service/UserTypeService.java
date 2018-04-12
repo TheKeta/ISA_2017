@@ -7,6 +7,8 @@ import com.reservationapp.model.UserType;
 public interface UserTypeService {
 
 	UserType findOne(Long id);
+	
+	UserType findOneByName(String name);
 
 	List<UserType> findAll();
 	
