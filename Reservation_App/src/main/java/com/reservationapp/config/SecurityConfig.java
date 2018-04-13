@@ -17,34 +17,55 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
-@Order(SecurityProperties.ACCESS_OVERRIDE_ORDER)
+@Order(SecurityProperties.BASIC_AUTH_ORDER)
 public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	@Autowired
     private UserDetailsService userDetailsService;
  
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests()
-                .antMatchers("/", "/public/**").permitAll()
-                .antMatchers("/users/**").hasAuthority("ADMIN")
-                .anyRequest().fullyAuthenticated()
-                .and()
-                .formLogin()
-                .loginPage("/login")
-                .failureUrl("/login")
-                .usernameParameter("email")
-                .permitAll()
-                .and()
-                .logout()
-                .logoutUrl("/logout")
-                .deleteCookies("remember-me")
-                .logoutSuccessUrl("/")
-                .permitAll()
-                .and()
-                .rememberMe()
-                .and()
-                .sessionManagement()
-                .maximumSessions(1);
+//        http.authorizeRequests()
+//                .antMatchers("/", "/public/**").permitAll()
+//                .antMatchers("/users/**").hasAuthority("ADMIN")
+//                .anyRequest().fullyAuthenticated()
+//                .and()
+//                .formLogin()
+//                .loginPage("/login")
+//                .failureUrl("/login")
+//                .usernameParameter("email")
+//                .permitAll()
+//                .and()
+//                .logout()
+//                .logoutUrl("/logout")
+//                .deleteCookies("remember-me")
+//                .logoutSuccessUrl("/")
+//                .permitAll()
+//                .and()
+//                .rememberMe()
+//                .and()
+//                .sessionManagement()
+//                .maximumSessions(1);
+
+    	http.authorizeRequests()
+        .antMatchers("/Create.html").hasAuthority("ADMIN")
+        .anyRequest().permitAll()
+        .and()
+        .formLogin()
+        .loginPage("/Login.html")
+        .failureUrl("/Login.html")
+        .usernameParameter("email")
+        .permitAll()
+        .and()
+        .logout()
+        .logoutUrl("/logout")
+        .deleteCookies("remember-me")
+        .logoutSuccessUrl("/Home.html")
+        .permitAll()
+        .and()
+        .rememberMe()
+        .and()
+        .sessionManagement()
+        .maximumSessions(1);
     }
 
     @Override

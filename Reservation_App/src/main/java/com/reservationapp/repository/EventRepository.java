@@ -6,6 +6,5 @@ import com.reservationapp.model.Event;
 
 public interface EventRepository extends JpaRepository<Event, Long>{
 
-	Object findById(Long id);
 
 }
