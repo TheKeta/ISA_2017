@@ -28,7 +28,7 @@ public class EventServiceImpl implements EventService{
 		return eventRepository.findAll();
 	}
 
-	@Override
+	@Override 
 	public Event save(Event event) {
 		return eventRepository.save(event);
 	}
