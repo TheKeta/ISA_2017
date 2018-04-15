@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.reservationapp.model.Event;
+import com.reservationapp.model.Institution;
 import com.reservationapp.repository.EventRepository;
 import com.reservationapp.service.EventService;
 
@@ -54,5 +55,13 @@ public class EventServiceImpl implements EventService{
 			this.delete(id);
 		}
 	}
+
+	@Override
+	public List<Event> findByInstitution(Institution institution) {
+		return eventRepository.findByInstitution(institution);
+	}
+	
+	
+	
 
 }

@@ -28,18 +28,42 @@ public class Show implements Serializable{
 	private ShowType type;
 	
 	@Column(nullable = false)
+	private String description;
+	
+	@Column(nullable = false)
+	private String cast;
+	
+	@Column(nullable = false)
 	private int length;
 	
 	public Show(){
 		
 	}
 
-	public Show(String name, Genre genre, ShowType type, int length) {
+	public Show(String name, Genre genre, ShowType type, String description, String cast, int length) {
 		super();
 		this.name = name;
 		this.genre = genre;
 		this.type = type;
 		this.length = length;
+		this.cast = cast;
+		this.description = description;
+	}
+
+	public String getCast() {
+		return cast;
+	}
+
+	public void setCast(String cast) {
+		this.cast = cast;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 	public Long getId(){

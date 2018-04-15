@@ -25,17 +25,29 @@ public class Seat implements Serializable{
 	private int seatNumber;
 	
 	@ManyToOne(optional = false)
+	private Hall hall;
+	
+	@ManyToOne(optional = false)
 	private SeatType seatType;
 
 	public Seat(){
 		
 	}
 	
-	public Seat(int row, int seatNumber, SeatType seatType) {
+	public Seat(int row, int seatNumber, Hall hall, SeatType seatType) {
 		super();
 		this.row = row;
 		this.seatNumber = seatNumber;
+		this.hall = hall;
 		this.seatType = seatType;
+	}
+
+	public Hall getHall() {
+		return hall;
+	}
+
+	public void setHall(Hall hall) {
+		this.hall = hall;
 	}
 
 	public Long getId() {

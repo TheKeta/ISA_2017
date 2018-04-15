@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.reservationapp.model.Event;
+import com.reservationapp.model.Institution;
 import com.reservationapp.service.impl.EventServiceImpl;
+import com.reservationapp.service.impl.InstitutionServiceImpl;
 
 @RestController
 @RequestMapping(value = "/event")
@@ -21,10 +23,13 @@ public class EventController {
 	@Autowired
 	private EventServiceImpl eventService;
 	
+	@Autowired
+	private InstitutionServiceImpl institutionService;
 	
-	@RequestMapping(value="/getEvents", method = RequestMethod.GET)
-	public ResponseEntity<List<Event>> getEvents(){
-		return new ResponseEntity<>(eventService.findAll(), HttpStatus.OK);
+	@RequestMapping(value="/getEvents/{id}", method = RequestMethod.GET)
+	public ResponseEntity<List<Event>> getEvents(@PathVariable Long id){
+		Institution institution = institutionService.findOne(id);
+		return new ResponseEntity<>(eventService.findByInstitution(institution), HttpStatus.OK);
 	}
 	
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)

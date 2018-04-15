@@ -42,7 +42,11 @@ public class InstitutionController {
 		for(Institution inst : tempList) {
 			ratedList.add(new InstitutionRated(inst, institutionRatingService.calculateRating(institutionRatingService.searchByInstitution(inst))));
 		}
-		return new ResponseEntity<>(ratedList, HttpStatus.OK);
+		if(ratedList.size() > 0){
+			return new ResponseEntity<>(ratedList, HttpStatus.OK);
+		}else {
+			return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+		}
 	}
 	
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
@@ -61,7 +65,7 @@ public class InstitutionController {
 		return new ResponseEntity<>(newInstitution, HttpStatus.OK);
 	}
 	
-	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+	@RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<Institution> delete(@PathVariable Long id) {
 		Institution deleted = institutionService.delete(id);
 		return new ResponseEntity<>(deleted, HttpStatus.OK);

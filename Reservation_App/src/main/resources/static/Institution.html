@@ -1,33 +1,21 @@
 <!DOCTYPE html>
 <html>
 <head>
-<link rel="stylesheet" type="text/css" href="/stylesheets/bootstrap.min.css">
-
-
-<meta charset="UTF-8">
+	<link rel="stylesheet" type="text/css" href="/stylesheets/bootstrap.min.css">
+	
+	<meta charset="UTF-8">
 </head>
 <body>
-	<div style="padding-left: 15px; padding-right:15px;">
-		<h1 class="row" style="text-align: center;" id="header"></h1>
-		<div class="row" style="padding-top: 75px; margin: auto;">
-			<div class="col-sm-3"></div>
-			<div class="col-sm-6">
-				<div style="margin-left: 30%; width: 40%;" >
-					<form onsubmit="search()">
-						<input type="text" id="searchInstitutions" onSubmit="search()"/>
-						<input type="submit" value="Search"/>
-						<button type="button" onClick="defaultElements()">Reset</button>
-					</form>
-				</div>
-				<div id="institutionDetails">
-				</div>
-			</div>
-		</div>	
+	<div class="row">
+		<div class="col-sm-3"></div>
+		<div id="showEvents" class="col-sm-6">
+			
+		</div>
 	</div>
-	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCaUW-It7c2db0fcpRH0nSl3qsfhcsTE0k&libraries=places"></script>
-	
+
+
 	<script src="/scripts/jquery-3.2.1.min.js"></script>
 	<script src="/stylesheets/bootstrap.min.js"></script>
-	<script src="/scripts/institution.js"></script>
+	<script src="/scripts/singleInstitution.js"></script>
 </body>
 </html>
