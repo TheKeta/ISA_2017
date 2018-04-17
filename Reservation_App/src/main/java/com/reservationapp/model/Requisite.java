@@ -33,7 +33,7 @@ public class Requisite implements Serializable {
 	@Column(nullable = false)
 	private int price;
 
-	@ManyToOne(optional = false)
+	@Column(nullable = false)
 	private String type; // new or used
 
 	public Requisite(Long id, String creator, String name, byte[] picture, String description, int price, String type) {
