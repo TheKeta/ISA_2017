@@ -27,7 +27,7 @@ function createHallElements(seats){
 	str += '</div>';
 	
 	str += '<div class="col-sm-4">';	
-	str += '</div>';
+	str += '</div>'; 
 	
 	str += "</div>";
 	str += "</div>";
