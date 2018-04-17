@@ -3,6 +3,7 @@ package com.reservationapp.service;
 import java.util.List;
 
 import com.reservationapp.model.Hall;
+import com.reservationapp.model.Institution;
 
 public interface HallService {
 
@@ -16,5 +17,8 @@ public interface HallService {
 	
 	Hall delete(Long id);
 	
+	
 	void delete(List<Long> ids);
+	
+	List<Hall> findByInstitution(Institution institution);
 }

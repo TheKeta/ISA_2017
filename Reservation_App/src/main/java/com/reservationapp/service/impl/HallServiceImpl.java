@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.reservationapp.model.Hall;
+import com.reservationapp.model.Institution;
 import com.reservationapp.repository.HallRepository;
 import com.reservationapp.service.HallService;
 
@@ -53,5 +54,10 @@ public class HallServiceImpl implements HallService{
 		for(Long id : ids){
 			this.delete(id);
 		}
+	}
+
+	@Override
+	public List<Hall> findByInstitution(Institution institution) {
+		return hallRepository.findByInstitution(institution);
 	}
 }
