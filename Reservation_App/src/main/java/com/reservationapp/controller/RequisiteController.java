@@ -21,13 +21,13 @@ public class RequisiteController {
 	private RequisiteServiceImpl requisiteService;
 	
 	
-	@RequestMapping(value="/", method = RequestMethod.GET)
-	public ResponseEntity<List<Requisite>> getRequisiteTypes(){
+	@RequestMapping(value="/getRequisites", method = RequestMethod.GET)
+	public ResponseEntity<List<Requisite>> getRequisites(){
 		return new ResponseEntity<>(requisiteService.findAll(), HttpStatus.OK);
 	}
 	
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
-	public ResponseEntity<Requisite> getRequisiteType(@PathVariable Long id) {
+	public ResponseEntity<Requisite> getRequisite(@PathVariable Long id) {
 		Requisite requisite = requisiteService.findOne(id);
 		if (requisite == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -37,7 +37,7 @@ public class RequisiteController {
 	}
 	
 	@RequestMapping(method=RequestMethod.POST, consumes="application/json")
-	public ResponseEntity<Requisite> addRequisiteType(@RequestBody Requisite requisite){
+	public ResponseEntity<Requisite> addRequisite(@RequestBody Requisite requisite){
 		Requisite requisiteType = requisiteService.save(requisite);
 		return new ResponseEntity<>(requisiteType, HttpStatus.OK);
 	}
