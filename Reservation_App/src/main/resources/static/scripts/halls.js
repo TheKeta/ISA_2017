@@ -30,7 +30,7 @@ function createHallElements(seats){
 	str += '</div>'; 
 	
 	str += "</div>";
-	str += "</div>";
+	str += "</div>"; 
 
 	str += '</div>';
 	return str;
