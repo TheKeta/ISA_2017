@@ -3,13 +3,13 @@ var str = url.split("=");
 
 $(document).ready(function() {	
 	$.ajax({
-		url: "../event/" + str[1],
+		url: "../event/eventShowsHalls/" + str[1],
 		success: function(eventShow){
 			$("#show").append(generateDropDown(eventShow.shows, eventShow.event.show.id))
+			$("#hall").append(generateDropDown(eventShow.halls, eventShow.event.hall.id))
 			$("#date").val(transformDate(new Date(eventShow.event.eventDate)));
 			$("#time").val(transformTime(new Date(eventShow.event.eventDate)));
 			$("#id").val(eventShow.event.id);
-			$("#hallId").val(eventShow.event.hall.id);
 		} 
 	});
 });
@@ -19,7 +19,7 @@ function Save(){
 	event.id = $("#id").val();
 	
 	var hall = new Object();
-	hall.id = $("#hallId").val();
+	hall.id = $("#hall").val();
 	event.hall = hall;
 	
 	

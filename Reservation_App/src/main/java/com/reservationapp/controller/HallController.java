@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.reservationapp.model.Hall;
+import com.reservationapp.model.Institution;
 import com.reservationapp.service.impl.HallServiceImpl;
+import com.reservationapp.service.impl.InstitutionServiceImpl;
 
 @RestController
 @RequestMapping(value = "/hall")
@@ -21,10 +23,13 @@ public class HallController {
 	@Autowired
 	private HallServiceImpl hallService;
 	
+	@Autowired
+	private InstitutionServiceImpl institutionService;
 	
-	@RequestMapping(value="/getHalls", method = RequestMethod.GET)
-	public ResponseEntity<List<Hall>> getHalls(){
-		return new ResponseEntity<>(hallService.findAll(), HttpStatus.OK);
+	@RequestMapping(value="/getHalls/{id}", method = RequestMethod.GET)
+	public ResponseEntity<List<Hall>> getHalls(@PathVariable Long id){
+		Institution institution = institutionService.findOne(id);
+		return new ResponseEntity<>(hallService.findByInstitution(institution), HttpStatus.OK);
 	}
 	
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)

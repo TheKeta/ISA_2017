@@ -46,7 +46,7 @@ function createEventElements(events){
 		var hours = date.getHours();
 		var minutes = date.getMinutes();
 		
-		str += '<li><a id="'+ events[i].id +'" href="www.google.com">Hall: '+ events[i].hall.name +', time: ' + hours + ":" + minutes + '</a></li>';	
+		str += '<li><a href="../Event.html?id='+ events[i].id +'">Hall: '+ events[i].hall.name +', time: ' + hours + ":" + minutes + '</a></li>';	
 	}
 	str += '</ul>';
 	str += '</div>';
@@ -59,21 +59,12 @@ function createEventElements(events){
 
 
 function Create(){
-	window.location.href = "../CreateEvent.html?id=" + str[1]
+	window.location.href = "../CreateEvent.html?id=" + str[1];
 }
 
 
-function Remove(id){
-	$.ajax({
-		url: "../event/delete/" + id,
-		type: "DELETE",
-		success: function(data){
-			window.location.href = "../Institution.html?id="+ str[1];
-		},
-		error: function(data){
-			alert('This show can\'t be deleted.');
-		}
-	});
+function Halls(){
+	window.location.href = "../Halls.html?id=" + str[1];
 }
 
 

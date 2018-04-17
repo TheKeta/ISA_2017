@@ -2,7 +2,18 @@ $(document).ready(function() {
 	$.ajax({
 		url: "../show/getShows",
 		success: function(shows){
-			$("show").append(shows.map(generateDropDown));
+			for(var i=0; i<shows.length; i++){
+				$("#show").append(generateDropDown(shows[i]));
+			}
+		}
+	});
+	
+	$.ajax({
+		url: "../hall/getHalls/" + window.location.href.split("=")[1],
+		success: function(halls){
+			for(var i=0; i<halls.length; i++){
+				$("#hall").append(generateDropDown(halls[i]));
+			}
 		}
 	});
 });
@@ -23,11 +34,10 @@ function Cancel(){
 function Create(){
 	var event = new Object();
 	
-	var institution = new Object();
-	institution.id = window.location.href.split("=")[1];
-	event.institution = institution;
-	
-	
+	var hall = new Object();
+	hall.id = $("#hall").val();
+	event.hall = hall;
+
 	var show = new Object();
 	show.id = $("#show").val();
 	event.show = show;
@@ -45,7 +55,7 @@ function Create(){
 		contentType: "application/json",
 		dataType: "json",
 		success: function(event){
-			window.location.href="../Institution.html?type=" + event.institution.id; 
+			window.location.href="../Institution.html?type=" + window.location.href.split("=")[1]; 
 		}
 	});
 }
