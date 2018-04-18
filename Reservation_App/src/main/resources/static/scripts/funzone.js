@@ -46,4 +46,5 @@ function createRequisiteElement(reqs){
 		+ '</div>';
 	
 	$('#allRequisites').append(str);
+	
 }
