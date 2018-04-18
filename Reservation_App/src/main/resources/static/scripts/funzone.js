@@ -14,7 +14,7 @@ function defaultElements(){
 	document.title = title;
 	$('#header').html(title);
 	$.ajax({
-		url: "../requisite/getRequisites/",
+		url: "../requisite/getRequisites/new",
 		success: function(data){
 			$('#allRequisites').html("");
 			console.log(data);
@@ -47,4 +47,8 @@ function createRequisiteElement(reqs){
 	
 	$('#allRequisites').append(str);
 	
+}
+
+function userShop(){
+	window.location.href = "../UserShop.html";
 }

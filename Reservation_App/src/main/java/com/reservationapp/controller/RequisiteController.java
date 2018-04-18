@@ -26,6 +26,11 @@ public class RequisiteController {
 		return new ResponseEntity<>(requisiteService.findAll(), HttpStatus.OK);
 	}
 	
+	@RequestMapping(value="/getRequisites/{type}", method = RequestMethod.GET)
+	public ResponseEntity<List<Requisite>> getRequisitesU(@PathVariable String type){
+		return new ResponseEntity<>(requisiteService.findAllUserReqs(type), HttpStatus.OK);
+	}
+	
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public ResponseEntity<Requisite> getRequisite(@PathVariable Long id) {
 		Requisite requisite = requisiteService.findOne(id);

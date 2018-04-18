@@ -1,6 +1,7 @@
 package com.reservationapp.model;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -18,7 +19,7 @@ public class Requisite implements Serializable {
 	private Long id;
 	
 	@Column(nullable = false)
-	private String creator; //user's ID
+	private Long creator; //user's ID
 	
 	@Column(nullable = false)
 	private String name;
@@ -34,8 +35,11 @@ public class Requisite implements Serializable {
 
 	@Column(nullable = false)
 	private String type; // new or used
+	
+	@Column(nullable = false)
+	private Date endDate;
 
-	public Requisite(Long id, String creator, String name, byte[] picture, String description, int price, String type) {
+	public Requisite(Long id, Long creator, String name, byte[] picture, String description, int price, String type, Date endDate) {
 		super();
 		this.id = id;
 		this.creator = creator;
@@ -44,15 +48,24 @@ public class Requisite implements Serializable {
 		this.description = description;
 		this.price = price;
 		this.type = type;
+		this.endDate = endDate;
 	}
 	
+	public Date getEndDate() {
+		return endDate;
+	}
+
+	public void setEndDate(Date endDate) {
+		this.endDate = endDate;
+	}
+
 	public Requisite() {}
 
-	public String getCreator() {
+	public Long getCreator() {
 		return creator;
 	}
 
-	public void setCreator(String creator) {
+	public void setCreator(Long creator) {
 		this.creator = creator;
 	}
 

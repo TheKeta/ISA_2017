@@ -16,4 +16,6 @@ public interface RequisiteService {
 	Requisite delete(Long id);
 	
 	void delete(List<Long> ids);
+	
+	List<Requisite> findAllUserReqs(String type);
 }

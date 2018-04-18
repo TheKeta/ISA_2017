@@ -52,4 +52,9 @@ public class RequisiteServiceImpl implements RequisiteService{
 			this.delete(id);
 		}
 	}
+	
+	@Override
+	public List<Requisite> findAllUserReqs(String type){
+		return requisiteRepository.findAllUsersReqs(type);
+	}
 }
