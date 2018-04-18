@@ -175,5 +175,5 @@ INSERT INTO SHOW VALUES( 4, 'Cast 4', 'Description 4', 120, 'Show 4', 1, 1);
 INSERT INTO SHOW VALUES( 5, 'Cast 5', 'Description 5', 120, 'Show 5', 2, 1);
 
 
-INSERT INTO REQUISITE VALUES(2,1,'Majica sa likom tora', 'Majica', null,750,'used',''2018-05-14'');
-INSERT INTO REQUISITE VALUES(1,1,'Solja sa likom tora', 'Solja', null,250,'new','2018-05-14');
+INSERT INTO REQUISITE VALUES(2,1,'Majica sa likom tora','2018-05-14', 'Majica', null,750,'used');
+INSERT INTO REQUISITE VALUES(1,1,'Solja sa likom tora','2018-05-14', 'Solja', null,250,'new');
