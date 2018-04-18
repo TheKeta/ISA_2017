@@ -6,6 +6,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,9 +17,11 @@ import org.springframework.web.bind.annotation.RestController;
 import com.reservationapp.DTOs.InstitutionRated;
 import com.reservationapp.model.Institution;
 import com.reservationapp.model.InstitutionType;
+import com.reservationapp.model.User;
 import com.reservationapp.service.impl.InstitutionRatingServiceImpl;
 import com.reservationapp.service.impl.InstitutionServiceImpl;
 import com.reservationapp.service.impl.InstitutionTypeServiceImpl;
+import com.reservationapp.service.impl.UserServiceImpl;
 
 @RestController
 @RequestMapping(value = "/institution")
@@ -31,6 +35,9 @@ public class InstitutionController {
 	
 	@Autowired
 	private InstitutionTypeServiceImpl institutionTypeService; 
+	
+	@Autowired
+	private UserServiceImpl userService;
 	
 	@RequestMapping(value="/getInstitutions/{type}", method = RequestMethod.GET)
 	public ResponseEntity<List<InstitutionRated>> getInstitutions(@PathVariable String type){
@@ -56,17 +63,35 @@ public class InstitutionController {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 		
+		if(loggedUser() != institution.getAdmin()){
+			return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+		}
+
+		
 		return new ResponseEntity<>(institution, HttpStatus.OK);
 	}
 	
 	@RequestMapping(method=RequestMethod.POST, consumes="application/json")
 	public ResponseEntity<Institution> addInstitution(@RequestBody Institution institution){
-		Institution newInstitution = institutionService.save(institution);
+		User user = userService.findOneById(institution.getAdmin().getId());
+		if(user == null){
+			institution.setAdmin(loggedUser());
+		}
+		Institution newInstitution = institutionService.save(institution);;
 		return new ResponseEntity<>(newInstitution, HttpStatus.OK);
 	}
 	
 	@RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<Institution> delete(@PathVariable Long id) {
+		Institution attempt = institutionService.findOne(id);
+		
+		if (attempt == null) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+		
+		if(loggedUser() != attempt.getAdmin()){
+			return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+		}
 		Institution deleted = institutionService.delete(id);
 		return new ResponseEntity<>(deleted, HttpStatus.OK);
 	} 
@@ -80,7 +105,12 @@ public class InstitutionController {
 		for(Institution inst : institutions) {
 			ratedList.add(new InstitutionRated(inst, institutionRatingService.calculateRating(institutionRatingService.searchByInstitution(inst))));
 		}
-		
 		return new ResponseEntity<>(ratedList, HttpStatus.OK);
+	}
+	
+	private User loggedUser(){
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		User user = userService.findOneByEmail(auth.getName());
+		return user;
 	}
 }

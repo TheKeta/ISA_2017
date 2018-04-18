@@ -22,7 +22,7 @@ public class ShowController {
 	private ShowServiceImpl showService;
 	
 	
-	@RequestMapping(value="/getHalls", method = RequestMethod.GET)
+	@RequestMapping(value="/getShows", method = RequestMethod.GET)
 	public ResponseEntity<List<Show>> getShows(){
 		return new ResponseEntity<>(showService.findAll(), HttpStatus.OK);
 	}

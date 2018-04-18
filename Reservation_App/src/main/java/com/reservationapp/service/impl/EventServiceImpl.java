@@ -1,5 +1,6 @@
 package com.reservationapp.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,7 +8,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.reservationapp.model.Event;
+import com.reservationapp.model.Hall;
 import com.reservationapp.model.Institution;
+import com.reservationapp.model.Show;
 import com.reservationapp.repository.EventRepository;
 import com.reservationapp.service.EventService;
 
@@ -17,6 +20,9 @@ public class EventServiceImpl implements EventService{
 
 	@Autowired
 	private EventRepository eventRepository;
+	
+	@Autowired
+	private HallServiceImpl hallService;
 
 	@Override
 	public Event findOne(Long id) {
@@ -57,11 +63,26 @@ public class EventServiceImpl implements EventService{
 	}
 
 	@Override
-	public List<Event> findByInstitution(Institution institution) {
-		return eventRepository.findByInstitution(institution);
+	public List<Event> findByHallAndShow(Hall hall, Show show) {
+		return eventRepository.findByHall(hall);
 	}
-	
-	
-	
+
+	@Override
+	public List<Event> findByHall(Hall hall) {
+		return eventRepository.findByHall(hall);
+	}
+
+	@Override
+	public List<Event> findByInstitution(Institution institution) {
+		List<Hall> halls = hallService.findByInstitution(institution);
+		List<Event> events = new ArrayList<Event>();
+		for(Hall h : halls){
+			List<Event> temp = findByHall(h);
+			for(Event e : temp){
+				events.add(e);
+			}
+		}
+		return events;
+	}
 
 }

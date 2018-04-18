@@ -29,17 +29,29 @@ public class Institution implements Serializable {
 	
 	@ManyToOne(optional = false)
 	private InstitutionType type;
+	
+	@ManyToOne(optional = false)
+	private User admin;
 
 	public Institution(){
 		
 	}
 	
-	public Institution(String name, String address, String description, InstitutionType type) {
+	public Institution(String name, String address, String description, InstitutionType type, User admin) {
 		super();
 		this.name = name;
 		this.address = address;
 		this.type = type;
 		this.description = description;
+		this.admin = admin;
+	}
+
+	public User getAdmin() {
+		return admin;
+	}
+
+	public void setAdmin(User admin) {
+		this.admin = admin;
 	}
 
 	public String getDescription() {

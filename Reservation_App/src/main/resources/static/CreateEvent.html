@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" type="text/css" href="/stylesheets/bootstrap.min.css">
+	<title>Create event</title>
+</head>
+<body>
+<div style="padding-left: 15px; padding-right: 15px;"> 
+	<div class="row" style="text-align: center">
+		<h1 id="header"></h1>		
+	</div>
+	<div class="row">
+		<div class="col-sm-3"></div>
+		<div class="col-sm-6">
+			<form>
+				<span>
+					Show:
+					<select id="show" class="form-control">
+						<option selected>Select show</option>
+					</select>
+				</span>
+				<span>
+					Hall:
+					<select id="hall" class="form-control">
+						<option selected>Select hall</option>
+					</select>
+				</span>
+				<span>
+			   		Date:
+			    	<input id="date" type="date" class="form-control" name="Date"/>
+		    	</span>
+				<span>
+			    	Time:
+			    	<input id="time" type="time" class="form-control" name="Time"/>
+			    </span>
+			    <div id="hiddenItems" style="display: none;">
+			    	<input id="institutionId" />
+			    </div>
+			    <div style=" padding-top: 10px; text-align: right;">
+				    <button type="button" style="margin-right: 10px;" onClick="Create()" >Create</button>
+				    <button type="button" onClick="Cancel()" >Cancel</button>
+			    </div>
+			</form>
+		</div>
+	</div>
+</div>
+
+	<script src="/scripts/jquery-3.2.1.min.js"></script>
+	<script src="/scripts/createEvent.js"></script>
+</body>
+</html>

@@ -6,7 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.reservationapp.model.Hall;
 import com.reservationapp.model.Seat;
+import com.reservationapp.repository.HallRepository;
 import com.reservationapp.repository.SeatRepository;
 import com.reservationapp.service.SeatService;
 
@@ -16,6 +18,7 @@ public class SeatServiceImpl implements SeatService{
 
 	@Autowired
 	private SeatRepository seatRepository;
+	
 
 	@Override
 	public Seat findOne(Long id) {
@@ -53,5 +56,10 @@ public class SeatServiceImpl implements SeatService{
 		for(Long id : ids){
 			this.delete(id);
 		}
+	}
+
+	@Override
+	public List<Seat> findByHall(Hall hall) {
+		return seatRepository.findByHall(hall);
 	}
 }

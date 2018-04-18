@@ -3,7 +3,9 @@ package com.reservationapp.service;
 import java.util.List;
 
 import com.reservationapp.model.Event;
+import com.reservationapp.model.Hall;
 import com.reservationapp.model.Institution;
+import com.reservationapp.model.Show;
 
 public interface EventService {
 
@@ -20,4 +22,8 @@ public interface EventService {
 	void delete(List<Long> ids);
 	
 	List<Event> findByInstitution(Institution institution);
+	
+	List<Event> findByHall(Hall hall);
+	
+	List<Event> findByHallAndShow(Hall hall, Show show);
 }

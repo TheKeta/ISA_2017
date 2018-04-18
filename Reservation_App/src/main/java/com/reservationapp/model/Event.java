@@ -21,9 +21,9 @@ public class Event implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
-	 
+	
 	@ManyToOne(optional = false)
-	private Institution institution;
+	private Hall hall;
 	
 	@ManyToOne(optional = false)
 	private Show show;
@@ -35,11 +35,11 @@ public class Event implements Serializable{
 		
 	}
 	
-	public Event(Institution institution, Show show, Date eventDate) {
+	public Event(Hall hall, Show show, Date eventDate) {
 		super();
-		Assert.notNull(institution, "Institution can not be null");
+		Assert.notNull(hall, "Hall can not be null");
 		Assert.notNull(show, "Show can not be null");
-		this.institution = institution;
+		this.hall = hall;
 		this.show = show;
 		this.eventDate = eventDate;
 	}
@@ -48,12 +48,12 @@ public class Event implements Serializable{
 		return id;
 	}
 
-	public Institution getInstitution() {
-		return institution;
+	public Hall getHall() {
+		return hall;
 	}
 
-	public void setInstitution(Institution institution) {
-		this.institution = institution;
+	public void setHall(Hall hall) {
+		this.hall = hall;
 	}
 
 	public Show getShow() {

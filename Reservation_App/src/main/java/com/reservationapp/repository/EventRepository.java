@@ -7,12 +7,12 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import com.reservationapp.model.Event;
-import com.reservationapp.model.Institution;
+import com.reservationapp.model.Hall;
 
 public interface EventRepository extends JpaRepository<Event, Long>{
 
 	
-	@Query("SELECT p FROM Event p where lower(p.institution) = lower(:institution)")
-	public List<Event> findByInstitution(@Param("institution") Institution institution);
+	@Query("SELECT p FROM Event p where lower(p.hall) = lower(:hall)")
+	public List<Event> findByHall(@Param("hall") Hall hall);
 
 }

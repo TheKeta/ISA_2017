@@ -15,7 +15,7 @@ $(document).ready(function() {
 		success: function(data){
 			$("#hiddenType").append('<input type="text" id="typeId" value="'+ data.id +'" />')
 			$("#hiddenType").append('<input type="text" id="typeName" value="'+ data.name +'" />')
-		}
+		}	
 	});
 
 });
@@ -29,6 +29,10 @@ function Add(){
 	var type = new Object();
 	type.id =  $("#typeId").val();
 	obj.type = type;
+	
+	var admin = new Object();
+	admin.id = "5";
+	obj.admin = admin;
 	
 	$.ajax({
 		url: "../institution",
