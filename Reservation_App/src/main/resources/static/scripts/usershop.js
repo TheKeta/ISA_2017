@@ -47,3 +47,7 @@ function createRequisiteElement(reqs){
 	$('#allRequisites').append(str);
 	
 }
+
+function addItem(){
+	window.location.href = "../NewRequisite.html";
+}

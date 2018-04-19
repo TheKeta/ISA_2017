@@ -44,7 +44,23 @@ function create(){
             contentType: false,
             cache: false,
             success: function (data) {
-            	window.location.href = "../FunZone.html";
+            	$.ajax({
+            		url: "../user/getUserRole",
+            		success: function(data){
+            			console.log(data);
+            			if(data==3){
+            				window.location.href = "../FunZone.html";  
+            			}
+            			else{
+            				window.location.href = "../UserShop.html";
+            			}
+            		},
+            		error: function(xhr, ajaxOptions, thrownError){
+            			console.log(thrownError);
+
+            		}
+            	});
+            	
             },
             error: function (e) {
             	alert("Enter all fields properly. (Image is not required)")
@@ -64,7 +80,22 @@ function create(){
     		contentType: "application/json",
     		dataType: "json",
             success: function (data) {
-            	window.location.href = "../FunZone.html";
+            	$.ajax({
+            		url: "../user/getUserRole",
+            		success: function(data){
+            			console.log(data);
+            			if(data==3){
+            				window.location.href = "../FunZone.html";  
+            			}
+            			else{
+            				window.location.href = "../UserShop.html";
+            			}
+            		},
+            		error: function(xhr, ajaxOptions, thrownError){
+            			console.log(thrownError);
+
+            		}
+            	});
             },
             error: function (e) {
             	alert("Enter all fields properly. (Image is not required)")
