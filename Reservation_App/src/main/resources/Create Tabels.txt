@@ -12,10 +12,11 @@ INSERT INTO GENRE VALUES(3, 'Horror');
 
 INSERT INTO USER_TYPE VALUES('1', 'ADMIN');
 INSERT INTO USER_TYPE VALUES('2', 'VISITOR');
+INSERT INTO USER_TYPE VALUES('3', 'ADMINFZ');
 
 insert into user values('1', 'TRUE', 'admin@admin', 'Stefan', 'Radanovic', '$2a$10$pKZ1qLKTesJpSjim4aVdTuZDKzP5nXDrfdNng4oo02xnMrKseqXVa', 'admin', '1');
-insert into user values('2', 'TRUE', 'admin2@admin', 'Dejan', 'Besic', '$2a$10$pKZ1qLKTesJpSjim4aVdTuZDKzP5nXDrfdNng4oo02xnMrKseqXVa', 'admin', '1');
-insert into user values('3', 'TRUE', 'admin3@admin', 'Mario', 'Gula', '$2a$10$pKZ1qLKTesJpSjim4aVdTuZDKzP5nXDrfdNng4oo02xnMrKseqXVa', 'admin', '1');
+insert into user values('2', 'TRUE', 'admin2@admin', 'Dejan', 'Besic', '$2a$10$pKZ1qLKTesJpSjim4aVdTuZDKzP5nXDrfdNng4oo02xnMrKseqXVa', 'admin', '2');
+insert into user values('3', 'TRUE', 'admin3@admin', 'Mario', 'Gula', '$2a$10$pKZ1qLKTesJpSjim4aVdTuZDKzP5nXDrfdNng4oo02xnMrKseqXVa', 'admin', '3');
 
 INSERT INTO INSTITUTION VALUES(1, 'New York', 'Description 1', 'Name1', 3, 1); 
 INSERT INTO INSTITUTION VALUES(2, 'Zeleznicka 15', 'Description 2', 'Name2', 3, 2);

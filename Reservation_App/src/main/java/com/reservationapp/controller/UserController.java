@@ -45,6 +45,14 @@ public class UserController {
 		return 0; //nije ulogovan
 	}
 	
+	@RequestMapping(value="/getCurrentUser", method = RequestMethod.GET)
+	public  ResponseEntity<User> getCurrentUser() {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		User user = userService.findOneByEmail(auth.getName());
+		return new ResponseEntity<>(user, HttpStatus.OK);
+	}
+	
+	
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public ResponseEntity<User> getUser(@PathVariable Long id) {
 		User user = userService.findOneById(id);

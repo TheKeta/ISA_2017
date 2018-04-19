@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.TableGenerator;
 import javax.persistence.Transient;
+import javax.persistence.Version;
 
 import org.springframework.util.Assert;
 import org.springframework.web.multipart.MultipartFile;
@@ -27,6 +28,17 @@ public class Requisite implements Serializable {
 	@GeneratedValue(strategy = GenerationType.TABLE, generator = "Address_Gen")
 	private Long id;
 	
+	@Version
+	private Long version;
+	
+	public Long getVersion() {
+		return version;
+	}
+
+	public void setVersion(Long version) {
+		this.version = version;
+	}
+
 	@Column(nullable = false)
 	private Long creator; //user's ID
 	

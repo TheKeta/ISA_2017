@@ -2,18 +2,16 @@ package com.reservationapp.service.impl;
 
 import java.util.List;
 
-import javax.transaction.Transactional;
-
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.reservationapp.model.Bid;
-import com.reservationapp.model.Requisite;
 import com.reservationapp.repository.BidRepository;
 import com.reservationapp.service.BidService;
 
 @Service
-@Transactional
+@Transactional(readOnly = true)
 public class BidServiceImpl implements BidService{
 	
 	@Autowired
@@ -29,18 +27,18 @@ public class BidServiceImpl implements BidService{
 		return bidRepository.findAll();
 	}
 
-	@Override
+	@Transactional(readOnly = false)
 	public Bid save(Bid bid) {
 		return bidRepository.save(bid);
 	}
 
-	@Override
+	@Transactional(readOnly = false)
 	public List<Bid> save(List<Bid> bid) {
 		return bidRepository.saveAll(bid);
 
 	}
 
-	@Override
+	@Transactional(readOnly = false)
 	public Bid delete(Long id) {
 		Bid bid = bidRepository.findById(id).get();
 		if(bid == null){
@@ -51,7 +49,7 @@ public class BidServiceImpl implements BidService{
 		return bid;
 	}
 	
-	@Override
+	@Transactional(readOnly = false)
 	public void delete(List<Long> ids) {
 		for(Long id : ids){
 			this.delete(id);

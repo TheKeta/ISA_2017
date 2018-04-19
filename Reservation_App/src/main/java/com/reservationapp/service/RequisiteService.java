@@ -18,4 +18,6 @@ public interface RequisiteService {
 	void delete(List<Long> ids);
 	
 	List<Requisite> findAllUserReqs(String type);
+	
+	Requisite update(Requisite requisite);
 }

@@ -63,6 +63,25 @@ function createRequisiteElement(reqs){
 	
 }
 
+function Order(reqsID){
+	var data = new Object();
+	data.itemsID = reqsID;
+	$.ajax({
+    	url: "../bid/addNewBid",
+		data: JSON.stringify(data),
+		type: "POST",
+		contentType: "application/json",
+		dataType: "json",
+        success: function (data) {
+        	alert("sas");
+        },
+		error: function(xhr, ajaxOptions, thrownError){
+			console.log(thrownError);
+
+		}
+	});
+}
+
 function userShop(){
 	window.location.href = "../UserShop.html";
 }

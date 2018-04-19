@@ -4,12 +4,15 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.reservationapp.model.Requisite;
 import com.reservationapp.repository.RequisiteRepository;
 import com.reservationapp.service.RequisiteService;
 
 @Service
+@Transactional(readOnly = true)
 public class RequisiteServiceImpl implements RequisiteService{
 	
 	@Autowired
@@ -25,17 +28,17 @@ public class RequisiteServiceImpl implements RequisiteService{
 		return requisiteRepository.findAll();
 	}
 
-	@Override
+	@Transactional(readOnly = false)
 	public Requisite save(Requisite requisite) {
 		return requisiteRepository.save(requisite);
 	}
 
-	@Override
+	@Transactional(readOnly = false)
 	public List<Requisite> save(List<Requisite> requisite) {
 		return requisiteRepository.saveAll(requisite);
 	}
 
-	@Override
+	@Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW)
 	public Requisite delete(Long id) {
 		Requisite requisite = requisiteRepository.findById(id).get();
 		if(requisite == null){
@@ -46,7 +49,7 @@ public class RequisiteServiceImpl implements RequisiteService{
 		return requisite;
 	}
 
-	@Override
+	@Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW)
 	public void delete(List<Long> ids) {
 		for(Long id : ids){
 			this.delete(id);
@@ -56,5 +59,13 @@ public class RequisiteServiceImpl implements RequisiteService{
 	@Override
 	public List<Requisite> findAllUserReqs(String type){
 		return requisiteRepository.findAllUsersReqs(type);
+	}
+	
+	@Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW)
+	public Requisite update(Requisite requisite) {
+		Requisite req = findOne(requisite.getId()); 
+		req.setPrice(requisite.getPrice());
+		requisiteRepository.save(req);
+		return req;
 	}
 }
