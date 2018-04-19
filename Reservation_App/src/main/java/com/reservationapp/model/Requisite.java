@@ -8,14 +8,23 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
+import javax.persistence.TableGenerator;
+import javax.persistence.Transient;
+
+import org.springframework.util.Assert;
+import org.springframework.web.multipart.MultipartFile;
+
+import com.fasterxml.jackson.annotation.JsonInclude;
 
 @Entity
 public class Requisite implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	
+	@TableGenerator(name = "Address_Gen", table = "ID_GEN", pkColumnName = "GEN_NAME", valueColumnName = "GEN_VAL", pkColumnValue = "Addr_Gen", initialValue = 10000, allocationSize = 100)
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.TABLE, generator = "Address_Gen")
 	private Long id;
 	
 	@Column(nullable = false)
@@ -24,9 +33,22 @@ public class Requisite implements Serializable {
 	@Column(nullable = false)
 	private String name;
 	
+	@JsonInclude()
+	@Transient
+	private MultipartFile picture;
+
 	@Column(nullable = true)
-	private byte[] picture;
+	@Lob
+	private byte[] pictureDB;
 	
+	public byte[] getPictureDB() {
+		return pictureDB;
+	}
+
+	public void setPictureDB(byte[] pictureDB) {
+		this.pictureDB = pictureDB;
+	}
+
 	@Column(nullable = false)
 	private String description;
 
@@ -39,8 +61,12 @@ public class Requisite implements Serializable {
 	@Column(nullable = false)
 	private Date endDate;
 
-	public Requisite(Long id, Long creator, String name, byte[] picture, String description, int price, String type, Date endDate) {
+	public Requisite(Long id, Long creator, String name,MultipartFile picture, String description, int price, String type, Date endDate) {
 		super();
+		Assert.notNull(name, "Name can not be null");
+		Assert.notNull(description, "Description can not be null");
+		Assert.notNull(price, "Price can not be null");
+		Assert.notNull(endDate, "End Date can not be null");
 		this.id = id;
 		this.creator = creator;
 		this.name = name;
@@ -93,11 +119,11 @@ public class Requisite implements Serializable {
 		return id;
 	}
 
-	public byte[] getPicture() {
+	public MultipartFile getPicture() {
 		return picture;
 	}
 
-	public void setPicture(byte[] picture) {
+	public void setPicture(MultipartFile picture) {
 		this.picture = picture;
 	}
 

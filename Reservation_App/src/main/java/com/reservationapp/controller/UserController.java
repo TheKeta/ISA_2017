@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,6 +27,22 @@ public class UserController {
 	@RequestMapping(value="/getUsers", method = RequestMethod.GET)
 	public ResponseEntity<List<User>> getUsers(){
 		return new ResponseEntity<>(userService.findAll(), HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="/getUserRole", method = RequestMethod.GET)
+	public int getUserRole() {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		User user = userService.findOneByEmail(auth.getName());
+		if(user!=null) {
+			if(user.getUserType().getName().equals("ADMINFZ")) {
+				return 3; //admin fun zone
+			}
+			else if(user.getUserType().getName().equals("ADMIN"))
+				return 1; //admin
+			else
+				return 2; //obican
+		}
+		return 0; //nije ulogovan
 	}
 	
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)

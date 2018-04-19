@@ -14,6 +14,20 @@ function defaultElements(){
 	document.title = title;
 	$('#header').html(title);
 	$.ajax({
+		url: "../user/getUserRole",
+		success: function(data){
+			console.log(data);
+			if(data==3){
+				$('#forAdm').append('<button onClick="addnewRequisite()">Add New Requisite</button>');
+			}
+		},
+		error: function(xhr, ajaxOptions, thrownError){
+			console.log(thrownError);
+
+		}
+	});
+	
+	$.ajax({
 		url: "../requisite/getRequisites/new",
 		success: function(data){
 			$('#allRequisites').html("");
@@ -33,8 +47,8 @@ function createRequisiteElement(reqs){
 	var str = "";
 	str += '<div style=\"padding: 5px; border: 1px solid black; overflow: auto;\">'
 		+ '<p><b>' + reqs.name + '</b></p>'
-		+ '<div style="float:left; width: 300px;">'
-		+ '<img src=\"' +reqs.image +'\" alt=\"'+reqs.name+'\" style="width:250px;height:250px;">'
+		+ '<div style="float:left; width: 500px;">'
+		+ '<img src=\"data:image/png;base64,' +reqs.pictureDB +'\" alt=\"'+reqs.name+'\" style="width:900px;height:250px;">'
 		+ '</div>'
 		+ '<div style="float:center; width: auto;">'
 		+ '<p><i>'+ reqs.description+ '</i></p>'
@@ -51,4 +65,8 @@ function createRequisiteElement(reqs){
 
 function userShop(){
 	window.location.href = "../UserShop.html";
+}
+
+function addnewRequisite(){
+	window.location.href = "../NewRequisite.html";
 }

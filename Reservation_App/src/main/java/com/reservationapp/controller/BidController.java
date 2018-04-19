@@ -24,6 +24,7 @@ public class BidController {
 	@RequestMapping(value="/getBids", method = RequestMethod.GET)
 	public ResponseEntity<List<Bid>> getBids(){
 		return new ResponseEntity<>(bidService.findAll(), HttpStatus.OK);
+		
 	}
 	
 	
