@@ -80,7 +80,7 @@ function Create(){
 		contentType: "application/json",
 		dataType: "json",
 		success: function(data){
-			window.history.back();
+			window.location.href = "../QuickReservations.html?id="+str[1];
 		}
 	});
 }
