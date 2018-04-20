@@ -1,5 +1,6 @@
 package com.reservationapp.controller;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,6 +57,10 @@ public class RequisiteController {
 			try {
 				if(user.getUserType().getName().equals("ADMINFZ")) {
 					//admin fun zone
+					Date today = new Date();
+					if(!requisite.getEndDate().after(today)) {
+						return null;
+					}
 					requisite.setCreator(user.getId());
 					requisite.setType("new");
 					requisite.setPictureDB(null);
@@ -65,6 +70,10 @@ public class RequisiteController {
 				}
 				else if(user.getUserType().getName().equals("VISITOR")) {
 					//obican
+					Date today = new Date();
+					if(!requisite.getEndDate().after(today)) {
+						return null;
+					}
 					requisite.setCreator(user.getId());
 					requisite.setType("used");
 					requisite.setPictureDB(null);
@@ -87,6 +96,10 @@ public class RequisiteController {
 			try {
 				if(user.getUserType().getName().equals("ADMINFZ")) {
 					//admin fun zone
+					Date today = new Date();
+					if(!requisite.getEndDate().after(today)) {
+						return null;
+					}
 					requisite.setCreator(user.getId());
 					requisite.setType("new");
 					requisite.setPictureDB(requisite.getPicture().getBytes());
@@ -97,6 +110,10 @@ public class RequisiteController {
 				}
 				else if(user.getUserType().getName().equals("VISITOR")) {
 					//obican
+					Date today = new Date();
+					if(!requisite.getEndDate().after(today)) {
+						return null;
+					}
 					requisite.setCreator(user.getId());
 					requisite.setType("used");
 					requisite.setPictureDB(requisite.getPicture().getBytes());
@@ -125,8 +142,12 @@ public class RequisiteController {
 						oldReq.setName(requisite.getName());
 					if(requisite.getDescription()!= null)
 						oldReq.setDescription(requisite.getDescription());
-					if(requisite.getEndDate()!= null)
+					if(requisite.getEndDate()!= null) {
+						Date today = new Date();
+						if(!requisite.getEndDate().after(today))
+							return null;
 						oldReq.setEndDate(requisite.getEndDate());
+					}
 					if(requisite.getPrice()>0 )
 						oldReq.setPrice(requisite.getPrice());
 					oldReq.setPictureDB(requisite.getPicture().getBytes());
@@ -155,8 +176,12 @@ public class RequisiteController {
 						oldReq.setName(requisite.getName());
 					if(requisite.getDescription()!= null)
 						oldReq.setDescription(requisite.getDescription());
-					if(requisite.getEndDate()!= null)
+					if(requisite.getEndDate()!= null) {
+						Date today = new Date();
+						if(!requisite.getEndDate().after(today))
+							return null;
 						oldReq.setEndDate(requisite.getEndDate());
+					}
 					if(requisite.getPrice()>0 )
 						oldReq.setPrice(requisite.getPrice());
 					
