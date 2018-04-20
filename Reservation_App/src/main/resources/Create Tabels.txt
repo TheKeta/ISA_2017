@@ -83,6 +83,7 @@ INSERT INTO EVENT VALUES(8, '2018-04-14', 1, 2);
 INSERT INTO EVENT VALUES(9, '2018-04-14', 4, 2);
 INSERT INTO EVENT VALUES(10, '2018-04-14', 5, 3);
 
+<<<<<<< HEAD
 INSERT INTO INSTITUTION_TYPE VALUES(1, 'Theater');
 INSERT INTO INSTITUTION_TYPE VALUES(2, 'Cinema');
 
@@ -178,3 +179,8 @@ INSERT INTO SHOW VALUES( 5, 'Cast 5', 'Description 5', 120, 'Show 5', 2, 1);
 
 INSERT INTO REQUISITE VALUES(1,2,'Majica sa likom tora','2018-04-14',true ,'Majica', null,750,'used',0);
 INSERT INTO REQUISITE VALUES(2,3,'Solja sa likom tora','2018-05-14',true ,'Solja', null,250,'new',0);
+=======
+INSERT INTO USER_TYPE VALUES('1', 'ADMIN');
+INSERT INTO USER_TYPE VALUES('2', 'VISITOR');
+insert into user values('1', 'TRUE', 'subotica', 'a@a', 'Stefan', 'Radanovic', 'admin', 'tkn', '2');
+>>>>>>> branch 'master' of https://github.com/twiste9/ISA_2017

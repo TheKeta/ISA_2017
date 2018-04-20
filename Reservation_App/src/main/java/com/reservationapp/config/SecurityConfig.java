@@ -15,66 +15,56 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
+import com.reservationapp.service.impl.CurrentUserDetailsService;
+
 
 //ovde
 @Configuration
 @EnableWebSecurity
+//@Order(SecurityProperties.BASIC_AUTH_ORDER-2)
 public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	@Autowired
-    private UserDetailsService userDetailsService;
- 
-	@Autowired
-	private BCryptPasswordEncoder bCryptPasswordEncoder;
+    private CurrentUserDetailsService userDetailsService;
+// 
+//	@Autowired
+//	private BCryptPasswordEncoder bCryptPasswordEncoder;
 	
-	@Override
-	protected void configure(AuthenticationManagerBuilder auth)
-			throws Exception {
-		auth
-			.userDetailsService(userDetailsService)
-			.passwordEncoder(bCryptPasswordEncoder);
-	}
+//	@Override
+//	protected void configure(AuthenticationManagerBuilder auth)
+//			throws Exception {
+//		auth
+//			.userDetailsService(userDetailsService)
+//			.passwordEncoder(bCryptPasswordEncoder);
+//	}
 	
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-//        http.authorizeRequests()
-//                .antMatchers("/", "/public/**").permitAll()
-//                .antMatchers("/users/**").hasAuthority("ADMIN")
-//                .anyRequest().fullyAuthenticated()
-//                .and()
-//                .formLogin()
-//                .loginPage("/login")
-//                .failureUrl("/login")
-//                .usernameParameter("email")
-//                .permitAll()
-//                .and()
-//                .logout()
-//                .logoutUrl("/logout")
-//                .deleteCookies("remember-me")
-//                .logoutSuccessUrl("/")
-//                .permitAll()
-//                .and()
-//                .rememberMe()
-//                .and()
-//                .sessionManagement()
-//                .maximumSessions(1);
-    	
+   	
     	http.
 		authorizeRequests()
 			.antMatchers("/").permitAll()
 			.antMatchers("/h2-console", "/h2-console/**").permitAll()
-			.antMatchers("/login").permitAll()
-			.antMatchers("/registration").permitAll()
-			.antMatchers("/admin/**").hasAuthority("ADMIN").anyRequest()
-			.authenticated().and().csrf().disable().formLogin()
-			.loginPage("/login").failureUrl("/login?error=true")
-			.defaultSuccessUrl("/admin/home")
-			.usernameParameter("email")
-			.passwordParameter("password")
-			.and().logout()
-			.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-			.logoutSuccessUrl("/").and().exceptionHandling()
-			.accessDeniedPage("/access-denied");
+			.antMatchers("/login", "/confirm").anonymous()
+			.antMatchers("/registration*").anonymous()
+			.antMatchers("/userProfile").authenticated()
+			.antMatchers("/admin/**").hasAuthority("ADMIN")
+			.and().csrf().disable();
+//			.antMatchers("/login", "/confirm").anonymous()
+//			.antMatchers("/registration*").anonymous();
+//			.antMatchers("/admin/**").hasAuthority("ADMIN");
+			//.anyRequest();
+//			.authenticated().and().csrf().disable().formLogin()
+//			.and().logout()
+//			.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+//			.logoutSuccessUrl("/").and().exceptionHandling()
+//			.accessDeniedPage("/access-denied");
 
+//    	and().csrf().disable().formLogin()
+//		.loginPage("/login").failureUrl("/login?error=true")
+//		.defaultSuccessUrl("/admin/home")
+//		.usernameParameter("email")
+//		.passwordParameter("password")
+    	
     	http.headers().frameOptions().disable();
     }
     
