@@ -73,3 +73,4 @@ INSERT INTO EVENT VALUES(10, '2018-04-14', 5, 3);
 
 INSERT INTO USER_TYPE VALUES('1', 'ADMIN');
 INSERT INTO USER_TYPE VALUES('2', 'VISITOR');
+insert into user values('1', 'TRUE', 'subotica', 'a@a', 'Stefan', 'Radanovic', 'admin', 'tkn', '2');

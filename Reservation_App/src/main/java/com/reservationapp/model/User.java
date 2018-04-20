@@ -30,7 +30,7 @@ public class User implements Serializable{
 	private String email;
 	
 	@Column(nullable = false)
-	private String username;
+	private String city;
 	
 	@Column(nullable = false)
 	private boolean active;
@@ -43,7 +43,7 @@ public class User implements Serializable{
 		this.active = active;
 	}
 
-	@Column(nullable = false)
+	@Column(nullable = false, length=60)
 	@Length(min = 5, message = "*Your password must have at least 5 characters")
 	@NotEmpty(message = "*Please provide your password")
 	@Transient
@@ -60,14 +60,25 @@ public class User implements Serializable{
 	@ManyToOne(optional = true)
 	private UserType userType;
 	
+	@Column(nullable = false)
+	private String token;
+	
+	public String getToken() {
+		return token;
+	}
+
+	public void setToken(String token) {
+		this.token = token;
+	}
+
 	public User(){
 		
 	}
 
-	public User(String email, String username, String password, String firstName, String lastName, UserType userType) {
+	public User(String email, String city, String password, String firstName, String lastName, UserType userType) {
 		super();
 		this.email = email;
-		this.username = username;
+		this.city = city;
 		this.password = password;
 		this.firstName = firstName;
 		this.lastName = lastName;
@@ -86,12 +97,12 @@ public class User implements Serializable{
 		this.email = email;
 	}
 
-	public String getUsername() {
-		return username;
+	public String getCity() {
+		return city;
 	}
 
-	public void setUsername(String username) {
-		this.username = username;
+	public void setCity(String city) {
+		this.city = city;
 	}
 
 	public String getPassword() {

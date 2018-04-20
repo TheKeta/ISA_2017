@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+	<title>User Profile</title>
+	<link rel="stylesheet" type="text/css" th:href="@{/css/registration.css}" />
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+	<form th:action="@{/logout}" method="get">
+		<button class="btn btn-md btn-danger btn-block" name="registration"
+		type="Submit">Logout</button>
+	</form>  	
+	
+	<span th:utext="${message}"></span>
+	<span th:utext="${welcomeMessage}"></span>
+	
+	<div class="container">
+		<div class="row">
+			<div class="col-md-6 col-md-offset-3">
+				<form autocomplete="off" id="updateForm"
+					th:object="${user}" class="form-horizontal"
+					role="form">
+					<h2>Account Info</h2>
+					<div class="form-group">
+						<div class="col-sm-9">
+						<label th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"
+								class="validation-message"></label>
+						<input type="text" th:field="*{firstName}" placeholder="Name" id="firstName"
+								class="form-control" /> 
+						</div>
+					</div>
+
+					<div class="form-group">
+						<div class="col-sm-9">
+						<label	th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}" 
+								class="validation-message"></label>
+							<input type="text" th:field="*{lastName}" id="lastName"
+								placeholder="Last Name" class="form-control" /> 
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-sm-9">
+							<input type="text" th:field="*{email}" placeholder="Email" id="email"
+								class="form-control" disabled/> <label
+								th:if="${#fields.hasErrors('email')}" th:errors="*{email}"
+								class="validation-message"></label>
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-sm-9">
+							<input type="text" th:field="*{city}" placeholder="City" id="city"
+								class="form-control" /> <label
+								th:if="${#fields.hasErrors('city')}" th:errors="*{city}"
+								class="validation-message"></label>
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-sm-9">
+							<button type="submit" class="btn btn-primary btn-block">Update Account</button>
+						</div>
+					</div>
+					
+					<span th:utext="${successMessage}"></span>
+					<span th:utext="${message}"></span>
+					
+				</form>
+				<form autocomplete="off" id="changePassForm" 
+					th:object="${user}" class="form-horizontal"
+					role="form">
+					<h2>Change Password</h2>
+					<div class="form-group">
+						<div class="col-sm-9">
+							<input type="password" th:field="*{oldPassword}" id="oldPassword"
+								placeholder="Old Password" class="form-control" /> <label
+								th:if="${#fields.hasErrors('oldPassword')}" th:errors="*{oldPassword}"
+								class="validation-message"></label>
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-sm-9">
+							<input type="password" th:field="*{password}" id="newPassword2"
+								placeholder="Password" class="form-control" /> <label
+								th:if="${#fields.hasErrors('password')}" th:errors="*{password}"
+								class="validation-message"></label>
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-sm-9">
+							<input type="password" th:field="*{repeatedPassword}" id="newPassword"
+								placeholder="Repeat password" class="form-control" /> <label
+								th:if="${#fields.hasErrors('repeatedPassword')}" th:errors="*{repeatedPassword}"
+								class="validation-message"></label>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<div class="col-sm-9">
+							<button type="submit" class="btn btn-primary btn-block">Change Password</button>
+						</div>
+					</div>
+					
+					
+				</form>
+			</div>
+		</div>
+	</div>
+	<script>
+		$(document).ready(function(){
+			$(document).on('submit', '#updateForm', function(e) {
+				e.preventDefault();
+				var firstName=document.getElementById("firstName").value;
+				var lastName=document.getElementById("lastName").value;
+				var city=document.getElementById("city").value;
+				var email=document.getElementById("email").value;
+				if(firstName.trim()=="" || lastName.trim()=="" || city.trim()=="" || email.trim()==""){
+					alert("You have not entered all fields.");
+       		 		return false;
+       		 	}
+				
+				var user = new Object();
+				user.firstName=firstName;
+				user.lastName=lastName;
+				user.city=city;
+				user.email=email;
+				$.ajax({
+       				url: '../user',
+       	        	type: "PUT",
+       	        	data: JSON.stringify(user),
+       	        	contentType: "application/json",
+       	        	success: function(data){
+       	   		  				if(data != null){
+       	   		  					//window.location.href="../WebProjekat/Index.html";
+       	   		  					document.getElementById("firstName").value = data.firstName;
+       	   		  					document.getElementById("lastName").value = data.lastName;
+       	   		  					document.getElementById("city").value = data.city;
+       	   		  					alert("Successfuly updated information");
+				       			}else{
+				       				alert("Oops! Something went wrong");
+				       			}
+       	        			}
+       	    	});
+    		});
+			
+			$(document).on('submit', '#changePassForm', function(e) {
+				e.preventDefault();
+				var oldPassword=document.getElementById("oldPassword").value;
+				var newPassword=document.getElementById("newPassword").value;
+				var newPassword2=document.getElementById("newPassword2").value;
+				var email=document.getElementById("email").value;
+				if(oldPassword.trim()=="" || newPassword.trim()=="" || newPassword2.trim()=="" || email.trim()==""){
+					alert("You have not entered all fields.");
+       		 		return false;
+       		 	}
+				
+				if(newPassword != newPassword2){
+					alert("Repeated password incorrect");
+					return false;
+				}
+				
+				var user = new Object();
+				user.oldPassword=oldPassword;
+				user.password=newPassword;
+				user.repeatedPassword=newPassword2;
+				user.email=email;
+				$.ajax({
+       				url: '../user/changePassword',
+       	        	type: "PUT",
+       	        	data: JSON.stringify(user),
+       	        	contentType: "application/json",
+       	        	success: function(data){
+       	   		  				if(data == true){
+       	   		  					//window.location.href="../WebProjekat/Index.html";
+       	   		  					document.getElementById("oldPassword").value = "";
+       	   		  					document.getElementById("newPassword").value = "";
+       	   		  					document.getElementById("newPassword2").value = "";
+       	   		  					alert("Password successfuly changed");
+				       			}else{
+				       				alert("Oops! Something went wrong");
+				       			}
+       	        			}
+       	    	});
+    		});
+			
+		});
+	</script>
+</body>
+</html>

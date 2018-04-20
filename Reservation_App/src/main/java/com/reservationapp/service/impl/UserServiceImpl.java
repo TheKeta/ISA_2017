@@ -23,16 +23,19 @@ import com.reservationapp.service.UserService;
 
 @Service
 @Transactional
-public class UserServiceImpl implements UserService, UserDetailsService{
+public class UserServiceImpl implements UserService{
 
+	@Autowired
+    private UserDetailsService userDetailsService;
+	
 	@Autowired
 	private UserRepository userRepository;
 	
 	@Autowired
 	private UserTypeRepository userTypeRepository;
-	
-	@Autowired
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
+//	
+//	@Autowired
+//    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
 	@Override
 	public User findOneById(Long id) {
@@ -46,10 +49,10 @@ public class UserServiceImpl implements UserService, UserDetailsService{
 
 	@Override
 	public User save(User user) {
-		user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-//		UserType userType = userTypeRepository.findOneByName("VISITOR");
-//		user.setUserType(userType);
-		return userRepository.save(user);
+		//user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+		User res = userRepository.save(user);
+		
+		return res;
 	}
 
 	@Override
@@ -82,23 +85,37 @@ public class UserServiceImpl implements UserService, UserDetailsService{
 	}
 	
 	@Override
-	@Transactional
-	public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
-		User user = userRepository.findOneByEmail(userName);
-		List<GrantedAuthority> authorities = getUserAuthority(user.getUserType());
-		return buildUserForAuthentication(user, authorities);
+	public User findOneByToken(String token){
+		return userRepository.findOneByToken(token);
 	}
-
-	private List<GrantedAuthority> getUserAuthority(UserType userRole) {
-		Set<GrantedAuthority> roles = new HashSet<GrantedAuthority>();
-		roles.add(new SimpleGrantedAuthority(userRole.getName()));
-		
-
-		List<GrantedAuthority> grantedAuthorities = new ArrayList<GrantedAuthority>(roles);
-		return grantedAuthorities;
-	}
-
-	private UserDetails buildUserForAuthentication(User user, List<GrantedAuthority> authorities) {
-		return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), user.isActive(), true, true, true, authorities);
-	}
+	
+//	@Override
+//	@Transactional
+//	public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
+//		User user = userRepository.findOneByEmail(userName);
+//		if(user.isActive()){
+//			List<GrantedAuthority> authorities = getUserAuthority(user.getUserType());
+//			return buildUserForAuthentication(user, authorities);
+//		}
+//		return null;
+//	}
+//
+//	private List<GrantedAuthority> getUserAuthority(UserType userRole) {
+//		Set<GrantedAuthority> roles = new HashSet<GrantedAuthority>();
+//		roles.add(new SimpleGrantedAuthority(userRole.getName()));
+//		
+//
+//		List<GrantedAuthority> grantedAuthorities = new ArrayList<GrantedAuthority>(roles);
+//		return grantedAuthorities;
+//	}
+//
+//	private UserDetails buildUserForAuthentication(User user, List<GrantedAuthority> authorities) {
+//		return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), user.isActive(), true, true, true, authorities);
+//	}
+//
+//	@Override
+//	public UserDetails loadUser(String email) {
+//		// TODO Auto-generated method stub
+//		return loadUserByUsername(email);
+//	}
 }
