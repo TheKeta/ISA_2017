@@ -72,8 +72,11 @@ public class Requisite implements Serializable {
 	
 	@Column(nullable = false)
 	private Date endDate;
-
-	public Requisite(Long id, Long creator, String name,MultipartFile picture, String description, int price, String type, Date endDate) {
+	
+	@Column(nullable = false)
+	private boolean isActive;
+	
+	public Requisite(Long id, Long creator, String name,MultipartFile picture, String description, int price, String type, Date endDate, boolean isActive) {
 		super();
 		Assert.notNull(name, "Name can not be null");
 		Assert.notNull(description, "Description can not be null");
@@ -87,8 +90,17 @@ public class Requisite implements Serializable {
 		this.price = price;
 		this.type = type;
 		this.endDate = endDate;
+		this.isActive =  isActive;
 	}
 	
+	public boolean isActive() {
+		return isActive;
+	}
+
+	public void setActive(boolean isActive) {
+		this.isActive = isActive;
+	}
+
 	public Date getEndDate() {
 		return endDate;
 	}

@@ -2,9 +2,9 @@ package com.reservationapp.service.impl;
 
 import java.util.List;
 
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.reservationapp.model.Bid;
 import com.reservationapp.repository.BidRepository;
@@ -57,7 +57,21 @@ public class BidServiceImpl implements BidService{
 		
 	}
 
+	@Override
+	public Bid findHeighestBid(Bid bid) {
+		List<Bid> list= bidRepository.findHeighestBid(bid.getItemsID());
+		int pom = 0;
+		for(Bid b : list) {
+			if(b.getPrice()>list.get(pom).getPrice())
+				pom = list.indexOf(b);
+		}
+		return list.get(pom);
+	}
 	
+	@Override
+	public List<Bid> findByItemsid(Long itemsid){
+		return  bidRepository.findHeighestBid(itemsid);
+	}
 		
 	
 

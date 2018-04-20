@@ -59,6 +59,7 @@ public class RequisiteController {
 					requisite.setCreator(user.getId());
 					requisite.setType("new");
 					requisite.setPictureDB(null);
+					requisite.setActive(true);
 					Requisite requisiteType = requisiteService.save(requisite);
 					return new ResponseEntity<>(requisiteType, HttpStatus.OK);
 				}
@@ -67,6 +68,7 @@ public class RequisiteController {
 					requisite.setCreator(user.getId());
 					requisite.setType("used");
 					requisite.setPictureDB(null);
+					requisite.setActive(true);
 					Requisite requisiteType = requisiteService.save(requisite);
 					return new ResponseEntity<>(requisiteType, HttpStatus.OK);
 				}
@@ -89,6 +91,7 @@ public class RequisiteController {
 					requisite.setType("new");
 					requisite.setPictureDB(requisite.getPicture().getBytes());
 					requisite.setPicture(null);
+					requisite.setActive(true);
 					Requisite requisiteType = requisiteService.save(requisite);
 					return new ResponseEntity<>(requisiteType, HttpStatus.OK);
 				}
@@ -98,6 +101,7 @@ public class RequisiteController {
 					requisite.setType("used");
 					requisite.setPictureDB(requisite.getPicture().getBytes());
 					requisite.setPicture(null);
+					requisite.setActive(true);
 					Requisite requisiteType = requisiteService.save(requisite);
 					return new ResponseEntity<>(requisiteType, HttpStatus.OK);
 				}
@@ -107,6 +111,7 @@ public class RequisiteController {
 		}
 		return null; //nije ulogovan ili je nesto znjto
 	}
+	
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<Requisite> delete(@PathVariable Long id) {
 		Requisite deleted = requisiteService.delete(id);

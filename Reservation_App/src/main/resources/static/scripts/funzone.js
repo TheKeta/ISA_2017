@@ -55,7 +55,7 @@ function createRequisiteElement(reqs){
 		+ '<p>Price: '+ reqs.price + ' din</p>'
 		+ '</div>'
 		+ '<div style="float:right; width: 100px;"> '
-		+ '<button onClick="Order('+ reqs.id + ')">Order Item</button>'
+		+ '<button onClick="order('+ reqs.id + ')">Order Item</button>'
 		+ '</div>'
 		+ '</div>';
 	
@@ -63,7 +63,7 @@ function createRequisiteElement(reqs){
 	
 }
 
-function Order(reqsID){
+function order(reqsID){
 	var data = new Object();
 	data.itemsID = reqsID;
 	$.ajax({
@@ -73,7 +73,7 @@ function Order(reqsID){
 		contentType: "application/json",
 		dataType: "json",
         success: function (data) {
-        	alert("sas");
+        	alert("Order is complete.");
         },
 		error: function(xhr, ajaxOptions, thrownError){
 			console.log(thrownError);
