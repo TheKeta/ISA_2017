@@ -1,5 +1,6 @@
 package com.reservationapp.service.impl;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -67,5 +68,10 @@ public class RequisiteServiceImpl implements RequisiteService{
 		req.setPrice(requisite.getPrice());
 		requisiteRepository.save(req);
 		return req;
+	}
+	
+	@Override
+	public List<Requisite> findByEndDateLessThanAndIsActiveTrue(Date date){
+		return requisiteRepository.findByEndDateLessThanAndIsActiveTrue(date);
 	}
 }

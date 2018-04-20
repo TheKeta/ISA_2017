@@ -1,5 +1,6 @@
 package com.reservationapp.service;
 
+import java.util.Date;
 import java.util.List;
 
 import com.reservationapp.model.Requisite;
@@ -20,4 +21,6 @@ public interface RequisiteService {
 	List<Requisite> findAllUserReqs(String type);
 	
 	Requisite update(Requisite requisite);
+	
+	List<Requisite> findByEndDateLessThanAndIsActiveTrue(Date date);
 }

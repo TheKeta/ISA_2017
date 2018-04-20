@@ -58,8 +58,10 @@ public class BidServiceImpl implements BidService{
 	}
 
 	@Override
-	public Bid findHeighestBid(Bid bid) {
-		List<Bid> list= bidRepository.findHeighestBid(bid.getItemsID());
+	public Bid findHeighestBid(Long itemsID) {
+		List<Bid> list= bidRepository.findHeighestBid(itemsID);
+		if (list == null || list.isEmpty())
+			return null;
 		int pom = 0;
 		for(Bid b : list) {
 			if(b.getPrice()>list.get(pom).getPrice())

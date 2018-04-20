@@ -76,7 +76,7 @@ public class BidController {
 		
 	}
 	
-	@RequestMapping(value = "/addNewBidd", method=RequestMethod.POST, consumes="application/json")
+	@RequestMapping(value = "/order", method=RequestMethod.POST, consumes="application/json")
 	public ResponseEntity<Bid> addBidd(@RequestBody Bid bid){
 		Requisite req = reqService.findOne(bid.getItemsID());
 		if(req!=null) {
@@ -111,7 +111,7 @@ public class BidController {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		User user = userService.findOneByEmail(auth.getName());
 		if(user!=null) {
-			Bid newBid =bidService.findHeighestBid(bid);
+			Bid newBid =bidService.findHeighestBid(bid.getItemsID());
 			//treba obavestiti sve o ovome;
 			// i postaviti rekvizit na neaktivan
 			Requisite re = reqService.findOne(newBid.getItemsID());
@@ -126,22 +126,24 @@ public class BidController {
 			message1.setReciverID(re.getCreator());
 			message1.setSenderID(newBid.getBiddersID());
 			message1.setRead(false);
-			message1.setText("Please proceed to make arrangements with buyer. ");
+			message1.setText("Please proceed to make arrangements with buyer.(item: "+ re.getName() +")");
 			messageService.save(message1);
 			
 			
 			List<Bid> losers = bidService.findByItemsid(newBid.getItemsID());
-			List<Long> l2 = new ArrayList<Long>();
-			for(Bid bi : losers) {
-				if(!bi.getBiddersID().equals(user.getId()) && !bi.getBiddersID().equals(newBid.getBiddersID()) ) {
-					if(!l2.contains(bi.getBiddersID())) {
-						Message message3 = new Message();
-						message3.setReciverID(bi.getBiddersID());
-						message3.setSenderID(re.getCreator());
-						message3.setRead(false);
-						message3.setText("Your bid for item "+re.getName()+" was not accepted not accepted. ");
-						messageService.save(message3);
-						l2.add(bi.getBiddersID());
+			if(losers!=null) {
+				List<Long> l2 = new ArrayList<Long>();
+				for(Bid bi : losers) {
+					if(!bi.getBiddersID().equals(re.getCreator()) && !bi.getBiddersID().equals(newBid.getBiddersID()) ) {
+						if(!l2.contains(bi.getBiddersID())) {
+							Message message3 = new Message();
+							message3.setReciverID(bi.getBiddersID());
+							message3.setSenderID(re.getCreator());
+							message3.setRead(false);
+							message3.setText("Your bid for item "+re.getName()+" was not accepted not accepted. ");
+							messageService.save(message3);
+							l2.add(bi.getBiddersID());
+						}
 					}
 				}
 			}

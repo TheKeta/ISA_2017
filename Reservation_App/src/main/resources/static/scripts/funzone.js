@@ -107,7 +107,7 @@ function order(reqsID){
 	var data = new Object();
 	data.itemsID = reqsID;
 	$.ajax({
-    	url: "../bid/addNewBid",
+    	url: "../bid/order",
 		data: JSON.stringify(data),
 		type: "POST",
 		contentType: "application/json",

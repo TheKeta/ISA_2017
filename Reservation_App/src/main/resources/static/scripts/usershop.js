@@ -99,7 +99,7 @@ function SendBid(reqsID){
 	}
 	data.price = price;
 	$.ajax({
-    	url: "../bid/addNewBidd",
+    	url: "../bid/addNewBid",
 		data: JSON.stringify(data),
 		type: "POST",
 		contentType: "application/json",
