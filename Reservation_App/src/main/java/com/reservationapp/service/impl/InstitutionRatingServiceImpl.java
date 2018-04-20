@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.reservationapp.model.Institution;
 import com.reservationapp.model.InstitutionRating;
+import com.reservationapp.model.User;
 import com.reservationapp.repository.InstitutionRatingRepository;
 import com.reservationapp.service.InstitutionRatingService;
 
@@ -68,6 +69,11 @@ public class InstitutionRatingServiceImpl implements InstitutionRatingService{
 			sum += rating.getRating();
 		}
 		return sum/ratings.size();
+	}
+
+	@Override
+	public InstitutionRating findByInstitutionAndUser(Institution institution, User user) {
+		return institutionRatingRepository.findByInstitutionAndUser(institution, user);
 	}
 	
 }

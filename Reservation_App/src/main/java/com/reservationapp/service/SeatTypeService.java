@@ -17,4 +17,6 @@ public interface SeatTypeService {
 	SeatType delete(Long id);
 	
 	void delete(List<Long> ids);
+	
+	SeatType findByName(String name);
 }

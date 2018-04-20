@@ -15,7 +15,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.reservationapp.DTOs.InstitutionRated;
+import com.reservationapp.DTOs.InstitutionUsers;
 import com.reservationapp.model.Institution;
+import com.reservationapp.model.InstitutionRating;
 import com.reservationapp.model.InstitutionType;
 import com.reservationapp.model.User;
 import com.reservationapp.service.impl.InstitutionRatingServiceImpl;
@@ -57,25 +59,23 @@ public class InstitutionController {
 	}
 	
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
-	public ResponseEntity<Institution> getInstitution(@PathVariable Long id) {
+	public ResponseEntity<InstitutionUsers> getInstitution(@PathVariable Long id) {
 		Institution institution = institutionService.findOne(id);
 		if (institution == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 		
-		if(loggedUser() != institution.getAdmin()){
+		if(!loggedUser().getUserType().getName().equals("ADMIN")){
 			return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
 		}
-
 		
-		return new ResponseEntity<>(institution, HttpStatus.OK);
+		return new ResponseEntity<>(new InstitutionUsers(institution, userService.findAll()), HttpStatus.OK);
 	}
 	
 	@RequestMapping(method=RequestMethod.POST, consumes="application/json")
 	public ResponseEntity<Institution> addInstitution(@RequestBody Institution institution){
-		User user = userService.findOneById(institution.getAdmin().getId());
-		if(user == null){
-			institution.setAdmin(loggedUser());
+		if(!loggedUser().getUserType().getName().equals("ADMIN")){
+			return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
 		}
 		Institution newInstitution = institutionService.save(institution);;
 		return new ResponseEntity<>(newInstitution, HttpStatus.OK);
@@ -89,16 +89,16 @@ public class InstitutionController {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 		
-		if(loggedUser() != attempt.getAdmin()){
+		if(!loggedUser().getUserType().getName().equals("ADMIN")){
 			return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
 		}
 		Institution deleted = institutionService.delete(id);
 		return new ResponseEntity<>(deleted, HttpStatus.OK);
 	} 
 	
+
 	@RequestMapping(value ="/search/{type}/{searchText}", method = RequestMethod.GET)
 	public ResponseEntity<List<InstitutionRated>> getSearchResult(@PathVariable String type, @PathVariable String searchText){
-		
 		InstitutionType instType = institutionTypeService.findByName(type);
 		List<Institution> institutions = institutionService.searchByNameAndType(instType, searchText);
 		List<InstitutionRated> ratedList = new ArrayList<InstitutionRated>();
@@ -106,6 +106,24 @@ public class InstitutionController {
 			ratedList.add(new InstitutionRated(inst, institutionRatingService.calculateRating(institutionRatingService.searchByInstitution(inst))));
 		}
 		return new ResponseEntity<>(ratedList, HttpStatus.OK);
+	}
+
+	
+	@RequestMapping(value ="/rate/{id}/{rating}", method = RequestMethod.GET)
+	public ResponseEntity<InstitutionRating> rate(@PathVariable Long id, @PathVariable int rating){
+		Institution institution = institutionService.findOne(id);
+		if(institution == null) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+		InstitutionRating alreadyRated = institutionRatingService.findByInstitutionAndUser(institution, loggedUser());
+		if(alreadyRated != null) {
+			alreadyRated.setRating(rating);
+			institutionRatingService.save(alreadyRated);
+			return new ResponseEntity<>(alreadyRated, HttpStatus.OK);
+		}
+		InstitutionRating newRating = new InstitutionRating(loggedUser(), rating, institution);
+		institutionRatingService.save(newRating);
+		return new ResponseEntity<>(newRating, HttpStatus.OK);
 	}
 	
 	private User loggedUser(){

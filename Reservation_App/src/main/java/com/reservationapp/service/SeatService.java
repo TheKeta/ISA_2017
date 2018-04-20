@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.reservationapp.model.Hall;
 import com.reservationapp.model.Seat;
+import com.reservationapp.model.SeatType;
 
 public interface SeatService {
 
@@ -20,4 +21,6 @@ public interface SeatService {
 	void delete(List<Long> ids);
 	
 	List<Seat> findByHall(Hall hall);
+
+	Seat findByRowAndSeatNumber(int row, int seatNumber, SeatType seatType);
 }

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="/stylesheets/bootstrap.min.css">
+<meta charset="UTF-8">
+<title>Create quick reservation</title>
+</head>
+<body>
+	<div style="padding-left: 15px; padding-right:15px;">
+		<div class="row">
+			<div class="col-sm-3"></div>
+			<div class="col-sm-6">
+				<h1 style="text-align: center;">Create quick reservation</h1>
+				<span style="text-align: left; ">
+					Price:
+					<input id="price" type="number" class="form-control"/>
+				</span>
+				<div style="margin-top: 20px;">
+					<select id="chooseEvent" onChange="loadSeats()" class="form-control">
+						<option selected id="selectEvent">Select event</option>
+					</select>
+				</div>
+				<div class="row">
+					<div id="balcony-left" class="col-sm-4">
+						<table style="margin-left: auto; margin-right: auto;">
+						</table>
+					</div>
+					<div id="regular" class="col-sm-4">
+						<table style="margin-left: auto; margin-right: auto;">
+						</table>
+					</div>
+					<div id="balcony-right" class="col-sm-4" >
+						<table style="margin-left: auto; margin-right: auto;">
+						</table>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-sm-4">
+					</div>
+					<div id="couples" class="col-sm-4">
+						<table style="margin-left: auto; margin-right: auto;">
+						</table>
+					</div>
+				</div>
+				<div class="row" style="text-align: right;">
+					<button onClick="Create()">Create</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script src="/scripts/jquery-3.2.1.min.js"></script>
+	<script src="/stylesheets/bootstrap.min.js"></script>
+	<script src="/scripts/createQuickReservation.js"></script>
+</body>
+</html>

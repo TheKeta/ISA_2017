@@ -8,9 +8,12 @@ import org.springframework.data.repository.query.Param;
 
 import com.reservationapp.model.Hall;
 import com.reservationapp.model.Seat;
+import com.reservationapp.model.SeatType;
 
 public interface SeatRepository extends JpaRepository<Seat, Long> {
 
 	@Query("SELECT p FROM Seat p where lower(p.hall) = lower(:hall)")
 	public List<Seat> findByHall(@Param("hall") Hall hall);
+	
+	public Seat findByRowAndSeatNumberAndSeatType(int row, int seatNumber, SeatType seatType);
 }

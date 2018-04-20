@@ -38,6 +38,10 @@ function createInstitutionElements(institutionRated){
 	}else{
 		str += '<li>Rating: '+ institutionRated.rating +'</li>';
 	}
+	str += '<li><select class="form-control" style="width: 55px;" id="rateInstitution_'+ institutionRated.institution.id +'">';
+	str += '<option value="5">5</option><option value="4">4</option><option value="3">3</option><option value="2">2</option><option value="1">1</option>';
+	str += '</select>';
+	str += '<button onClick="Rate('+ institutionRated.institution.id +')">Rate</button>';
 	str += '</ul>';
 	str += '</div>';
 	str += '<div class="col-sm-3">';
@@ -61,6 +65,17 @@ function Edit(id){
 
 function Visit(id){
 	window.location.href = "../Institution.html?id="+id;
+}
+
+function Rate(id){
+	var rating = $("#rateInstitution_"+ id).val();
+	$.ajax({
+		url: "../institution/rate/"+ id +"/"+ rating,
+		success: function(data){
+			window.location.reload();
+		}
+		
+	});	
 }
 
 function Delete(id){

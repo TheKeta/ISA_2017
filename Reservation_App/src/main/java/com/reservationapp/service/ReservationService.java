@@ -2,6 +2,7 @@ package com.reservationapp.service;
 
 import java.util.List;
 
+import com.reservationapp.model.Institution;
 import com.reservationapp.model.Reservation;
 
 public interface ReservationService {
@@ -17,4 +18,6 @@ public interface ReservationService {
 	Reservation delete(Long id);
 	
 	void delete(List<Long> ids);
+	
+	List<Reservation> findByInstitution(Long id);
 }

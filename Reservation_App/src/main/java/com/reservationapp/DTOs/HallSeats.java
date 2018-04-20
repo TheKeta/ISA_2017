@@ -1,51 +1,36 @@
 package com.reservationapp.DTOs;
 
-import java.util.ArrayList;
 import java.util.List;
 
+import com.reservationapp.model.Hall;
 import com.reservationapp.model.Seat;
 
 public class HallSeats {
 
-	private List<List<Seat>> halls;
+	private List<Hall> halls;
+	private List<List<Seat>> seats;
 
-	public HallSeats(List<Seat> seats) {
+	public HallSeats(List<List<Seat>> seats, List<Hall> halls) {
 		super();
-		halls = new ArrayList<List<Seat>>();
-		List<Seat> removed = new ArrayList<Seat>();
-		for(Seat s : seats){
-			List<Seat> tempList = new ArrayList<Seat>();
-			for(Seat temp : seats){
-				if(!removed.contains(temp) && s.getId()!=temp.getId()){
-					if(s.getHall() == temp.getHall()){
-						if(!removed.contains(s)){
-							tempList.add(s);
-							removed.add(s);
-						}
-						tempList.add(temp);
-						removed.add(temp);
-					}
-				}
-			}
-			
-			if(tempList.size() == 0 && !removed.contains(s)){
-				tempList.add(s);
-			}
-			if(tempList.size() > 0){
-				halls.add(tempList);
-			}
-		}
+		this.halls = halls;
+		this.seats = seats;		
 	}
 
-	public List<List<Seat>> getHalls() {
+	public List<Hall> getHalls() {
 		return halls;
 	}
 
-	public void setHalls(List<List<Seat>> halls) {
+	public void setHalls(List<Hall> halls) {
 		this.halls = halls;
 	}
 
-	
-	
-	
+	public List<List<Seat>> getSeats() {
+		return seats;
+	}
+
+	public void setSeats(List<List<Seat>> seats) {
+		this.seats = seats;
+	}
+
+
 }

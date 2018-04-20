@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.reservationapp.model.Institution;
 import com.reservationapp.model.InstitutionRating;
+import com.reservationapp.model.User;
 
 public interface InstitutionRatingService {
 
@@ -22,5 +23,7 @@ public interface InstitutionRatingService {
 	List<InstitutionRating> searchByInstitution(Institution institution);
 	
 	double calculateRating(List<InstitutionRating> ratings);
+	
+	InstitutionRating findByInstitutionAndUser(Institution institution, User user);
 	
 } 

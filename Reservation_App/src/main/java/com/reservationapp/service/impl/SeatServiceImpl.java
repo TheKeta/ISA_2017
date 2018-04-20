@@ -8,7 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.reservationapp.model.Hall;
 import com.reservationapp.model.Seat;
-import com.reservationapp.repository.HallRepository;
+import com.reservationapp.model.SeatType;
 import com.reservationapp.repository.SeatRepository;
 import com.reservationapp.service.SeatService;
 
@@ -61,5 +61,10 @@ public class SeatServiceImpl implements SeatService{
 	@Override
 	public List<Seat> findByHall(Hall hall) {
 		return seatRepository.findByHall(hall);
+	}
+
+	@Override
+	public Seat findByRowAndSeatNumber(int row, int seatNumber,SeatType seatType) {
+		return seatRepository.findByRowAndSeatNumberAndSeatType(row, seatNumber, seatType);
 	}
 }

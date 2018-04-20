@@ -8,11 +8,14 @@ import org.springframework.data.repository.query.Param;
 
 import com.reservationapp.model.Institution;
 import com.reservationapp.model.InstitutionRating;
+import com.reservationapp.model.User;
 
 public interface InstitutionRatingRepository extends JpaRepository<InstitutionRating, Long>{
 
 	
 	@Query("SELECT p FROM InstitutionRating p where lower(p.institution) = lower(:institution)")
 	public List<InstitutionRating> searchByInstitution(@Param("institution") Institution institution);
+
+	public InstitutionRating findByInstitutionAndUser(Institution institution, User user);
 }
  

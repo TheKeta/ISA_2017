@@ -1,9 +1,13 @@
 package com.reservationapp.controller;
 
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,11 +18,14 @@ import com.reservationapp.DTOs.EventShows;
 import com.reservationapp.DTOs.EventShowsHalls;
 import com.reservationapp.DTOs.InstitutionEvents;
 import com.reservationapp.model.Event;
+import com.reservationapp.model.Hall;
 import com.reservationapp.model.Institution;
+import com.reservationapp.model.User;
 import com.reservationapp.service.impl.EventServiceImpl;
 import com.reservationapp.service.impl.HallServiceImpl;
 import com.reservationapp.service.impl.InstitutionServiceImpl;
 import com.reservationapp.service.impl.ShowServiceImpl;
+import com.reservationapp.service.impl.UserServiceImpl;
 
 @RestController
 @RequestMapping(value = "/event")
@@ -36,10 +43,19 @@ public class EventController {
 	@Autowired
 	private HallServiceImpl hallService;
 	
+	@Autowired
+	private UserServiceImpl userService;
+	
 	@RequestMapping(value="/getEvents/{id}", method = RequestMethod.GET)
-	public ResponseEntity<InstitutionEvents> getEvents(@PathVariable Long id){
+	public ResponseEntity<InstitutionEvents> getInstitutionEvents(@PathVariable Long id){
 		Institution institution = institutionService.findOne(id);
 		return new ResponseEntity<>(new InstitutionEvents(eventService.findByInstitution(institution)), HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="/events/{id}", method = RequestMethod.GET)
+	public ResponseEntity<List<Event>> getEvents(@PathVariable Long id){
+		Institution institution = institutionService.findOne(id);
+		return new ResponseEntity<>(eventService.findByInstitution(institution), HttpStatus.OK);
 	}
 	
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
@@ -48,6 +64,9 @@ public class EventController {
 		if (event == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
+		if(event.getHall().getInstitution().getAdmin() != loggedUser()){
+			return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+		}		
 		
 		return new ResponseEntity<>(new EventShows(event, showService.findAll()), HttpStatus.OK);
 	}
@@ -58,8 +77,11 @@ public class EventController {
 		if (event == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
+		if(event.getHall().getInstitution().getAdmin() != loggedUser()){
+			return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+		}
 		
-		return new ResponseEntity<>(new EventShowsHalls(event, showService.findAll(), hallService.findAll()), HttpStatus.OK);
+		return new ResponseEntity<>(new EventShowsHalls(event, showService.findAll(), hallService.findByInstitution(event.getHall().getInstitution())), HttpStatus.OK);
 	}
 	
 	@RequestMapping(value = "/getEvent/{id}", method = RequestMethod.GET)
@@ -68,18 +90,38 @@ public class EventController {
 		if (event == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
-		
+		if(event.getHall().getInstitution().getAdmin() != loggedUser()){
+			return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+		}		
 		return new ResponseEntity<>(event, HttpStatus.OK);
 	}
+	
 	@RequestMapping(method=RequestMethod.POST, consumes="application/json")
 	public ResponseEntity<Event> addEvent(@RequestBody Event event){
+		Hall hall = hallService.findOne(event.getHall().getId());
+		if(loggedUser() != hall.getInstitution().getAdmin()){
+			return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);	
+		}
+		event.setHall(hall);
+		
 		Event newEvent = eventService.save(event);
+		
+		
 		return new ResponseEntity<>(newEvent, HttpStatus.OK);
 	}
 	
 	@RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<Event> delete(@PathVariable Long id) {
+		if(eventService.findOne(id).getHall().getInstitution().getAdmin() != loggedUser()){
+			return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+		}
 		Event deleted = eventService.delete(id);
 		return new ResponseEntity<>(deleted, HttpStatus.OK);
+	}
+	
+	private User loggedUser(){
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		User user = userService.findOneByEmail(auth.getName());
+		return user;
 	}
 }

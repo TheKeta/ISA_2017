@@ -5,6 +5,7 @@
 	<link rel="stylesheet" type="text/css" href="/stylesheets/bootstrap.min.css">
 </head>
 <body>
+<div style="padding-left: 15px; padding-right:15px;">
 	<div class="row" style="text-align: center">
 		<h1 id="header"></h1>		
 	</div>
@@ -26,13 +27,17 @@
 			    	Description:
 			    	<input id="description" type="text" class="form-control" name="Description"/>
 			    </span>
+			    <span>
+			    	Admin:
+			    	<select id="admin" class="form-control"></select>
+			    </span>
 			    <div id="hiddenType" style="display: none;">
 			    </div>
 			    <button type="button" onClick="Add()" >Add</button>
 			</form>
 		</div>
 	</div>
-
+</div>
 
 	<script src="/scripts/jquery-3.2.1.min.js"></script>
 	<script src="/scripts/createInstitution.js"></script>

@@ -1,7 +1,6 @@
 package com.reservationapp.model;
 
 import java.io.Serializable;
-import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,7 +8,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 
 @Entity
 public class Reservation implements Serializable{
@@ -23,23 +21,23 @@ public class Reservation implements Serializable{
 	@Column(nullable = false)
 	private double price;
 	
-	@OneToMany()
-	private Set<Seat> seats;
+	@ManyToOne(optional = false)
+	private Seat seat;
 	
 	@ManyToOne(optional = false)
 	private Event event;
 	
-	@ManyToOne(optional = false)
+	@ManyToOne(optional = true)
 	private User user;
 
 	public Reservation(){
 		
 	}
-	
-	public Reservation(double price, Set<Seat> seats, Event event, User user) {
+
+	public Reservation(double price, Seat seat, Event event, User user) {
 		super();
 		this.price = price;
-		this.seats = seats;
+		this.seat = seat;
 		this.event = event;
 		this.user = user;
 	}
@@ -47,7 +45,7 @@ public class Reservation implements Serializable{
 	public Long getId() {
 		return id;
 	}
-	
+
 	public double getPrice() {
 		return price;
 	}
@@ -56,12 +54,12 @@ public class Reservation implements Serializable{
 		this.price = price;
 	}
 
-	public Set<Seat> getSeats() {
-		return seats;
+	public Seat getSeats() {
+		return seat;
 	}
 
-	public void setSeats(Set<Seat> seats) {
-		this.seats = seats;
+	public void setSeats(Seat seat) {
+		this.seat = seat;
 	}
 
 	public Event getEvent() {
@@ -80,5 +78,5 @@ public class Reservation implements Serializable{
 		this.user = user;
 	}
 	
-	
+		
 }

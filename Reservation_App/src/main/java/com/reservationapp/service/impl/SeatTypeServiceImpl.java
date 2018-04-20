@@ -54,4 +54,9 @@ public class SeatTypeServiceImpl implements SeatTypeService{
 			this.delete(id);
 		}
 	}
+
+	@Override
+	public SeatType findByName(String name) {
+		return seatTypeRepository.findByName(name);
+	}
 }

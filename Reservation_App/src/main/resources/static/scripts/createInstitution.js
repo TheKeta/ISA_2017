@@ -13,12 +13,19 @@ $(document).ready(function() {
 	$.ajax({
 		url: "../institutionType/institutionTypeId/" + str[1],
 		success: function(data){
-			$("#hiddenType").append('<input type="text" id="typeId" value="'+ data.id +'" />')
-			$("#hiddenType").append('<input type="text" id="typeName" value="'+ data.name +'" />')
+			$("#hiddenType").append('<input type="text" id="typeId" value="'+ data.institution.id +'" />');
+			$("#hiddenType").append('<input type="text" id="typeName" value="'+ data.institution.name +'" />');
+			$("#admin").append(data.users.map(generateDropDown));
 		}	
 	});
 
 });
+
+function generateDropDown(user){
+	var str = "";
+	str += '<option value="'+ user.id +'">'+ user.username +'</option>';
+	return str;
+}
 
 
 function Add(){
@@ -26,12 +33,14 @@ function Add(){
 	obj.name = $("#name").val();
 	obj.address = $("#address").val();
 	obj.description = $("#description").val();
+	
 	var type = new Object();
 	type.id =  $("#typeId").val();
+	type.name = $("#typeName").val();
 	obj.type = type;
 	
 	var admin = new Object();
-	admin.id = "5";
+	admin.id = $("#admin").val();
 	obj.admin = admin;
 	
 	$.ajax({

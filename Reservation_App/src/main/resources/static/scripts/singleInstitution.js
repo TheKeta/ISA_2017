@@ -58,6 +58,10 @@ function createEventElements(events){
 }
 
 
+function QuickReservations(){
+	window.location.href = "../QuickReservations.html?id=" + str[1];
+}
+
 function Create(){
 	window.location.href = "../CreateEvent.html?id=" + str[1];
 }

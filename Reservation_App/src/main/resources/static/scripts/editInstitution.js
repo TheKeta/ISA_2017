@@ -4,31 +4,46 @@ $(document).ready(function() {
 	$.ajax({
 		url: "../institution/" + str[1],
 		success: function(data){
-			$("#name").val(data.name);
-			$("#address").val(data.address);
-			$("#description").val(data.description);
-			$("#hiddenType").append('<input type="text" id="id" value="'+ data.id +'" />')
-			$("#hiddenType").append('<input type="text" id="typeId" value="'+ data.type.id +'" />')
-			$("#hiddenType").append('<input type="text" id="typeName" value="'+ data.type.name +'" />')
-			$("#hiddenType").append('<input type="text" id="adminId" value="'+ data.admin.id +'" />')
+			$("#name").val(data.institution.name);
+			$("#address").val(data.institution.address);
+			$("#description").val(data.institution.description);
+			$("#hiddenType").append('<input type="text" id="id" value="'+ data.institution.id +'" />')
+			$("#hiddenType").append('<input type="text" id="typeId" value="'+ data.institution.type.id +'" />')
+			$("#hiddenType").append('<input type="text" id="typeName" value="'+ data.institution.type.name +'" />')
+			for(var i=0; i< data.users.length; i++){
+				$("#admin").append(generateDropDown(data.users[i], data.institution.id))
+			}
 		} 
 	});
 });
+
+function generateDropDown(data, id){
+	var str = "";
+	if(data.id == id){
+		str += '<option selected value="'+ data.id +'">'+ data.firstName + " " +data.lastName +'</option>'
+	}else{
+		str += '<option value="'+ data.id +'">'+ data.firstName + " " +data.lastName +'</option>'
+	}
+	return str;
+}
 
 
 function Save(){
 	
 	var obj = new Object();
+	
+	obj.id = $("#id").val();
 	obj.name = $("#name").val();
 	obj.address = $("#address").val();
 	obj.description = $("#description").val();
 	var type = new Object();
 	type.id =  $("#typeId").val();
+	type.name = $("#typeName").val();
 	obj.type = type;
 	
 	var admin = new Object();
-	admin.id = $("#adminId").val();
-	obj.admin = admin;	
+	admin.id = $("#admin").val();
+	obj.admin = admin;
 	
 	$.ajax({
 		url: "../institution",
@@ -36,8 +51,8 @@ function Save(){
 		type: "POST",
 		contentType: "application/json",
 		dataType: "json",
-		success: function(data){
-			window.location.href="../Institutions.html?type=" + data.type.name; 
+		success: function(institution){
+			window.location.href="../Institutions.html?type=" + institution.type.name; 
 		}
 	});
 }
