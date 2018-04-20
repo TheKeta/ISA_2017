@@ -28,6 +28,7 @@ function defaultElements(){
 
 function createRequisiteElement(reqs){
 	var str = "";
+	var datum = reqs.endDate.split("T");
 	str += '<div style=\"padding: 5px; border: 1px solid black; overflow: auto;\">'
 		+ '<p><b>' + reqs.name + '</b></p>'
 		+ '<div style="float:left; width: 500px;">'
@@ -35,7 +36,7 @@ function createRequisiteElement(reqs){
 		+ '</div>'
 		+ '<div style="float:center; width: auto;">'
 		+ '<p><i>'+ reqs.description+ '</i></p>'
-//		+ '<p>Price: '+ reqs.price + ' din</p>'
+		+ '<p>Active till: '+ datum[0] +'</p>'
 		+ '</div>'
 		+ '<div style="float:right; width: auto;"> '
 		+ '<p>Currently highest bid is: <p id="curPrice'+reqs.id+'">'+ reqs.price + '</p> din.</p>'

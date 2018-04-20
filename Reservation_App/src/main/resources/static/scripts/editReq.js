@@ -6,23 +6,35 @@ $(document).ready(function() {
 function defaultElements(){
 	var url = window.location.href;
 	var str = url.split("=");
-	var title = "New Requisite";
+	var title = "Edit Requisite";
 	document.title = title;
 	$('#header').html(title);
 	
 }
 
+
 function create(){
     
     if (document.getElementById('image').files[0]!= undefined){
     	var data = new FormData();
-        data.append("name", $("#name").val());
-        data.append("description",$("#description").val());
-        data.append("endDate",new Date($("#endDate").val()));
-        data.append("price",parseInt($("#price").val()));
+    	var url = window.location.href;
+    	var str = url.split("=");
+    	data.append("id",str[1]);
+    	if(($("#name").val()).trim()!=""){
+    		data.append("name", $("#name").val());
+    	}
+    	if(($("#description").val()).trim()!="")
+    		data.append("description",$("#description").val());
+    	if(($("#endDate").val()).trim()!="")
+    		data.append("endDate",new Date($("#endDate").val()));
+    	if(($("#price").val()).trim()!="")
+    		data.append("price",parseInt($("#price").val()));
     	data.append("picture",document.getElementById('image').files[0]);
+//    	for (var pair of data.entries()) {
+//    	    console.log(pair[0]+ ', ' + pair[1]); 
+//    	}
     	$.ajax({
-        	url: "../requisite/addNewReqq",
+        	url: "../requisite/editReqq",
         	 type: "POST",
              enctype: 'multipart/form-data',
              data: data,
@@ -55,12 +67,21 @@ function create(){
         });
     }else{
     	var data = new Object();
-        data.name= $("#name").val();
-        data.description=$("#description").val();
-        data.endDate=new Date($("#endDate").val());
-        data.price=parseInt($("#price").val());
+    	var url = window.location.href;
+    	var str = url.split("=");
+    	data.id =str[1];
+    	if(($("#name").val()).trim()!=""){
+    		data.name= $("#name").val();
+    	}
+    	if(($("#description").val()).trim()!="")
+    		data.description=$("#description").val();
+    	if(($("#endDate").val()).trim()!="")
+            data.endDate=new Date($("#endDate").val());
+    	if(($("#price").val()).trim()!="")
+    		 data.price=parseInt($("#price").val());
+//    	console.log(data);
     	$.ajax({
-        	url: "../requisite/addNewReq",
+        	url: "../requisite/editReq",
     		data: JSON.stringify(data),
     		type: "POST",
     		contentType: "application/json",
@@ -91,8 +112,4 @@ function create(){
     }
     	//    console.log(data)
 
-}
-
-function cancel(){
-	window.location.href = "../FunZone.html";
 }

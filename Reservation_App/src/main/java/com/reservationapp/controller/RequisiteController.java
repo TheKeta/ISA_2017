@@ -112,9 +112,79 @@ public class RequisiteController {
 		return null; //nije ulogovan ili je nesto znjto
 	}
 	
-	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+	@RequestMapping(value="/editReqq", method=RequestMethod.POST)
+	public ResponseEntity<Requisite> editRequisitee(@ModelAttribute Requisite requisite){		
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		User user = userService.findOneByEmail(auth.getName());
+		if(user!=null) {
+			try {
+				if(user.getUserType().getName().equals("ADMINFZ")) {
+					//admin fun zone
+					Requisite oldReq = requisiteService.findOne(requisite.getId());
+					if(requisite.getName()!=null)
+						oldReq.setName(requisite.getName());
+					if(requisite.getDescription()!= null)
+						oldReq.setDescription(requisite.getDescription());
+					if(requisite.getEndDate()!= null)
+						oldReq.setEndDate(requisite.getEndDate());
+					if(requisite.getPrice()>0 )
+						oldReq.setPrice(requisite.getPrice());
+					oldReq.setPictureDB(requisite.getPicture().getBytes());
+					
+					return new ResponseEntity<>(requisiteService.update(oldReq), HttpStatus.OK);
+					
+				}
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return null; //nije ulogovan ili je nesto znjto
+	}
+	
+	@RequestMapping(value="/editReq", method=RequestMethod.POST, consumes="application/json" )
+	public ResponseEntity<Requisite> editRequisite(@RequestBody Requisite requisite){	
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		User user = userService.findOneByEmail(auth.getName());
+		if(user!=null) {
+			try {
+				if(user.getUserType().getName().equals("ADMINFZ")) {
+					//admin fun zone
+					System.out.println("AAAA   "+requisite.getName()+requisite.getId());
+					Requisite oldReq = requisiteService.findOne(requisite.getId());
+					if(requisite.getName()!=null)
+						oldReq.setName(requisite.getName());
+					if(requisite.getDescription()!= null)
+						oldReq.setDescription(requisite.getDescription());
+					if(requisite.getEndDate()!= null)
+						oldReq.setEndDate(requisite.getEndDate());
+					if(requisite.getPrice()>0 )
+						oldReq.setPrice(requisite.getPrice());
+					
+					
+					return new ResponseEntity<>(requisiteService.update(oldReq), HttpStatus.OK);
+					
+				}
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return null; //nije ulogovan ili je nesto znjto
+	}
+	
+	@RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<Requisite> delete(@PathVariable Long id) {
-		Requisite deleted = requisiteService.delete(id);
-		return new ResponseEntity<>(deleted, HttpStatus.OK);
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		User user = userService.findOneByEmail(auth.getName());
+		if(user!=null) {
+			try {
+				if(user.getUserType().getName().equals("ADMINFZ")) {
+					Requisite deleted = requisiteService.delete(id);
+					return new ResponseEntity<>(deleted, HttpStatus.OK);
+				}
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
 	}
 }

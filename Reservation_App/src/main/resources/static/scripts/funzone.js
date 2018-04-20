@@ -45,22 +45,62 @@ function defaultElements(){
 
 function createRequisiteElement(reqs){
 	var str = "";
+	var datum = reqs.endDate.split("T");
 	str += '<div style=\"padding: 5px; border: 1px solid black; overflow: auto;\">'
 		+ '<p><b>' + reqs.name + '</b></p>'
 		+ '<div style="float:left; width: 500px;">'
-		+ '<img src=\"data:image/png;base64,' +reqs.pictureDB +'\" alt=\"'+reqs.name+'\" style="width:900px;height:250px;">'
+		+ '<img src=\"data:image/png;base64,' +reqs.pictureDB +'\" alt=\"'+reqs.name+'\" style="width:500px;height:250px;">'
 		+ '</div>'
 		+ '<div style="float:center; width: auto;">'
 		+ '<p><i>'+ reqs.description+ '</i></p>'
+		+ '<p>Active till: '+ datum[0] +'</p>'
 		+ '<p>Price: '+ reqs.price + ' din</p>'
 		+ '</div>'
-		+ '<div style="float:right; width: 100px;"> '
+		+ '<div id="orDiv'+reqs.id+'" style="float:right; width: 100px;"> '
 		+ '<button onClick="order('+ reqs.id + ')">Order Item</button>'
 		+ '</div>'
 		+ '</div>';
 	
 	$('#allRequisites').append(str);
-	
+	$.ajax({
+		url: "../user/getCurrentUser",
+		success: function(datas){
+			if(datas==null){
+				window.location.href = "../Login.html";			
+			}
+			else{
+				console.log(datas);
+				if(datas.userType.id == 3){
+					var pom = "";
+					pom += '<button onClick="editRequisite('+ reqs.id + ')">Edit</button></br>'
+					+ '<button onClick="deleteRequisite('+ reqs.id + ')">Delete</button>'
+					$('#orDiv'+reqs.id).html(pom);
+				}
+			}
+		},
+		error: function(xhr, ajaxOptions, thrownError){
+			console.log(thrownError);
+
+		}
+	});
+}
+
+function editRequisite(reqsID){
+	window.location.href = "../EditReq.html?id="+reqsID;	
+}
+
+function deleteRequisite(reqsID){
+	$.ajax({
+    	url: "../requisite/delete/"+reqsID,
+		type: "DELETE",
+        success: function (data) {
+        	window.location.href = "../FunZone.html";
+        },
+		error: function(xhr, ajaxOptions, thrownError){
+			console.log(thrownError);
+
+		}
+	});
 }
 
 function order(reqsID){

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="/scripts/jquery-3.2.1.min.js"></script>
+
+<link rel="stylesheet" type="text/css" href="/stylesheets/bootstrap.min.css">
+<script src="/stylesheets/bootstrap.min.js"></script>
+
+<meta charset="UTF-8">
+</head>
+<body>
+	<div style="padding-left: 15px; padding-right: 15px;"> 
+	<div class="row" style="text-align: center">
+		<h1 id="header"></h1>		
+	</div>
+	<div class="row">
+		<div class="col-sm-3"></div>
+		<div class="col-sm-6">
+			<form id="newForm">
+				<span>
+					Name:
+					<input id="name" type="text" class="form-control" name="Name"/>
+				</span>
+				<span>
+					Description:
+					<textarea id="description" class="form-control" name="Description"/></textarea>
+				</span>
+				<span>
+			   		End Date:
+			    	<input id="endDate" type="date" class="form-control" name="EndDate"/>
+		    	</span>
+				<span>
+			    	Price:
+					<input id="price" type="text" class="form-control" name="Price"/>
+			    </span>
+			    <span>
+			    	Image:
+					<input type="file" class="form-control" id="image" accept="image/jpg, image/jpeg, image/png" placeholder="Upload Image"></input>
+			    </span>
+			    <div id="hiddenItems" style="display: none;">
+			    	<input id="institutionId" />
+			    </div>
+			    <div style=" padding-top: 10px; text-align: right;">
+				    <button type="button" style="margin-right: 10px;" onClick="create()" >Edit</button>
+				    <button type="button" onClick="cancel()" >Cancel</button>
+			    </div>
+			</form>
+		</div>
+	</div>
+</div>
+	
+	<script src="/scripts/editReq.js"></script>
+</body>
+</html>
