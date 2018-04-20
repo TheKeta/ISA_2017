@@ -10,6 +10,6 @@ import com.reservationapp.model.Requisite;
 
 public interface RequisiteRepository extends JpaRepository<Requisite, Long>{
 
-	@Query("SELECT r FROM Requisite r where lower(r.type) = lower(:type) order by r.id desc ")
+	@Query("SELECT r FROM Requisite r where r.isActive = true and lower(r.type) = lower(:type) order by r.id desc ")
 	public List<Requisite> findAllUsersReqs(@Param("type") String type);
 }

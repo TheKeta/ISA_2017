@@ -17,4 +17,8 @@ public interface BidService {
 	
 	void delete(List<Long> ids);
 	
+	Bid findHeighestBid(Bid bid);
+	
+	List<Bid> findByItemsid(Long itemsid);
+	
 }
