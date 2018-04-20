@@ -14,7 +14,7 @@ INSERT INTO USER_TYPE VALUES('1', 'ADMIN');
 INSERT INTO USER_TYPE VALUES('2', 'VISITOR');
 INSERT INTO USER_TYPE VALUES('3', 'ADMINFZ');
 
-insert into user values('1', 'TRUE', 'admin@admin', 'Stefan', 'Radanovic', '$2a$10$pKZ1qLKTesJpSjim4aVdTuZDKzP5nXDrfdNng4oo02xnMrKseqXVa', 'admin', '1');
+insert into user values('1', 'TRUE', ,'admin@admin', 'Stefan', 'Radanovic', '$2a$10$pKZ1qLKTesJpSjim4aVdTuZDKzP5nXDrfdNng4oo02xnMrKseqXVa', 'admin', '1');
 insert into user values('2', 'TRUE', 'admin2@admin', 'Dejan', 'Besic', '$2a$10$pKZ1qLKTesJpSjim4aVdTuZDKzP5nXDrfdNng4oo02xnMrKseqXVa', 'admin', '2');
 insert into user values('3', 'TRUE', 'admin3@admin', 'Mario', 'Gula', '$2a$10$pKZ1qLKTesJpSjim4aVdTuZDKzP5nXDrfdNng4oo02xnMrKseqXVa', 'admin', '3');
 
@@ -177,10 +177,12 @@ INSERT INTO SHOW VALUES( 4, 'Cast 4', 'Description 4', 120, 'Show 4', 1, 1);
 INSERT INTO SHOW VALUES( 5, 'Cast 5', 'Description 5', 120, 'Show 5', 2, 1);
 
 
-INSERT INTO REQUISITE VALUES(1,2,'Majica sa likom tora','2018-04-14',true ,'Majica', null,750,'used',0);
-INSERT INTO REQUISITE VALUES(2,3,'Solja sa likom tora','2018-05-14',true ,'Solja', null,250,'new',0);
+INSERT INTO REQUISITE VALUES(1,2,'Majica sa likom tora','2018-05-14',true,true, ,'Majica', null,750,'used',0);
+INSERT INTO REQUISITE VALUES(2,3,'Solja sa likom tora','2018-05-14',true,false ,'Solja', null,250,'new',0);
 =======
 INSERT INTO USER_TYPE VALUES('1', 'ADMIN');
 INSERT INTO USER_TYPE VALUES('2', 'VISITOR');
-insert into user values('1', 'TRUE', 'subotica', 'a@a', 'Stefan', 'Radanovic', 'admin', 'tkn', '2');
+insert into user values('1', 'TRUE', 'subotica', 'a@a', 'Stefan', 'Radanovic', 'admin', 'tkn', '1');
+insert into user values('2', 'TRUE', 'subotica', 'aa@a', 'Stefan', 'Radanovic', 'admin', 'tkn', '2');
+insert into user values('3', 'TRUE', 'subotica', 'aaa@a', 'Stefan', 'Radanovic', 'admin', 'tkn', '3');
 >>>>>>> branch 'master' of https://github.com/twiste9/ISA_2017

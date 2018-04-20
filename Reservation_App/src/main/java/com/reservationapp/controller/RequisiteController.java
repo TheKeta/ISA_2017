@@ -34,9 +34,53 @@ public class RequisiteController {
 		return new ResponseEntity<>(requisiteService.findAll(), HttpStatus.OK);
 	}
 	
+	@RequestMapping(value="/getFreshRequisites", method = RequestMethod.GET)
+	public ResponseEntity<List<Requisite>> getRequisitesF(){
+		return new ResponseEntity<>(requisiteService.findAllUserFreshReqs(), HttpStatus.OK);
+	}
+	
 	@RequestMapping(value="/getRequisites/{type}", method = RequestMethod.GET)
 	public ResponseEntity<List<Requisite>> getRequisitesU(@PathVariable String type){
 		return new ResponseEntity<>(requisiteService.findAllUserReqs(type), HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="/approve/{id}", method = RequestMethod.POST)
+	public ResponseEntity<Requisite> updateA(@PathVariable String id){
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		User user = userService.findOneByEmail(auth.getName());
+		if(user!=null) {
+			if(user.getUserType().getName().equals("ADMINFZ")) {
+				try {
+					Long idd = Long.parseLong(id);
+					Requisite req = requisiteService.findOne(idd);
+					req.setApproved(true);
+					return new ResponseEntity<>(requisiteService.update(req), HttpStatus.OK);
+					
+				}catch(Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+	}
+	@RequestMapping(value="/disprove/{id}", method = RequestMethod.POST)
+	public ResponseEntity<Requisite> updateD(@PathVariable String id){
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		User user = userService.findOneByEmail(auth.getName());
+		if(user!=null) {
+			if(user.getUserType().getName().equals("ADMINFZ")) {
+				try {
+					Long idd = Long.parseLong(id);
+					Requisite req = requisiteService.findOne(idd);
+					req.setActive(false);
+					return new ResponseEntity<>(requisiteService.update(req), HttpStatus.OK);
+					
+				}catch(Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
 	}
 		
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
@@ -65,6 +109,7 @@ public class RequisiteController {
 					requisite.setType("new");
 					requisite.setPictureDB(null);
 					requisite.setActive(true);
+					requisite.setApproved(true);
 					Requisite requisiteType = requisiteService.save(requisite);
 					return new ResponseEntity<>(requisiteType, HttpStatus.OK);
 				}
@@ -78,6 +123,7 @@ public class RequisiteController {
 					requisite.setType("used");
 					requisite.setPictureDB(null);
 					requisite.setActive(true);
+					requisite.setApproved(false);
 					Requisite requisiteType = requisiteService.save(requisite);
 					return new ResponseEntity<>(requisiteType, HttpStatus.OK);
 				}
@@ -105,6 +151,7 @@ public class RequisiteController {
 					requisite.setPictureDB(requisite.getPicture().getBytes());
 					requisite.setPicture(null);
 					requisite.setActive(true);
+					requisite.setApproved(true);
 					Requisite requisiteType = requisiteService.save(requisite);
 					return new ResponseEntity<>(requisiteType, HttpStatus.OK);
 				}
@@ -119,6 +166,7 @@ public class RequisiteController {
 					requisite.setPictureDB(requisite.getPicture().getBytes());
 					requisite.setPicture(null);
 					requisite.setActive(true);
+					requisite.setApproved(false);
 					Requisite requisiteType = requisiteService.save(requisite);
 					return new ResponseEntity<>(requisiteType, HttpStatus.OK);
 				}
@@ -151,6 +199,7 @@ public class RequisiteController {
 					if(requisite.getPrice()>0 )
 						oldReq.setPrice(requisite.getPrice());
 					oldReq.setPictureDB(requisite.getPicture().getBytes());
+					oldReq.setApproved(true);
 					
 					return new ResponseEntity<>(requisiteService.update(oldReq), HttpStatus.OK);
 					
@@ -185,7 +234,7 @@ public class RequisiteController {
 					if(requisite.getPrice()>0 )
 						oldReq.setPrice(requisite.getPrice());
 					
-					
+					oldReq.setApproved(true);
 					return new ResponseEntity<>(requisiteService.update(oldReq), HttpStatus.OK);
 					
 				}

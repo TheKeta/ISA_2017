@@ -74,4 +74,9 @@ public class RequisiteServiceImpl implements RequisiteService{
 	public List<Requisite> findByEndDateLessThanAndIsActiveTrue(Date date){
 		return requisiteRepository.findByEndDateLessThanAndIsActiveTrue(date);
 	}
+	
+	@Override
+	public List<Requisite> findAllUserFreshReqs(){
+		return requisiteRepository.findAllUserFreshReqs();
+	}
 }

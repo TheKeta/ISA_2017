@@ -23,4 +23,6 @@ public interface RequisiteService {
 	Requisite update(Requisite requisite);
 	
 	List<Requisite> findByEndDateLessThanAndIsActiveTrue(Date date);
+	
+	List<Requisite> findAllUserFreshReqs();
 }

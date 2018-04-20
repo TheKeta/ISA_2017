@@ -93,7 +93,7 @@ function SendBid(reqsID){
 	var data = new Object();
 	data.itemsID = reqsID;
 	var price = parseInt($("#placeBid").val());
-	if(price == undefined){
+	if($("#placeBid").val() == ""){
 		alert("Enter bidding price.");
 		return;
 	}
@@ -105,6 +105,7 @@ function SendBid(reqsID){
 		contentType: "application/json",
 		dataType: "json",
         success: function (data) {
+        	console.log(data)
         	$('#curPrice'+reqsID).html(data.price);
         },
 		error: function(xhr, ajaxOptions, thrownError){

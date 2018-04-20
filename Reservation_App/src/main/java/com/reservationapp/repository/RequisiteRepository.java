@@ -11,11 +11,12 @@ import com.reservationapp.model.Requisite;
 
 public interface RequisiteRepository extends JpaRepository<Requisite, Long>{
 
-	@Query("SELECT r FROM Requisite r where r.isActive = true and lower(r.type) = lower(:type) order by r.id desc ")
+	@Query("SELECT r FROM Requisite r where r.isApproved = true and r.isActive = true and lower(r.type) = lower(:type) order by r.id desc ")
 	public List<Requisite> findAllUsersReqs(@Param("type") String type);
 
 	@Query("SELECT r FROM Requisite r where r.isActive = true and r.endDate <= :date ")
 	public List<Requisite> findByEndDateLessThanAndIsActiveTrue(@Param("date") Date date);
 
-	
+	@Query("SELECT r FROM Requisite r where r.isApproved = false and r.isActive = true order by r.id asc ")
+	public List<Requisite> findAllUserFreshReqs();
 }

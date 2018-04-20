@@ -64,7 +64,7 @@ public class BidController {
 			User user = userService.findOneByEmail(auth.getName());
 			if(user!=null) {
 				bid.setBiddersID(user.getId());
-				bid.setPrice(req.getPrice());
+				req.setPrice(bid.getPrice());
 				bid.setReservation(true);
 				
 				Bid bidd = bidService.save(bid);
@@ -112,6 +112,8 @@ public class BidController {
 		User user = userService.findOneByEmail(auth.getName());
 		if(user!=null) {
 			Bid newBid =bidService.findHeighestBid(bid.getItemsID());
+			if(newBid== null)
+				return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
 			//treba obavestiti sve o ovome;
 			// i postaviti rekvizit na neaktivan
 			Requisite re = reqService.findOne(newBid.getItemsID());
