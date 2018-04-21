@@ -35,6 +35,9 @@ public class User implements Serializable{
 	@Column(nullable = false)
 	private boolean active;
 	
+	@Column(nullable = false)
+	private int points;
+	
 	public boolean isActive() {
 		return active;
 	}
@@ -135,6 +138,14 @@ public class User implements Serializable{
 
 	public void setUserType(UserType userType) {
 		this.userType = userType;
+	}
+
+	public int getPoints() {
+		return points;
+	}
+
+	public void setPoints(int points) {
+		this.points = points;
 	}
 		
 }

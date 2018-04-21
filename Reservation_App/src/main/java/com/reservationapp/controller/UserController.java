@@ -1,5 +1,6 @@
 package com.reservationapp.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -68,6 +69,25 @@ public class UserController {
 		
 		return new ResponseEntity<>(user, HttpStatus.OK);
 	}
+	
+	@RequestMapping(value = "/{firstName}/{lastName}", method = RequestMethod.GET)
+	public ResponseEntity<List<UserForm>> getSearchedUsers(@PathVariable String firstName, @PathVariable String lastName) {
+		if(firstName.equals("-1"))
+			firstName="";
+		if(lastName.equals("-1"))
+			lastName="";
+		
+		List<User> users = userService.findByFirstNameIgnoreCaseStartingWithAndLastNameIgnoreCaseStartingWith(firstName, lastName);
+		List<UserForm> res = new ArrayList<UserForm>();
+		for(User u : users){
+			UserForm uf = new UserForm(u);
+			res.add(uf);
+		}
+		
+		
+		return new ResponseEntity<>(res, HttpStatus.OK);
+	}
+	
 //	
 //	@RequestMapping(method=RequestMethod.POST, consumes="application/json")
 //	public ResponseEntity<User> addUser(@RequestBody User user){

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="/scripts/jquery-3.2.1.min.js"></script>
+
+<link rel="stylesheet" type="text/css" href="/stylesheets/bootstrap.min.css">
+<script src="/stylesheets/bootstrap.min.js"></script>
+
+<meta charset="UTF-8">
+</head>
+<body>
+	<div style="padding-left: 15px; padding-right:15px; ">
+		<h1 class="row" style="text-align: center;" id="header"></h1>
+		<div class="row" style="overflow: auto;  margin: auto; float:left; width: 35%">
+			<h4>Received</h4>
+			<div id="received">
+			</div>
+		</div>	
+		<div class="row" style="overflow: auto; margin: auto; float:left ; width: 35%">
+			<h4>Sent</h4>
+			<div id="sent">
+			</div>
+		</div>	
+		<div class="row" style="overflow: auto; margin: auto; float:left; width: 30%">
+			<h4>New Message</h4>
+			<div id="new">
+				<form id="newForm">
+				<span>
+					Email:</br>
+					<input id="name" type="text" class="form-control" name="Name"/>
+				</span>
+				</br>
+				<span>
+					Message:</br>
+					<textarea id="description" class="form-control" name="Description"/></textarea>
+				</span>
+				
+			    <div id="hiddenItems" style="display: none;">
+			    	<input id="institutionId" />
+			    </div>
+			    <div style=" padding-top: 10px; text-align: right;">
+				    <button type="button" style="margin-right: 10px; float:left;" onClick="send()" >Send</button>
+			    </div>
+			</form>
+			</div>
+		</div>	
+	</div>
+	
+	<script src="/scripts/messages.js"></script>
+</body>
+</html>

@@ -10,6 +10,7 @@ $(document).ready(function() {
 			$("#hiddenType").append('<input type="text" id="id" value="'+ data.id +'" />')
 			$("#hiddenType").append('<input type="text" id="typeId" value="'+ data.type.id +'" />')
 			$("#hiddenType").append('<input type="text" id="typeName" value="'+ data.type.name +'" />')
+			$("#hiddenType").append('<input type="text" id="adminId" value="'+ data.admin.id +'" />')
 		} 
 	});
 });
@@ -18,13 +19,16 @@ $(document).ready(function() {
 function Save(){
 	
 	var obj = new Object();
-	obj.id = $("#id").val();
 	obj.name = $("#name").val();
 	obj.address = $("#address").val();
 	obj.description = $("#description").val();
 	var type = new Object();
 	type.id =  $("#typeId").val();
 	obj.type = type;
+	
+	var admin = new Object();
+	admin.id = $("#adminId").val();
+	obj.admin = admin;	
 	
 	$.ajax({
 		url: "../institution",

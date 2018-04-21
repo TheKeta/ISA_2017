@@ -86,11 +86,14 @@ public class LoginController {
 		SecurityContextHolder.getContext().setAuthentication(auth);
 		UserForm userForm = new UserForm(userDetails.getUser());
 		
+		userExists.setPoints(userExists.getPoints()+1);
+		userService.save(userExists);
+		
 		modelAndView.addObject("user", userForm);
 		modelAndView.addObject("welcomeMessage", "Welcome " + userForm.getFirstName());
 		modelAndView.addObject("message", "");
 		
-		modelAndView.setViewName("userProfile");
+		modelAndView.setViewName("redirect:userProfile");
 		return modelAndView;
 	}
 	
@@ -129,7 +132,7 @@ public class LoginController {
 			User newUser = new User(user.getEmail(), user.getCity(), user.getPassword(),
 					user.getFirstName(), user.getLastName(), userType);
 			
-
+			newUser.setPoints(0);
 			newUser.setUserType(userType);
 			newUser.setToken(UUID.randomUUID().toString());
 			newUser.setActive(false);

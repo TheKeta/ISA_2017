@@ -13,9 +13,11 @@ import org.springframework.transaction.annotation.Transactional;
 import com.reservationapp.model.Bid;
 import com.reservationapp.model.Message;
 import com.reservationapp.model.Requisite;
+import com.reservationapp.model.User;
 import com.reservationapp.service.impl.BidServiceImpl;
 import com.reservationapp.service.impl.MessageServiceImpl;
 import com.reservationapp.service.impl.RequisiteServiceImpl;
+import com.reservationapp.service.impl.UserServiceImpl;
 
 @Transactional(readOnly = true)
 @Component
@@ -29,6 +31,9 @@ public class ScheduledTasks {
 	
 	@Autowired
 	private MessageServiceImpl messageService;
+	
+	@Autowired
+	private UserServiceImpl userService;
 //  prvi je na svaki minut drugi je svaki dan u 00:01
 //	@Scheduled(cron = "* */1 * * * *")
 	@Scheduled(cron = "0 1 0 * * ?")
@@ -41,18 +46,20 @@ public class ScheduledTasks {
 				
 				Bid newBid =bidService.findHeighestBid(re.getId());
 				if(newBid != null) {
+					User kupac = userService.findOneById(newBid.getBiddersID());
+					User user = userService.findOneById(re.getCreator());
 					Message message = new Message();
 					message.setReciverID(newBid.getBiddersID());
-					message.setSenderID(re.getCreator());
+					message.setSenderID(newBid.getBiddersID());
 					message.setRead(false);
-					message.setText("Your bid for "+re.getName()+" is selected as best, please proceed to make arrangements with seller. ");
+					message.setText("Your bid for \""+re.getName()+"\" is selected as best, please proceed to make arrangements with seller. Email:"+user.getEmail());
 					messageService.save(message);
 					
 					Message message1 = new Message();
 					message1.setReciverID(re.getCreator());
-					message1.setSenderID(newBid.getBiddersID());
+					message1.setSenderID(re.getCreator());
 					message1.setRead(false);
-					message1.setText("Please proceed to make arrangements with buyer.(item: "+ re.getName() +")");
+					message1.setText("Please proceed to make arrangements with buyer.(item: "+ re.getName() +"). Email:"+kupac.getEmail());
 					messageService.save(message1);
 					
 					List<Bid> losers = bidService.findByItemsid(re.getId());
@@ -63,7 +70,7 @@ public class ScheduledTasks {
 								if(!l2.contains(bi.getBiddersID())) {
 									Message message3 = new Message();
 									message3.setReciverID(bi.getBiddersID());
-									message3.setSenderID(re.getCreator());
+									message3.setSenderID(bi.getBiddersID());
 									message3.setRead(false);
 									message3.setText("Your bid for item "+re.getName()+" was not accepted not accepted. ");
 									messageService.save(message3);
@@ -77,7 +84,7 @@ public class ScheduledTasks {
 					message1.setReciverID(re.getCreator());
 					message1.setSenderID(re.getCreator());
 					message1.setRead(false);
-					message1.setText("Your add for "+ re.getName() +" is expired, no one placed a bid. Burrrn LOL");
+					message1.setText("Your add for \""+ re.getName() +"\" is expired, no one placed a bid. Burrrn LOL");
 					messageService.save(message1);
 				}
 				re.setActive(false);

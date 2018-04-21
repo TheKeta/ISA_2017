@@ -32,7 +32,7 @@ function createRequisiteElement(reqs){
 	str += '<div style=\"padding: 5px; border: 1px solid black; overflow: auto;\">'
 		+ '<p><b>' + reqs.name + '</b></p>'
 		+ '<div style="float:left; width: 500px;">'
-		+ '<img src=\"data:image/png;base64,' +reqs.pictureDB +'\" alt=\"'+reqs.name+'\" style="width:900px;height:250px;">'
+		+ '<img src=\"data:image/png;base64,' +reqs.pictureDB +'\" alt=\"'+reqs.name+'\" style="width:500px;height:250px;">'
 		+ '</div>'
 		+ '<div style="float:center; width: auto;">'
 		+ '<p><i>'+ reqs.description+ '</i></p>'
@@ -41,7 +41,7 @@ function createRequisiteElement(reqs){
 		+ '<div style="float:right; width: auto;"> '
 		+ '<p>Currently highest bid is: <p id="curPrice'+reqs.id+'">'+ reqs.price + '</p> din.</p>'
 		+ '<div id = bidForm'+reqs.id+'>'
-		+ '<p>Place your bid: <input type="text" name="placeBid" id="placeBid"> </p>'
+		+ '<p>Place your bid: <input type="text" name="placeBid" id="placeBid'+reqs.id+'"> </p>'
 		+ '<button onClick="SendBid('+ reqs.id + ')">Send Bid</button>'
 		+ '</div>'
 		+ '</div>'
@@ -92,7 +92,7 @@ function acceptBid(reqsID){
 function SendBid(reqsID){
 	var data = new Object();
 	data.itemsID = reqsID;
-	var price = parseInt($("#placeBid").val());
+	var price = parseInt($("#placeBid"+reqsID).val());
 	if($("#placeBid").val() == ""){
 		alert("Enter bidding price.");
 		return;
@@ -106,7 +106,7 @@ function SendBid(reqsID){
 		dataType: "json",
         success: function (data) {
         	console.log(data)
-        	$('#curPrice'+reqsID).html(data.price);
+        	$('#curPrice'+reqsID).html(price);
         },
 		error: function(xhr, ajaxOptions, thrownError){
 			console.log(thrownError);
