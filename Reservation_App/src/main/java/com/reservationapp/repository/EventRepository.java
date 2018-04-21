@@ -9,7 +9,6 @@ import org.springframework.data.repository.query.Param;
 
 import com.reservationapp.model.Event;
 import com.reservationapp.model.Hall;
-import com.reservationapp.model.Reservation;
 
 public interface EventRepository extends JpaRepository<Event, Long>{
 

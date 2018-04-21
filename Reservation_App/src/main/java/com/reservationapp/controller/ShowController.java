@@ -1,5 +1,6 @@
 package com.reservationapp.controller;
 
+import java.io.IOException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,8 +61,13 @@ public class ShowController {
 		if(!loggedUser().getUserType().getName().equals("ADMIN")){
 			return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
 		}
-		
+//		try {
+//			show.setPictureDB(show.getPicture().getBytes());
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
 		Show newShow = showService.save(show);
+		
 		return new ResponseEntity<>(newShow, HttpStatus.OK);
 	}
 	
@@ -70,7 +76,6 @@ public class ShowController {
 		if(!loggedUser().getUserType().getName().equals("ADMIN")){
 			return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
 		}
-		
 		Show deleted = showService.delete(id);
 		
 		return new ResponseEntity<>(deleted, HttpStatus.OK);

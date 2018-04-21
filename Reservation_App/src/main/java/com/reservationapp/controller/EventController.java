@@ -14,16 +14,21 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.reservationapp.DTOs.EventReservationsSeats;
 import com.reservationapp.DTOs.EventShows;
 import com.reservationapp.DTOs.EventShowsHalls;
 import com.reservationapp.DTOs.InstitutionEvents;
 import com.reservationapp.model.Event;
 import com.reservationapp.model.Hall;
 import com.reservationapp.model.Institution;
+import com.reservationapp.model.Reservation;
+import com.reservationapp.model.Seat;
 import com.reservationapp.model.User;
 import com.reservationapp.service.impl.EventServiceImpl;
 import com.reservationapp.service.impl.HallServiceImpl;
 import com.reservationapp.service.impl.InstitutionServiceImpl;
+import com.reservationapp.service.impl.ReservationServiceImpl;
+import com.reservationapp.service.impl.SeatServiceImpl;
 import com.reservationapp.service.impl.ShowServiceImpl;
 import com.reservationapp.service.impl.UserServiceImpl;
 
@@ -46,6 +51,12 @@ public class EventController {
 	@Autowired
 	private UserServiceImpl userService;
 	
+	@Autowired
+	private SeatServiceImpl seatService;
+	
+	@Autowired
+	private ReservationServiceImpl reservationService;
+	
 	@RequestMapping(value="/getEvents/{id}", method = RequestMethod.GET)
 	public ResponseEntity<InstitutionEvents> getInstitutionEvents(@PathVariable Long id){
 		Institution institution = institutionService.findOne(id);
@@ -56,6 +67,18 @@ public class EventController {
 	public ResponseEntity<List<Event>> getEvents(@PathVariable Long id){
 		Institution institution = institutionService.findOne(id);
 		return new ResponseEntity<>(eventService.findByInstitution(institution), HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="/getEventSeats/{id}", method = RequestMethod.GET)
+	public ResponseEntity<EventReservationsSeats> getEventSeats(@PathVariable Long id){
+		if(loggedUser() == null){
+			return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+		}
+		Event event = eventService.findOne(id);
+		List<Seat> seats = seatService.findByHall(hallService.findOne(event.getHall().getId()));
+		List<Reservation> reservations = reservationService.findByEvent(event);
+		
+		return new ResponseEntity<>(new EventReservationsSeats(event, seats, reservations), HttpStatus.OK);
 	}
 	
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
