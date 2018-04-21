@@ -16,6 +16,8 @@ $(document).ready(function(){
 			$("#description").val(showGenresTypes.show.description);
 			$("#length").val(showGenresTypes.show.length);
 			$("#cast").val(showGenresTypes.show.cast);
+			$("#poster").val(showGenresTypes.show.pictureDB)
+			$("#id").val(showGenresTypes.show.id);
 			
 		}
 	});
@@ -33,29 +35,40 @@ function generateDropdowns(data, id){
 }
 
 function Save(){
-	var show = new Object();
-	show.id = window.location.href.split("=")[1];
-	show.name = $("#name").val();
-	show.cast = $("#cast").val();
-	show.description = $("#description").val();
-	show.length = $("#length").val();
+	var show = new FormData();
+	if(document.getElementById('picture').files[0]!= undefined){
+		show.append("picture", document.getElementById('picture').files[0]);
+	}else{
+		show.append("pictureDB", document.getElementById('poster').value);	
+	}
+	var id = window.location.href.split("=")[1];
 	
+	show.append("name", $("#name").val());
+	show.append("cast", $("#cast").val());
+	show.append("description", $("#description").val());
+	show.append("length", $("#length").val());
+	show.append("id", $("#id").val());
 	var type = new Object();
 	type.id = $("#type").val();
-	show.type = type;
+	//show.append("type", type);
 	
 	var genre = new Object();
 	genre.id = $("#genre").val();
-	show.genre = genre;
+	//show.append("genre", genre);
 	
 	$.ajax({
-		url: "../show",
+    	url: "../show/add/"+ genre.id + "/" + type.id,
 		type: "POST",
-		data: JSON.stringify(show),
-		contentType: "application/json",
-		dataType: "json",
-		success: function(show){
-			window.location.href = "../Shows.html";
+	    enctype: 'multipart/form-data',
+	    data: show,
+        processData: false, //prevent jQuery from automatically transforming the data into a query string
+        contentType: false,
+        cache: false,
+        success: function (data) {
+        	window.location.href = "../Shows.html"
+        },
+		error: function(thrownError){
+			console.log(thrownError.responseText);
 		}
 	});
 }

@@ -10,13 +10,42 @@
 		<div class="row">
 			<div class="col-sm-3"></div>
 			<div id="shows" class="col-sm-6">
-				<input type="text" id="name"  style="margin-top: 10px;" class="form-control"/>
-				<select class="form-control"  style="margin-top: 10px;" id="genre"></select>
-				<select class="form-control"  style="margin-top: 10px;" id="type"></select>
-				<input type="text" id="description"  style="margin-top: 10px;" class="form-control"/>
-				<input type="text" id="cast"  style="margin-top: 10px;" class="form-control"/>
-				<input type="number" id="length" style="margin-top: 10px;" class="form-control"/>
-				<div style=" padding-top: 10px; text-align: right;">
+				<span style="margin-top: 10px;">
+					Name:
+					<input type="text" id="name"  style="margin-top: 10px;" class="form-control"/>
+				</span>
+				
+				<span style="margin-top: 10px;">
+					Genre:
+					<select class="form-control"  id="genre">
+						<option value="selectGenre" selected>Select genre</option>
+					</select>
+				</span>
+				<span style="margin-top: 10px;">
+					Type:
+					<select class="form-control"   id="type">
+						<option value="selectType" selected>Select type</option>
+					</select>
+				</span>
+				<span style="margin-top: 10px;">
+					Description:
+					<input type="text" id="description"  class="form-control"/>
+				</span>
+				<span style="margin-top: 10px;">
+					Cast:
+					<input type="text" id="cast"  class="form-control"/>
+				</span>
+				<span style="margin-top: 10px;">
+					Length:
+					<input type="number" id="length"  class="form-control"/>
+				</span>
+				<span style="margin-top: 10px;">
+					Poster:
+					<input type="file" id="picture"  class="form-control"/>
+				</span>
+				<input type="text" id="poster"  style="display: none;"/>
+				<input type="number" id="id"  style="display: none;"/>
+				 <div style="text-align: right;">
 				    <button type="button" style="margin-right: 10px;" onClick="Save()" >Save</button>
 				    <button type="button" onClick="Cancel()" >Cancel</button>
 			    </div>

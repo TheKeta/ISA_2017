@@ -28,26 +28,29 @@ function Create(){
 	show.append("description", $("#description").val());
 	show.append("length", $("#length").val());
 	
-	var type = new FormData();
-	type.append("id",$("#type").val());
-	show.append("type", type);
+	var type = new Object();
+	type.id = $("#type").val();
+	//show.append("type", type);
 	
-	var genre = new FormData();
-	genre.append("id", $("#genre").val());
-	show.append("genre", genre);
+	var genre = new Object();
+	genre.id = $("#genre").val();
+	//show.append("genre", genre);
 	
 	
 	$.ajax({
-    	url: "../show",
-    	 type: "POST",
-         enctype: 'multipart/form-data',
-         data: show,
+    	url: "../show/add/"+ genre.id + "/" + type.id,
+		type: "POST",
+	    enctype: 'multipart/form-data',
+	    data: show,
         processData: false, //prevent jQuery from automatically transforming the data into a query string
         contentType: false,
         cache: false,
-        success: function (show) {
+        success: function (data) {
         	window.location.href = "../Shows.html"
-        }
+        },
+		error: function(thrownError){
+			console.log(thrownError.responseText);
+		}
 	});
 }
 

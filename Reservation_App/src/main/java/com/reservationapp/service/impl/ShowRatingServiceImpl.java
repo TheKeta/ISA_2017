@@ -6,7 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.reservationapp.model.Show;
 import com.reservationapp.model.ShowRating;
+import com.reservationapp.model.User;
 import com.reservationapp.repository.ShowRatingRepository;
 import com.reservationapp.service.ShowRatingService;
 
@@ -53,5 +55,15 @@ public class ShowRatingServiceImpl implements ShowRatingService{
 		for(Long id : ids){
 			this.delete(id);
 		}
+	}
+
+	@Override
+	public ShowRating findByShowAndUser(Show show, User user) {
+		return showRatingRepository.findByShowAndUser(show, user);
+	}
+
+	@Override
+	public List<ShowRating> findByShow(Show show) {
+		return showRatingRepository.findByShow(show);
 	}
 }

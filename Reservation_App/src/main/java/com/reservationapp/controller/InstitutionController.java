@@ -21,7 +21,6 @@ import com.reservationapp.model.Institution;
 import com.reservationapp.model.InstitutionRating;
 import com.reservationapp.model.InstitutionType;
 import com.reservationapp.model.User;
-import com.reservationapp.service.HistoryService;
 import com.reservationapp.service.impl.HistoryServiceImpl;
 import com.reservationapp.service.impl.InstitutionRatingServiceImpl;
 import com.reservationapp.service.impl.InstitutionServiceImpl;

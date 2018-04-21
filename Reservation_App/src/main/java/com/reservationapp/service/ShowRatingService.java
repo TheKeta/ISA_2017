@@ -2,7 +2,9 @@ package com.reservationapp.service;
 
 import java.util.List;
 
+import com.reservationapp.model.Show;
 import com.reservationapp.model.ShowRating;
+import com.reservationapp.model.User;
 
 public interface ShowRatingService {
 
@@ -17,4 +19,8 @@ public interface ShowRatingService {
 	ShowRating delete(Long id);
 	
 	void delete(List<Long> ids);
+	
+	ShowRating findByShowAndUser(Show show, User user);
+	
+	List<ShowRating> findByShow(Show show);
 }

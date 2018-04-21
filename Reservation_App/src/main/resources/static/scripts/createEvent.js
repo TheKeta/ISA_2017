@@ -12,17 +12,23 @@ $(document).ready(function() {
 		url: "../hall/getHalls/" + window.location.href.split("=")[1],
 		success: function(halls){
 			for(var i=0; i<halls.length; i++){
-				$("#hall").append(generateDropDown(halls[i]));
+				$("#hall").append(generateDropDownHalls(halls[i]));
 			}
 		}
 	});
 });
 
 
+function generateDropDownHalls(data){
+	var str = "";
+	str += '<option value="'+ data.id +'">'+ data.name +'</option>';
+	return str;
+}
+
 
 function generateDropDown(data){
 	var str = "";
-	str += '<option value="'+ data.id +'">'+ data.name +'</option>';
+	str += '<option value="'+ data.show.id +'">'+ data.show.name +'</option>';
 	return str;
 }
 

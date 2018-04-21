@@ -24,7 +24,10 @@ function createEventElements(events){
 	str += '<button type=\"button\" class=\"btn\" style=\"width: 100%; height: 30px; background: #d9d9d9;\" data-toggle=\"collapse\" data-target=\"#'+ events[0].id + '\"\">'+ events[0].show.name +'</button>';
 	str += '<div id=\"'+ events[0].id + '\" class=\"collapse in\">';
 	str += '<div class="row">';
-	str += '<div class="col-sm-8">';
+	str += '<div class="col-sm-2">';
+	str += '<img src=\"data:image/png;base64,' + events[0].show.pictureDB +'\" alt=\"'+events[0].show.name+'\" style="width:100px;height:100px;" />';
+	str += '</div>';
+	str += '<div class="col-sm-6">';
 	str += '<ul>';
 	str += '<li>Type: '+ events[0].show.type.name +'</li>';
 	str += '<li>Genre: '+ events[0].show.genre.name +'</li>';

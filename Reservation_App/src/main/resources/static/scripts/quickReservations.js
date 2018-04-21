@@ -25,7 +25,10 @@ function createElements(reservation){
 	str += '<button type=\"button\" class=\"btn\" style=\"width: 100%; height: 30px; background: #d9d9d9;\" data-toggle=\"collapse\" data-target=\"#'+ reservation.id + '\"\">'+ reservation.event.show.name +'</button>';
 	str += '<div id=\"'+ reservation.id + '\" class=\"collapse in\">';
 	str += '<div class="row">';
-	str += '<div class="col-sm-8">';
+	str += '<div class="col-sm-2">';
+	str += '<img src=\"data:image/png;base64,' + reservation.event.show.pictureDB +'\" alt=\"'+ reservation.event.show.name+'\" style="width:100px;height:100px;" />';
+	str += '</div>';
+	str += '<div class="col-sm-6">';
 	str += '<ul>';
 	str += '<li>Type: '+ reservation.event.show.type.name +'</li>';
 	str += '<li>Genre: '+ reservation.event.show.genre.name +'</li>';

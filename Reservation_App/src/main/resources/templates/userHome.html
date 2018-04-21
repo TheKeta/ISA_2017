@@ -95,8 +95,8 @@
     			var i;
     			for(i=0; i<data.length; i++){
     				a.innerHTML += '<tr><td>' + data[i].id + '</td><td>' + data[i].seat + '</td><td>' + data[i].price + '</td><td>' +
-    				data[i].date + '</td><td><button type="button"  class="btn btn-warning btn-sm" onclick="cancelReservation(\'' + data[i].id + '\')">Cancel</button></td>' +
-    				'<td><select><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option></select></td>' +
+    				data[i].eventDate + '</td><td><button type="button"  class="btn btn-warning btn-sm" onclick="cancelReservation(\'' + data[i].id + '\')">Cancel</button></td>' +
+    				'<td><select id="rating"><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option></select></td>' +
     				'<td><button type="button"  class="btn btn-classic btn-sm" onclick="rate(\'' + data[i].id + '\')">Rate</button></td></tr>';
       			}
 			}else{
@@ -106,7 +106,13 @@
 	}
 	
 	function rate(id){
-		
+		var rating = $("#rating").val();
+		$.ajax({
+			url: '../show/rate/'+ id +'/' + rating,
+        	success: function(data){
+        		window.location.reload();
+        	}
+		});
 	}
 	
 	
