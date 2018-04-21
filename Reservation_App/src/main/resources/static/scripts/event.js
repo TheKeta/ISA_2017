@@ -12,6 +12,11 @@ $(document).ready(function() {
 			var hours = date.getHours();
 			var minutes = date.getMinutes();
 			
+			document.getElementById("event").value = reservedSeats.event.id;
+			document.getElementById("hall").value = reservedSeats.event.hall.id;
+			document.getElementById("price").value = reservedSeats.event.price;
+			
+			
 			$("#name").append(reservedSeats.event.show.name);
 			$("#hall").append(reservedSeats.event.hall.name);
 			$("#cast").append(reservedSeats.event.show.cast);
@@ -59,6 +64,74 @@ $(document).ready(function() {
 	});
 });
 
+function Reserve(){
+	var checkboxes = $(":checkbox:checked");
+	var reservations = [];
+	
+	for(var i=0; i<checkboxes.length; i++){
+		var seat = new Object();	
+		if(checkboxes[i].id != "sendToFriends"){
+			seat.row = checkboxes[i].id.split("_")[1].split("x")[0]; 
+			seat.seatNumber = checkboxes[i].id.split("x")[1];
+			var type = new Object();
+			type.name = checkboxes[i].id.split("_")[0];
+			if(type.name === 'balconyLeft'){
+				type.name = 'BALCONY-LEFT';
+			}else if(type.name ==="balconyRight"){
+				type.name = 'BALCONY-RIGHT';
+			}else if(type.name === 'couples'){
+				type.name = 'COUPLES';
+			}else if(type.name === 'regular'){
+				type.name = 'REGULAR';
+			}
+			var hall = new Object();
+			hall.id = document.getElementById("hall").value;
+			seat.seatType = type;
+			seat.hall = hall;
+			
+			var reservation = new Object();
+			reservation.seats = seat;
+			
+			var event = new Object();
+			event.id = document.getElementById("event").value;
+			reservation.event = event;
+			
+			var user = new Object();
+			reservation.user = user;
+			
+			reservation.price = document.getElementById("price").value;
+			
+			reservation.quick = false;
+			
+			reservations.push(reservation);
+		
+		}	
+	}
+	var sendToFriends = document.getElementById("sendToFriends").checked;
+	if(sendToFriends == true){
+		$.ajax({
+			url: "../reservation/reservationWithFriends",
+			data: JSON.stringify(reservations),
+			type: "POST",
+			contentType: "application/json",
+			dataType: "json",
+			success: function(data){
+				window.history.back();
+			}
+		});
+	}else{
+		$.ajax({
+			url: "../reservation/regularReservation",
+			data: JSON.stringify(reservations),
+			type: "POST",
+			contentType: "application/json",
+			dataType: "json",
+			success: function(data){
+				window.history.back();
+			}
+		});
+	}
+}
 
 function createSeats(seats, type){
 	if(seats.length === 0){

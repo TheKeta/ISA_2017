@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,14 +22,17 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.reservationapp.DTOs.ReservationsSum;
 import com.reservationapp.model.Event;
+import com.reservationapp.model.Friendship;
 import com.reservationapp.model.Hall;
 import com.reservationapp.model.Institution;
 import com.reservationapp.model.Reservation;
 import com.reservationapp.model.SeatType;
 import com.reservationapp.model.User;
 import com.reservationapp.service.impl.EventServiceImpl;
+import com.reservationapp.service.impl.FriendshipServiceImpl;
 import com.reservationapp.service.impl.HallServiceImpl;
 import com.reservationapp.service.impl.InstitutionServiceImpl;
+import com.reservationapp.service.impl.MailSender;
 import com.reservationapp.service.impl.ReservationServiceImpl;
 import com.reservationapp.service.impl.SeatServiceImpl;
 import com.reservationapp.service.impl.SeatTypeServiceImpl;
@@ -39,6 +44,9 @@ public class ReservationController {
 
 	@Autowired
 	private ReservationServiceImpl reservationService;
+	
+	@Autowired
+	private FriendshipServiceImpl friendshipService;
 	
 	@Autowired
 	private EventServiceImpl eventService;
@@ -57,6 +65,9 @@ public class ReservationController {
 	
 	@Autowired
 	private InstitutionServiceImpl institutionService;
+	
+	@Autowired
+	private MailSender mailSender;
 	
 	@RequestMapping(value="/getReservations/{id}", method = RequestMethod.GET)
 	public ResponseEntity<List<Reservation>> getReservations(@PathVariable Long id){
@@ -104,6 +115,107 @@ public class ReservationController {
 				SeatType type = seatTypeService.findByName(r.getSeats().getSeatType().getName());
 				Hall hall = hallService.findOne(r.getSeats().getHall().getId());
 				reservationService.save(new Reservation(r.getPrice(), seatService.findByRowAndSeatNumberAndHallAndSeatType(r.getSeats().getRow(), r.getSeats().getSeatNumber(), hall, type), event, null, r.isQuick()));
+			}
+		}
+		
+		
+		return new ResponseEntity<>(reservations, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="/regularReservation", method=RequestMethod.POST, consumes="application/json")
+	public ResponseEntity<List<Reservation>> addRegularReservation(@RequestBody List<Reservation> reservations){
+		
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		if(auth==null)
+			return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+		
+		User user = userService.findOneByEmail(auth.getName());
+		if(user==null)
+			return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+		
+		for(Reservation r : reservations) {
+			Event event = eventService.findOne(r.getEvent().getId());
+			List<Reservation> temps = reservationService.findByEvent(event);
+			boolean permission = true;
+			for(Reservation t : temps) {
+				if(t.getSeats().getRow() == r.getSeats().getRow() && 
+						t.getSeats().getSeatNumber() == r.getSeats().getSeatNumber() &&
+						t.getSeats().getSeatType().getName().equals(r.getSeats().getSeatType().getName())) {
+					
+						permission = false;
+				}
+			}
+			if(permission) {
+				SeatType type = seatTypeService.findByName(r.getSeats().getSeatType().getName());
+				Hall hall = hallService.findOne(r.getSeats().getHall().getId());
+				reservationService.save(new Reservation(r.getPrice(), seatService.findByRowAndSeatNumberAndHallAndSeatType(r.getSeats().getRow(), r.getSeats().getSeatNumber(), hall, type), event, user, r.isQuick()));
+			}
+		}
+		
+		
+		return new ResponseEntity<>(reservations, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="/reservationWithFriends", method=RequestMethod.POST, consumes="application/json")
+	public ResponseEntity<List<Reservation>> addReservationWithFriends(@RequestBody List<Reservation> reservations, HttpServletRequest request){
+		
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		if(auth==null)
+			return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+		
+		User user = userService.findOneByEmail(auth.getName());
+		if(user==null)
+			return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+		
+
+		List<Reservation> reservations2 = new ArrayList<Reservation>();
+		
+		for(Reservation r : reservations) {
+			Event event = eventService.findOne(r.getEvent().getId());
+			List<Reservation> temps = reservationService.findByEvent(event);
+			
+			boolean permission = true;
+			for(Reservation t : temps) {
+				if(t.getSeats().getRow() == r.getSeats().getRow() && 
+						t.getSeats().getSeatNumber() == r.getSeats().getSeatNumber() &&
+						t.getSeats().getSeatType().getName().equals(r.getSeats().getSeatType().getName())) {
+					
+						permission = false;
+				}
+			}
+			if(permission) {
+				SeatType type = seatTypeService.findByName(r.getSeats().getSeatType().getName());
+				Hall hall = hallService.findOne(r.getSeats().getHall().getId());
+				Reservation res = new Reservation(r.getPrice(), seatService.findByRowAndSeatNumberAndHallAndSeatType(r.getSeats().getRow(), r.getSeats().getSeatNumber(), hall, type), event, user, r.isQuick());
+				reservationService.save(res);
+				reservations2.add(res);
+			}
+		}
+		if(reservations.size()>1){
+			List<Friendship> friendships = friendshipService.acceptedFriendships();
+			List<User> friends = new ArrayList<User>();
+			for(Friendship f : friendships){
+				if(f.getSender().getId() == user.getId()){
+					friends.add(f.getReciever());
+				}else if(f.getReciever().getId() == user.getId()){
+					friends.add(f.getSender());
+				}
+			}
+			
+			String appUrl = request.getScheme() + "://" + request.getServerName();
+			if(request.getServerName().equals("localhost"))
+				appUrl+=":8080";
+			//String message = user.getFirstName() + " " + user.getLastName() + " has invited you to an event, click on one of the links to grab your ticket before they run out!\n";// + appUrl + "/confirmReservation?token=" + user.getToken();
+//			for(int i=1; i<reservations2.size(); i++){
+//				message+= appUrl + "/confirmReservation?token=" + user.getToken() + "&id=" + reservations2.get(i).getId() + "\n";
+//			}
+			
+			for(User friend : friends){
+				String message = user.getFirstName() + " " + user.getLastName() + " has invited you to an event, click on one of the links to grab your ticket before they run out!\n";// + appUrl + "/confirmReservation?token=" + user.getToken();
+				for(int i=1; i<reservations2.size(); i++){
+					message+= appUrl + "/confirmReservation?token=" + user.getToken() + "&id=" + reservations2.get(i).getId() + "&friend=" + friend.getId() + "\n";
+				}
+				mailSender.sendMail(friend.getEmail(), message, "Invitation");
 			}
 		}
 		

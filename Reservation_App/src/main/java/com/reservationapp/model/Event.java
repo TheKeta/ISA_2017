@@ -50,6 +50,14 @@ public class Event implements Serializable{
 
 	
 	
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
 	public double getPrice() {
 		return price;
 	}

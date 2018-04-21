@@ -18,6 +18,7 @@ import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -29,8 +30,8 @@ public class MailSender {
 	Logger logger = LoggerFactory.getLogger(this.getClass());
 	
 	
-	
-	public void sendMail(String to, String content) {
+	@Async
+	public void sendMail(String to, String content, String subject) {
 		Properties properties = new Properties();
 		
 	    properties.setProperty("mail.transport.protocol", "smtp");
@@ -59,7 +60,7 @@ public class MailSender {
 			MimeMessage message = new MimeMessage(session); 
 			message.setFrom(new InternetAddress("sdmrbg123@gmail.com")); 
 			message.addRecipient(Message.RecipientType.TO,new InternetAddress(to)); 
-			message.setSubject("Account Verification"); 
+			message.setSubject(subject); 
 			message.setText(content); 
 
 			//send message 

@@ -150,7 +150,7 @@ public class LoginController {
 			if(request.getServerName().equals("localhost"))
 				appUrl+=":8080";
 			String message = "To confirm your e-mail address, please click the link below:\n" + appUrl + "/confirm?token=" + newUser.getToken();
-			mailSender.sendMail(newUser.getEmail(), message);
+			mailSender.sendMail(newUser.getEmail(), message, "Account Verification");
 			modelAndView.addObject("successMessage", "Please confirm your registration via email.");
 			modelAndView.addObject("user", new User());
 			modelAndView.setViewName("login");
