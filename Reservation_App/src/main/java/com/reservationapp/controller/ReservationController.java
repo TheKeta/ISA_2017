@@ -1,5 +1,9 @@
 package com.reservationapp.controller;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -14,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.reservationapp.DTOs.ReservationsSum;
 import com.reservationapp.model.Event;
 import com.reservationapp.model.Hall;
 import com.reservationapp.model.Institution;
@@ -107,13 +112,28 @@ public class ReservationController {
 	}
 	
 	@RequestMapping(value = "/report/{id}/{fromDate}/{toDate}", method = RequestMethod.GET)
-	public ResponseEntity<List<Reservation>> delete(@PathVariable Long id, @PathVariable String fromDate, @PathVariable String toDate) {
+	public ResponseEntity<ReservationsSum> delete(@PathVariable Long id, @PathVariable String fromDate, @PathVariable String toDate) {
 		Institution institution = institutionService.findOne(id);
 		if(institution == null || institution.getAdmin() != loggedUser()){
 			return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
 		}
-		List<Reservation> reservations = reservationService.searchBetweenDates(new Date(fromDate), new Date(toDate));
-		return new ResponseEntity<>(reservations, HttpStatus.OK);
+		DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+		Date date1 = new Date();
+		Date date2 = new Date();
+		try {
+			date1 = formatter.parse(fromDate);
+			date2 = formatter.parse(toDate);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		List<Reservation> tempRes = reservationService.searchBetweenDates(date1, date2);
+		List<Reservation> reservations = new ArrayList<Reservation>();
+		for(Reservation r : tempRes){
+			if(r.getSeats().getHall().getInstitution() == institution && r.getUser() != null){
+				reservations.add(r);
+			}
+		}
+		return new ResponseEntity<>(new ReservationsSum(reservations), HttpStatus.OK);
 	}
 	
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)

@@ -32,6 +32,9 @@ public class ReservationServiceImpl implements ReservationService{
 	
 	@Autowired
 	private SeatServiceImpl seatService;
+	
+	@Autowired
+	private EventServiceImpl eventService;
 
 
 	@Override
@@ -96,6 +99,13 @@ public class ReservationServiceImpl implements ReservationService{
 
 	@Override
 	public List<Reservation> searchBetweenDates(Date fromDate, Date toDate) {
-		return reservationRepository.searchBetweenDates(fromDate, toDate);
+		List<Event> events = eventService.findByDateBetween(fromDate, toDate);
+		List<Reservation> reservations = new ArrayList<Reservation>();
+		for(Event e : events){
+			for(Reservation r: reservationRepository.findByEvent(e)){
+				reservations.add(r);
+			}
+		}
+		return reservations;
 	}
 }

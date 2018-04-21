@@ -76,6 +76,9 @@ function Edit(id){
 	window.location.href = "../EditEvents.html?id=" + id;
 }
 
+function Reports(){
+	window.location.href = "../Reports.html?id=" + str[1];
+}
 
 
 

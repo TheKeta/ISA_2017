@@ -1,5 +1,6 @@
 package com.reservationapp.service;
 
+import java.util.Date;
 import java.util.List;
 
 import com.reservationapp.model.Event;
@@ -26,4 +27,6 @@ public interface EventService {
 	List<Event> findByHall(Hall hall);
 	
 	List<Event> findByHallAndShow(Hall hall, Show show);
+	
+	List<Event> findByDateBetween(Date fromDate, Date toDate);
 }

@@ -1,6 +1,5 @@
 package com.reservationapp.repository;
 
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -15,5 +14,4 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long>{
 	
 	public List<Reservation> findByEvent(Event event);
 	
-	public List<Reservation> searchBetweenDates(Date fromDate, Date toDate);
 }
