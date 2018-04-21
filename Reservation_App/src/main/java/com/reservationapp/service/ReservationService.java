@@ -1,8 +1,8 @@
 package com.reservationapp.service;
 
+import java.util.Date;
 import java.util.List;
 
-import com.reservationapp.model.Institution;
 import com.reservationapp.model.Reservation;
 
 public interface ReservationService {
@@ -20,4 +20,6 @@ public interface ReservationService {
 	void delete(List<Long> ids);
 	
 	List<Reservation> findByInstitution(Long id);
+	
+	List<Reservation> searchBetweenDates(Date fromDate, Date toDate);
 }

@@ -1,6 +1,7 @@
 package com.reservationapp.service.impl;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -91,5 +92,10 @@ public class ReservationServiceImpl implements ReservationService{
 
 	public List<Reservation> findByEvent(Event event) {
 		return reservationRepository.findByEvent(event);
+	}
+
+	@Override
+	public List<Reservation> searchBetweenDates(Date fromDate, Date toDate) {
+		return reservationRepository.searchBetweenDates(fromDate, toDate);
 	}
 }

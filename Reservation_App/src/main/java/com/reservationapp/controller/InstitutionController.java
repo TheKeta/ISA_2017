@@ -126,6 +126,7 @@ public class InstitutionController {
 		return new ResponseEntity<>(newRating, HttpStatus.OK);
 	}
 	
+
 	private User loggedUser(){
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		User user = userService.findOneByEmail(auth.getName());

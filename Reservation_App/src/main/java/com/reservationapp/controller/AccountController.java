@@ -32,7 +32,7 @@ public class AccountController {
 	@Autowired
 	private CurrentUserDetailsService currentUserDetailsService;
 	
-
+	
 	@RequestMapping(value="/userProfile", method = RequestMethod.GET)
 	public ModelAndView userProfile(){
 		ModelAndView modelAndView = new ModelAndView();
