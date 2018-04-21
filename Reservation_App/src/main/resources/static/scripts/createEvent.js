@@ -34,6 +34,8 @@ function Cancel(){
 function Create(){
 	var event = new Object();
 	
+	event.price = $("#price").val();
+	
 	var hall = new Object();
 	hall.id = $("#hall").val();
 	event.hall = hall;

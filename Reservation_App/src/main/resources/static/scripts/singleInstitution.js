@@ -46,7 +46,7 @@ function createEventElements(events){
 		var hours = date.getHours();
 		var minutes = date.getMinutes();
 		
-		str += '<li><a href="../Event.html?id='+ events[i].id +'">Hall: '+ events[i].hall.name +', time: ' + hours + ":" + minutes + '</a></li>';	
+		str += '<li><a href="../Event.html?id='+ events[i].id +'">Hall: '+ events[i].hall.name +', time: ' + hours + ":" + minutes + ' - Price: ' + events[i].price +'</a></li>';	
 	}
 	str += '</ul>';
 	str += '</div>';

@@ -64,10 +64,6 @@ public class EventController {
 		if (event == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
-		if(event.getHall().getInstitution().getAdmin() != loggedUser()){
-			return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
-		}		
-		
 		return new ResponseEntity<>(new EventShows(event, showService.findAll()), HttpStatus.OK);
 	}
 	
@@ -76,9 +72,6 @@ public class EventController {
 		Event event = eventService.findOne(id);
 		if (event == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		}
-		if(event.getHall().getInstitution().getAdmin() != loggedUser()){
-			return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
 		}
 		
 		return new ResponseEntity<>(new EventShowsHalls(event, showService.findAll(), hallService.findByInstitution(event.getHall().getInstitution())), HttpStatus.OK);

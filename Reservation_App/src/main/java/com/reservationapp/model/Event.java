@@ -19,7 +19,7 @@ public class Event implements Serializable{
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy =  GenerationType.IDENTITY)
 	private Long id;
 	
 	@ManyToOne(optional = false)
@@ -31,17 +31,31 @@ public class Event implements Serializable{
 	@Column(nullable = false)
 	private Date eventDate;
 	
+	@Column(nullable = false)
+	private double price;
+	
 	public Event(){
 		
 	}
 	
-	public Event(Hall hall, Show show, Date eventDate) {
+	public Event(Hall hall, Show show, Date eventDate, double price) {
 		super();
 		Assert.notNull(hall, "Hall can not be null");
 		Assert.notNull(show, "Show can not be null");
 		this.hall = hall;
 		this.show = show;
 		this.eventDate = eventDate;
+		this.price = price;
+	}
+
+	
+	
+	public double getPrice() {
+		return price;
+	}
+
+	public void setPrice(double price) {
+		this.price = price;
 	}
 
 	public Long getId() {

@@ -23,7 +23,7 @@ $(document).ready(function() {
 
 function generateDropDown(user){
 	var str = "";
-	str += '<option value="'+ user.id +'">'+ user.username +'</option>';
+	str += '<option value="'+ user.id +'">'+ user.firstName + ' ' + user.lastName +'</option>';
 	return str;
 }
 

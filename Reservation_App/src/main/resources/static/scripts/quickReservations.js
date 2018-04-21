@@ -55,8 +55,10 @@ function createElements(reservation){
 	str += '<li>Row: ' + reservation.seats.row + ", Seat: " + reservation.seats.seatNumber + '</li>';
 	str += '<li>Time: ' + hours + ":" + minutes + '</a></li>';
 	str += '<li>Price:' + reservation.price + '</li>';
-	str += '<li><button onClick="Reserve('+ reservation.id +')">Reserve</button></li>'
+	
 	str += '</ul>';
+	str += '<button style="margin: 10px;" onClick="Reserve('+ reservation.id +')">Reserve</button>'
+	str += '<button onClick="Delete('+ reservation.id +')">Delete</button>';
 	str += '</div>';
 	
 	str += "</div>";
@@ -74,6 +76,16 @@ function Reserve(id){
 			window.location.reload();
 		}
 	});
+}
+
+function Delete(id){
+	$.ajax({
+		url: "../reservation/" + id,
+		type: "DELETE",
+		success: function(data){
+			window.location.reload();
+		}
+	})
 }
 
 function Add(){

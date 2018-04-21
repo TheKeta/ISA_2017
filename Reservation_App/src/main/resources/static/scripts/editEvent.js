@@ -9,6 +9,7 @@ $(document).ready(function() {
 			$("#hall").append(generateDropDown(eventShow.halls, eventShow.event.hall.id))
 			$("#date").val(transformDate(new Date(eventShow.event.eventDate)));
 			$("#time").val(transformTime(new Date(eventShow.event.eventDate)));
+			$("#price").val(eventShow.event.price);
 			$("#id").val(eventShow.event.id);
 		} 
 	});
@@ -22,6 +23,7 @@ function Save(){
 	hall.id = $("#hall").val();
 	event.hall = hall;
 	
+	event.price = $("#price").val();
 	
 	var show = new Object();
 	show.id = $("#show").val();

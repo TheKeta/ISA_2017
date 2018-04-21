@@ -14,9 +14,9 @@ INSERT INTO USER_TYPE VALUES('1', 'ADMIN');
 INSERT INTO USER_TYPE VALUES('2', 'VISITOR');
 INSERT INTO USER_TYPE VALUES('3', 'ADMINFZ');
 
-insert into user values('1', 'TRUE', 'subotica', 'a@a', 'Stefan', 'Radanovic', 'admin', 'tkn', '1');
-insert into user values('2', 'TRUE', 'subotica', 'aa@a', 'Stefan', 'Radanovic', 'admin', 'tkn', '2');
-insert into user values('3', 'TRUE', 'subotica', 'aaa@a', 'Stefan', 'Radanovic', 'admin', 'tkn', '3');
+insert into user values('1', 'TRUE', 'subotica', 'a@a', 'Stefan', 'Radanovic', 'admin', 0, 'tkn', '1');
+insert into user values('2', 'TRUE', 'subotica', 'aa@a', 'Stefan', 'Radanovic', 'admin' , 0, 'tkn', '2');
+insert into user values('3', 'TRUE', 'subotica', 'aaa@a', 'Stefan', 'Radanovic', 'admin',  0, 'tkn', '3');
 
 
 INSERT INTO INSTITUTION VALUES(1, 'New York', 'Description 1', 'Name1', 3, 1); 
@@ -122,16 +122,16 @@ INSERT INTO SHOW VALUES( 3, 'Cast 3', 'Description 3', 120, 'Show 3', 3, 1);
 INSERT INTO SHOW VALUES( 4, 'Cast 4', 'Description 4', 120, 'Show 4', 1, 1);
 INSERT INTO SHOW VALUES( 5, 'Cast 5', 'Description 5', 120, 'Show 5', 2, 1);
 
-INSERT INTO EVENT VALUES(1, '2018-04-14', 1, 1);
-INSERT INTO EVENT VALUES(2, '2018-04-14', 2, 2);
-INSERT INTO EVENT VALUES(3, '2018-04-14', 3, 3);
-INSERT INTO EVENT VALUES(4, '2018-04-14', 4, 4);
-INSERT INTO EVENT VALUES(5, '2018-04-14', 2, 5);
-INSERT INTO EVENT VALUES(6, '2018-04-14', 2, 1);
-INSERT INTO EVENT VALUES(7, '2018-04-14', 3, 1);
-INSERT INTO EVENT VALUES(8, '2018-04-14', 1, 2);
-INSERT INTO EVENT VALUES(9, '2018-04-14', 4, 2);
-INSERT INTO EVENT VALUES(10, '2018-04-14', 5, 3);
+INSERT INTO EVENT VALUES(1, '2018-04-14', 100, 1, 1);
+INSERT INTO EVENT VALUES(2, '2018-04-14', 200, 2, 2);
+INSERT INTO EVENT VALUES(3, '2018-04-14', 300, 3, 3);
+INSERT INTO EVENT VALUES(4, '2018-04-14', 400, 4, 4);
+INSERT INTO EVENT VALUES(5, '2018-04-14', 500, 2, 5);
+INSERT INTO EVENT VALUES(6, '2018-04-14', 100, 2, 1);
+INSERT INTO EVENT VALUES(7, '2018-04-14',100, 3, 1);
+INSERT INTO EVENT VALUES(8, '2018-04-14',100, 1, 2);
+INSERT INTO EVENT VALUES(9, '2018-04-14',100, 4, 2);
+INSERT INTO EVENT VALUES(10, '2018-04-14',100, 5, 3);
 
 
 INSERT INTO REQUISITE VALUES(1,2,'Majica sa likom tora','2018-05-14',true,true, ,'Majica', null,750,'used',0);

@@ -102,6 +102,10 @@ public class ReservationController {
 	
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<Reservation> delete(@PathVariable Long id) {
+		Reservation res = reservationService.findOne(id);
+		if(res.getSeats().getHall().getInstitution().getAdmin() != loggedUser()){
+			return new ResponseEntity<>(res, HttpStatus.UNAUTHORIZED);
+		}
 		Reservation deleted = reservationService.delete(id);
 		return new ResponseEntity<>(deleted, HttpStatus.OK);
 	}
