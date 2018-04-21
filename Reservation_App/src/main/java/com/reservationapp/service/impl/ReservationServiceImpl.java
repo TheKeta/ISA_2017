@@ -13,6 +13,7 @@ import com.reservationapp.model.Hall;
 import com.reservationapp.model.Institution;
 import com.reservationapp.model.Reservation;
 import com.reservationapp.model.Seat;
+import com.reservationapp.model.User;
 import com.reservationapp.repository.ReservationRepository;
 import com.reservationapp.service.ReservationService;
 
@@ -95,7 +96,13 @@ public class ReservationServiceImpl implements ReservationService{
 	}
 
 	@Override
-	public List<Reservation> searchBetweenDates(Date fromDate, Date toDate) {
-		return reservationRepository.searchBetweenDates(fromDate, toDate);
+	public List<Reservation> findByUser(User user) {
+		// TODO Auto-generated method stub
+		return reservationRepository.findByUser(user);
 	}
+
+//	@Override
+//	public List<Reservation> searchBetweenDates(Date fromDate, Date toDate) {
+//		return reservationRepository.searchBetweenDates(fromDate, toDate);
+//	}
 }

@@ -106,15 +106,15 @@ public class ReservationController {
 		return new ResponseEntity<>(reservations, HttpStatus.OK);
 	}
 	
-	@RequestMapping(value = "/report/{id}/{fromDate}/{toDate}", method = RequestMethod.GET)
-	public ResponseEntity<List<Reservation>> delete(@PathVariable Long id, @PathVariable String fromDate, @PathVariable String toDate) {
-		Institution institution = institutionService.findOne(id);
-		if(institution == null || institution.getAdmin() != loggedUser()){
-			return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
-		}
-		List<Reservation> reservations = reservationService.searchBetweenDates(new Date(fromDate), new Date(toDate));
-		return new ResponseEntity<>(reservations, HttpStatus.OK);
-	}
+//	@RequestMapping(value = "/report/{id}/{fromDate}/{toDate}", method = RequestMethod.GET)
+//	public ResponseEntity<List<Reservation>> delete(@PathVariable Long id, @PathVariable String fromDate, @PathVariable String toDate) {
+//		Institution institution = institutionService.findOne(id);
+//		if(institution == null || institution.getAdmin() != loggedUser()){
+//			return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
+//		}
+//		List<Reservation> reservations = reservationService.searchBetweenDates(new Date(fromDate), new Date(toDate));
+//		return new ResponseEntity<>(reservations, HttpStatus.OK);
+//	}
 	
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<Reservation> delete(@PathVariable Long id) {

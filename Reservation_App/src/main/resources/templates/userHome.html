@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+	<title>Home Page</title>
+	<link rel="stylesheet" type="text/css" th:href="@{/css/registration.css}" />
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+	<form th:action="@{/logout}" method="get">
+		<button class="btn btn-md btn-danger btn-block" name="registration"
+		type="Submit">Logout</button>
+	</form>
+	<form th:action="@{/userProfile}" method="get">
+		<button class="btn btn-md btn-success btn-block" name="userProfile"
+		type="Submit">My Profile</button>
+	</form>
+	<div class="row" style="padding-top:200px;">
+		<div class="col-sm-4"></div>
+		<div class="col-sm-1">
+			<a href ="../Institutions.html?type=Theater">
+				<img src="../images/Theaters.png" style="width: 200px; height: 200px;"/>
+			</a>
+		</div>
+		<div class="col-sm-1"></div>
+		<div class="col-sm-1">
+			<a href ="../Institutions.html?type=Cinema">
+				<img src="../images/Cinemas.png" style="width: 200px; height: 200px;"/>
+			</a>
+		</div>
+	</div>
+	<div class="row"> 
+		<div class="col-sm-4"></div>
+		<div class="col-sm-1"  style="text-align: right;">
+			<a href ="../Institutions.html?type=theater" >
+				Theaters
+			</a>
+		</div>
+		<div class="col-sm-1"></div>
+		<div class="col-sm-1" style="text-align: right;">
+			<a href ="../Institutions.html?type=cinema">
+				Cinemas
+			</a>
+		</div>
+	</div>
+	<h2>Friends</h2>
+	<table class="table table-bordred table-striped" style="border: 1px solid #ddd;" id="friendsTable"></table>
+	<h2>History</h2>
+	<table class="table table-bordred table-striped" style="border: 1px solid #ddd;" id="historyTable"></table>
+	<h2>Reservations</h2>
+	<table class="table table-bordred table-striped" style="border: 1px solid #ddd;" id="reservationsTable"></table>
+	
+	
+	<script>
+	$(document).ready(function() {
+		$.ajax({
+				url: '../friendship/friends',
+	       	type: "GET",
+	       	contentType: "application/json",
+	       	success: function(data){
+	  		  				updateFriendsTable(data);
+	       		}
+	   	});
+		
+		$.ajax({
+			url: '../home/getHistory',
+       	type: "GET",
+       	contentType: "application/json",
+       	success: function(data){
+  		  				updateHistoryTable(data);
+       		}
+   		});
+	});
+	
+	function updateHistoryTable(data){
+		if(data==null){
+			return false;
+		}
+		if(data.length != 0){
+  					var a = document.getElementById("historyTable");
+  					a.innerHTML = '';
+    			var i;
+    			for(i=0; i<data.length; i++){
+    				a.innerHTML += '<tr><td>' + data[i].type + '</td><td><a href="../Institution.html?id=' + data[i].id + '">' + data[i].name + '</a></td></tr>';
+      			}
+			}else{
+				var a = document.getElementById("historyTable");
+				a.innerHTML = '';
+			}
+	}
+	
+	
+	function updateFriendsTable(data){
+		if(data==null){
+			return false;
+		}
+		if(data.length != 0){
+  					var a = document.getElementById("friendsTable");
+  					a.innerHTML = '';
+    			var i;
+    			for(i=0; i<data.length; i++){
+    				a.innerHTML += '<tr><td><p>' + data[i].email + '</p></td><td>' + data[i].firstName + '</td><td>' + data[i].lastName + '</td><td><button type="button"  class="btn btn-warning btn-sm" onclick="unfriend(\'' + data[i].email + '\')">Unfriend</button></td></tr>';
+      			}
+			}else{
+				var a = document.getElementById("friendsTable");
+				a.innerHTML = '';
+			}
+	}
+	
+	function unfriend(e){
+		var user = new Object();
+		user.email = e;
+		$.ajax({
+				url: '../friendship/unfriend',
+	        	type: "PUT",
+	        	data: JSON.stringify(user),
+	        	contentType: "application/json",
+	        	success: function(data){
+	        		updateFriendsTable(data);
+	        	}
+	    	});
+	}
+	</script>
+</body>
+</html>

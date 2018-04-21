@@ -16,10 +16,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.reservationapp.DTOs.InstitutionRated;
 import com.reservationapp.DTOs.InstitutionUsers;
+import com.reservationapp.model.History;
 import com.reservationapp.model.Institution;
 import com.reservationapp.model.InstitutionRating;
 import com.reservationapp.model.InstitutionType;
 import com.reservationapp.model.User;
+import com.reservationapp.service.HistoryService;
+import com.reservationapp.service.impl.HistoryServiceImpl;
 import com.reservationapp.service.impl.InstitutionRatingServiceImpl;
 import com.reservationapp.service.impl.InstitutionServiceImpl;
 import com.reservationapp.service.impl.InstitutionTypeServiceImpl;
@@ -40,6 +43,9 @@ public class InstitutionController {
 	
 	@Autowired
 	private UserServiceImpl userService;
+	
+	@Autowired
+	private HistoryServiceImpl historyService;
 	
 	@RequestMapping(value="/getInstitutions/{type}", method = RequestMethod.GET)
 	public ResponseEntity<List<InstitutionRated>> getInstitutions(@PathVariable String type){
@@ -126,7 +132,31 @@ public class InstitutionController {
 		return new ResponseEntity<>(newRating, HttpStatus.OK);
 	}
 	
-
+	@RequestMapping(value = "/history/{id}", method = RequestMethod.PUT)
+	public void updateHistory(@PathVariable Long id){
+		Institution institution = institutionService.findOne(id);
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		if(institution == null || auth == null) {
+			return;
+		}
+		User user = userService.findOneByEmail(auth.getName());
+		for(History h : historyService.findAll()){
+			if(h.getUser().getId() == user.getId()){
+				if(!h.getInstitutions().contains(institution)){
+					h.getInstitutions().add(institution);
+				}
+				historyService.save(h);
+				return;
+			}
+		}
+		History history = new History();
+		history.setUser(user);
+		history.setInstitutions(new ArrayList<Institution>());
+		history.getInstitutions().add(institution);
+		historyService.save(history);
+		return;
+	}
+	
 	private User loggedUser(){
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		User user = userService.findOneByEmail(auth.getName());

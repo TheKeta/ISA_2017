@@ -20,14 +20,6 @@ function defaultElements(){
 			data.map(createInstitutionElements);
 		}
 	});
-	
-	$.ajax({
-		url: '../institution/history/' + str[1],
-       	type: "PUT",
-       	success: function(data){
-       		
-       	}
-   	});
 }
 
 

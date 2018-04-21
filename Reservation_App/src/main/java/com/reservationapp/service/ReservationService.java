@@ -4,12 +4,15 @@ import java.util.Date;
 import java.util.List;
 
 import com.reservationapp.model.Reservation;
+import com.reservationapp.model.User;
 
 public interface ReservationService {
 
 	Reservation findOne(Long id);
 
 	List<Reservation> findAll();
+	
+	List<Reservation> findByUser(User user);
 	
 	Reservation save(Reservation reservation);
 	
@@ -21,5 +24,5 @@ public interface ReservationService {
 	
 	List<Reservation> findByInstitution(Long id);
 	
-	List<Reservation> searchBetweenDates(Date fromDate, Date toDate);
+	//List<Reservation> searchBetweenDates(Date fromDate, Date toDate);
 }

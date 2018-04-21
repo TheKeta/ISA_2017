@@ -13,7 +13,10 @@
 		<button class="btn btn-md btn-danger btn-block" name="registration"
 		type="Submit">Logout</button>
 	</form>  	
-	
+	<form th:action="@{/userHome}" method="get">
+		<button class="btn btn-md btn-success btn-block" name="homePage"
+		type="Submit">Home Page</button>
+	</form>
 	<span th:utext="${message}"></span>
 	<span th:utext="${welcomeMessage}"></span>
 	

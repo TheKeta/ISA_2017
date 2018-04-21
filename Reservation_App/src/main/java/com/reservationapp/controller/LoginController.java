@@ -61,6 +61,13 @@ public class LoginController {
 		return modelAndView;
 	}
 	
+	@RequestMapping(value="/userHome", method = RequestMethod.GET)
+	public ModelAndView userHome(){
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName("userHome");
+		return modelAndView;
+	}
+	
 	@RequestMapping(value="/login", method = RequestMethod.POST)
 	public ModelAndView loginUser(@Valid User user, BindingResult bindingResult, HttpServletRequest request){
 		ModelAndView modelAndView = new ModelAndView();
@@ -93,7 +100,7 @@ public class LoginController {
 		modelAndView.addObject("welcomeMessage", "Welcome " + userForm.getFirstName());
 		modelAndView.addObject("message", "");
 		
-		modelAndView.setViewName("redirect:userProfile");
+		modelAndView.setViewName("redirect:userHome");
 		return modelAndView;
 	}
 	

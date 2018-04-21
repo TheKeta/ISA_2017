@@ -8,6 +8,13 @@ $(document).ready(function() {
 			data.groups.map(createEventElements);
 		}
 	});
+	$.ajax({
+		url: '../institution/history/' + str[1],
+       	type: "PUT",
+       	success: function(data){
+       		
+       	}
+   	});
 });
 
 
