@@ -6,7 +6,7 @@ public class ReservationDTO {
 
 	private Long id;
 	
-	private String eventDate;
+	private Long eventDate;
 	
 	private int seat;
 	
@@ -18,7 +18,7 @@ public class ReservationDTO {
 	
 	public ReservationDTO(Reservation res){
 		this.id = res.getId();
-		this.eventDate = res.getEvent().getEventDate().toString();
+		this.eventDate = res.getEvent().getEventDate().getTime();
 		this.seat = res.getSeats().getSeatNumber();
 		this.user = res.getUser().getEmail();
 		this.quick = res.isQuick();
@@ -37,11 +37,11 @@ public class ReservationDTO {
 		this.id = id;
 	}
 
-	public String getEventDate() {
+	public Long getEventDate() {
 		return eventDate;
 	}
 
-	public void setEventDate(String eventDate) {
+	public void setEventDate(Long eventDate) {
 		this.eventDate = eventDate;
 	}
 

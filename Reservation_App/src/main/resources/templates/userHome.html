@@ -91,16 +91,24 @@
 		}
 		if(data.length != 0){
   					var a = document.getElementById("reservationsTable");
-  					a.innerHTML = '<tr><th>ID</th><th>SEAT</th><th>PRICE</th><th>DATE</th><th>cancel</th></tr>';
+  					a.innerHTML = '<tr><th>ID</th><th>SEAT</th><th>PRICE</th><th>DATE</th><th>cancel</th><th colspan="2">Rate</th><th></th></tr>';
     			var i;
     			for(i=0; i<data.length; i++){
-    				a.innerHTML += '<tr><td>' + data[i].id + '</td><td>' + data[i].seat + '</td><td>' + data[i].price + '</td><td>' + data[i].date + '</td><td><button type="button"  class="btn btn-warning btn-sm" onclick="cancelReservation(\'' + data[i].id + '\')">Cancel</button></td></tr>';
+    				a.innerHTML += '<tr><td>' + data[i].id + '</td><td>' + data[i].seat + '</td><td>' + data[i].price + '</td><td>' +
+    				data[i].date + '</td><td><button type="button"  class="btn btn-warning btn-sm" onclick="cancelReservation(\'' + data[i].id + '\')">Cancel</button></td>' +
+    				'<td><select><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option></select></td>' +
+    				'<td><button type="button"  class="btn btn-classic btn-sm" onclick="rate(\'' + data[i].id + '\')">Rate</button></td></tr>';
       			}
 			}else{
 				var a = document.getElementById("reservationsTable");
 				a.innerHTML = '';
 			}
 	}
+	
+	function rate(id){
+		
+	}
+	
 	
 	function cancelReservation(id){
 		var reservation = new Object();

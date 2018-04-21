@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -21,13 +22,13 @@ public class Reservation implements Serializable{
 	@Column(nullable = false)
 	private double price;
 	
-	@ManyToOne(optional = false)
+	@ManyToOne(optional = false, fetch = FetchType.EAGER)
 	private Seat seat;
 	
-	@ManyToOne(optional = false)
+	@ManyToOne(optional = false, fetch = FetchType.EAGER)
 	private Event event;
 	
-	@ManyToOne(optional = true)
+	@ManyToOne(optional = true, fetch = FetchType.EAGER)
 	private User user;
 	
 	@Column(nullable = false)
