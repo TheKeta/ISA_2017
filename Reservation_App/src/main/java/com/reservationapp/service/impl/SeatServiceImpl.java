@@ -64,7 +64,7 @@ public class SeatServiceImpl implements SeatService{
 	}
 
 	@Override
-	public Seat findByRowAndSeatNumber(int row, int seatNumber,SeatType seatType) {
-		return seatRepository.findByRowAndSeatNumberAndSeatType(row, seatNumber, seatType);
+	public Seat findByRowAndSeatNumberAndHallAndSeatType(int row, int seatNumber, Hall hall, SeatType seatType) {
+		return seatRepository.findByRowAndSeatNumberAndHallAndSeatType(row, seatNumber, hall, seatType);
 	}
 }

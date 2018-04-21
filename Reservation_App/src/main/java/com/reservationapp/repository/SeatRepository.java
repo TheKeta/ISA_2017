@@ -15,5 +15,5 @@ public interface SeatRepository extends JpaRepository<Seat, Long> {
 	@Query("SELECT p FROM Seat p where lower(p.hall) = lower(:hall)")
 	public List<Seat> findByHall(@Param("hall") Hall hall);
 	
-	public Seat findByRowAndSeatNumberAndSeatType(int row, int seatNumber, SeatType seatType);
+	public Seat findByRowAndSeatNumberAndHallAndSeatType(int row, int seatNumber, Hall hall, SeatType seatType);
 }

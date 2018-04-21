@@ -29,17 +29,30 @@ public class Reservation implements Serializable{
 	
 	@ManyToOne(optional = true)
 	private User user;
+	
+	@Column(nullable = false)
+	private boolean quick;
 
 	public Reservation(){
 		
 	}
 
-	public Reservation(double price, Seat seat, Event event, User user) {
+	public Reservation(double price, Seat seat, Event event, User user, boolean quick) {
 		super();
 		this.price = price;
 		this.seat = seat;
 		this.event = event;
 		this.user = user;
+		this.quick = quick;
+	}
+
+	
+	public boolean isQuick() {
+		return quick;
+	}
+
+	public void setQuick(boolean quick) {
+		this.quick = quick;
 	}
 
 	public Long getId() {

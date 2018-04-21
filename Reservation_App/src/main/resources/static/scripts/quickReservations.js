@@ -55,7 +55,7 @@ function createElements(reservation){
 	str += '<li>Row: ' + reservation.seats.row + ", Seat: " + reservation.seats.seatNumber + '</li>';
 	str += '<li>Time: ' + hours + ":" + minutes + '</a></li>';
 	str += '<li>Price:' + reservation.price + '</li>';
-	
+	str += '<li><button onClick="Reserve('+ reservation.id +')">Reserve</button></li>'
 	str += '</ul>';
 	str += '</div>';
 	
@@ -63,6 +63,17 @@ function createElements(reservation){
 	str += "</div>";
 	str += '</div>';
 	return str;
+}
+
+function Reserve(id){
+	$.ajax({
+		url: "../reservation/reserve/" + id,
+		type: "POST",
+		contentType: "application/json",
+		success: function(data){
+			window.location.reload();
+		}
+	});
 }
 
 function Add(){

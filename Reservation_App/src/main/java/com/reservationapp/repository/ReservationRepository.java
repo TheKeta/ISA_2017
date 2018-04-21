@@ -11,7 +11,7 @@ import com.reservationapp.model.Seat;
 
 public interface ReservationRepository extends JpaRepository<Reservation, Long>{
 
-	public Reservation findBySeat(@Param("seat")Seat seat);
+	public List<Reservation> findBySeat(Seat seat);
 	
 	public List<Reservation> findByEvent(Event event);
 }

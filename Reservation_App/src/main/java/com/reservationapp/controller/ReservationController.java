@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,12 +14,16 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.reservationapp.model.Event;
+import com.reservationapp.model.Hall;
 import com.reservationapp.model.Reservation;
 import com.reservationapp.model.SeatType;
+import com.reservationapp.model.User;
 import com.reservationapp.service.impl.EventServiceImpl;
+import com.reservationapp.service.impl.HallServiceImpl;
 import com.reservationapp.service.impl.ReservationServiceImpl;
 import com.reservationapp.service.impl.SeatServiceImpl;
 import com.reservationapp.service.impl.SeatTypeServiceImpl;
+import com.reservationapp.service.impl.UserServiceImpl;
 
 @RestController
 @RequestMapping("/reservation")
@@ -35,6 +41,12 @@ public class ReservationController {
 	@Autowired
 	private SeatServiceImpl seatService;
 	
+	@Autowired
+	private UserServiceImpl userService;
+	
+	@Autowired
+	private HallServiceImpl hallService;
+	
 	@RequestMapping(value="/getReservations/{id}", method = RequestMethod.GET)
 	public ResponseEntity<List<Reservation>> getReservations(@PathVariable Long id){
 		return new ResponseEntity<>(reservationService.findByInstitution(id), HttpStatus.OK);
@@ -50,8 +62,21 @@ public class ReservationController {
 		return new ResponseEntity<>(reservation, HttpStatus.OK);
 	}
 	
+	@RequestMapping(value = "/reserve/{id}", method=RequestMethod.POST, consumes="application/json")
+	public ResponseEntity<Reservation> reserve(@PathVariable Long id){		
+		Reservation reserve = reservationService.findOne(id);
+		if(reserve.isQuick() && reserve.getUser() == null){
+			reserve.setUser(loggedUser());
+			reservationService.save(reserve);
+		}else{
+			return new ResponseEntity<>(reserve, HttpStatus.UNAUTHORIZED);
+		}
+
+		return new ResponseEntity<>(reserve, HttpStatus.OK);
+	}
+	
 	@RequestMapping(method=RequestMethod.POST, consumes="application/json")
-	public ResponseEntity<Reservation> addReservation(@RequestBody List<Reservation> reservations){
+	public ResponseEntity<List<Reservation>> addReservation(@RequestBody List<Reservation> reservations){
 		for(Reservation r : reservations) {
 			Event event = eventService.findOne(r.getEvent().getId());
 			List<Reservation> temps = reservationService.findByEvent(event);
@@ -66,17 +91,24 @@ public class ReservationController {
 			}
 			if(permission) {
 				SeatType type = seatTypeService.findByName(r.getSeats().getSeatType().getName());
-				reservationService.save(new Reservation(r.getPrice(), seatService.findByRowAndSeatNumber(r.getSeats().getRow(), r.getSeats().getSeatNumber(), type), event, null ));
+				Hall hall = hallService.findOne(r.getSeats().getHall().getId());
+				reservationService.save(new Reservation(r.getPrice(), seatService.findByRowAndSeatNumberAndHallAndSeatType(r.getSeats().getRow(), r.getSeats().getSeatNumber(), hall, type), event, null, r.isQuick()));
 			}
 		}
 		
 		
-		return new ResponseEntity<>(null, HttpStatus.OK);
+		return new ResponseEntity<>(reservations, HttpStatus.OK);
 	}
 	
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<Reservation> delete(@PathVariable Long id) {
 		Reservation deleted = reservationService.delete(id);
 		return new ResponseEntity<>(deleted, HttpStatus.OK);
+	}
+	
+	private User loggedUser(){
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		User user = userService.findOneByEmail(auth.getName());
+		return user;
 	}
 }

@@ -68,9 +68,13 @@ function Create(){
 		var user = new Object();
 		reservation.user = user;
 		
-		reservation.price = $("price").val();
+		reservation.price = $("#price").val();
+		
+		reservation.quick = true;
 		
 		reservations.push(reservation);
+		
+		
 	}
 	
 	$.ajax({
@@ -80,7 +84,7 @@ function Create(){
 		contentType: "application/json",
 		dataType: "json",
 		success: function(data){
-			window.location.href = "../QuickReservations.html?id="+str[1];
+			window.history.back();
 		}
 	});
 }

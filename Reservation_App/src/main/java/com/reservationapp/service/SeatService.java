@@ -22,5 +22,5 @@ public interface SeatService {
 	
 	List<Seat> findByHall(Hall hall);
 
-	Seat findByRowAndSeatNumber(int row, int seatNumber, SeatType seatType);
+	Seat findByRowAndSeatNumberAndHallAndSeatType(int row, int seatNumber, Hall hall, SeatType seatType);
 }

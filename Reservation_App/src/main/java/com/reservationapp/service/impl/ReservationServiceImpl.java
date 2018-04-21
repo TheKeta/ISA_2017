@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.reservationapp.model.Event;
 import com.reservationapp.model.Hall;
+import com.reservationapp.model.Institution;
 import com.reservationapp.model.Reservation;
 import com.reservationapp.model.Seat;
 import com.reservationapp.repository.ReservationRepository;
@@ -72,15 +73,17 @@ public class ReservationServiceImpl implements ReservationService{
 
 	@Override
 	public List<Reservation> findByInstitution(Long id) {
-		List<Hall> halls = hallService.findByInstitution(institutionService.findOne(id));
+		Institution institution = institutionService.findOne(id);
+		List<Hall> halls = hallService.findByInstitution(institution);
 		List<Reservation> reservations = new ArrayList<Reservation>();
 		for(Hall h : halls) {
 			for(Seat s : seatService.findByHall(h)) {
-				Reservation reservation = reservationRepository.findBySeat(s);
-				if(reservation != null && reservation.getUser() == null) {
-					reservations.add(reservation);	
+				List<Reservation> reservationTemp = reservationRepository.findBySeat(s);
+				for(Reservation r : reservationTemp){
+					if(r != null && r.getUser() == null) {
+						reservations.add(r);	
+					}
 				}
-				
 			}
 		}
 		return reservations;
