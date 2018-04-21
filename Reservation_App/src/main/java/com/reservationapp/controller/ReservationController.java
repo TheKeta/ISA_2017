@@ -1,5 +1,6 @@
 package com.reservationapp.controller;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,11 +16,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.reservationapp.model.Event;
 import com.reservationapp.model.Hall;
+import com.reservationapp.model.Institution;
 import com.reservationapp.model.Reservation;
 import com.reservationapp.model.SeatType;
 import com.reservationapp.model.User;
 import com.reservationapp.service.impl.EventServiceImpl;
 import com.reservationapp.service.impl.HallServiceImpl;
+import com.reservationapp.service.impl.InstitutionServiceImpl;
 import com.reservationapp.service.impl.ReservationServiceImpl;
 import com.reservationapp.service.impl.SeatServiceImpl;
 import com.reservationapp.service.impl.SeatTypeServiceImpl;
@@ -46,6 +49,9 @@ public class ReservationController {
 	
 	@Autowired
 	private HallServiceImpl hallService;
+	
+	@Autowired
+	private InstitutionServiceImpl institutionService;
 	
 	@RequestMapping(value="/getReservations/{id}", method = RequestMethod.GET)
 	public ResponseEntity<List<Reservation>> getReservations(@PathVariable Long id){
@@ -97,6 +103,16 @@ public class ReservationController {
 		}
 		
 		
+		return new ResponseEntity<>(reservations, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "/report/{id}/{fromDate}/{toDate}", method = RequestMethod.GET)
+	public ResponseEntity<List<Reservation>> delete(@PathVariable Long id, @PathVariable String fromDate, @PathVariable String toDate) {
+		Institution institution = institutionService.findOne(id);
+		if(institution == null || institution.getAdmin() != loggedUser()){
+			return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
+		}
+		List<Reservation> reservations = reservationService.searchBetweenDates(new Date(fromDate), new Date(toDate));
 		return new ResponseEntity<>(reservations, HttpStatus.OK);
 	}
 	

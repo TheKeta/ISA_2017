@@ -1,10 +1,33 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="ISO-8859-1">
-<title>Insert title here</title>
+	<link rel="stylesheet" type="text/css" href="/stylesheets/bootstrap.min.css">
+	<meta charset="UTF-8">
+	<title>Reports</title>
 </head>
 <body> 
+	<div style="padding-left: 15px; padding-right:15px;">
+		<div class="row">
+			<div class="col-sm-3"></div>
+			<div id="reports" class="col-sm-6">
+			<h1>Reports</h1>
+			<span>
+				From: 
+				<input type="Date" name="Date" style="width: 30%;" id="fromDate" class="form-control"/>
+			</span>
+			<span>
+				To:
+				<input type="Date" style="width: 30%;" name="Date" id="toDate" class="form-control"/>
+			</span>
+			<div style="text-align: right; width: 30%">
+				<button style="margin: 10px;" onClick="Confirm()" >Confirm</button>
+			</div>
+			</div>
+		</div>
+	</div>
 
+	<script src="/scripts/jquery-3.2.1.min.js"></script>
+	<script src="/stylesheets/bootstrap.min.js"></script>
+	<script src="/scripts/reports.js"></script> 
 </body>
 </html> 
