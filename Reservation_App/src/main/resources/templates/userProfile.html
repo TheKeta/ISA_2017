@@ -17,6 +17,18 @@
 		<button class="btn btn-md btn-success btn-block" name="homePage"
 		type="Submit">Home Page</button>
 	</form>
+	<form >
+		<button class="btn btn-md btn-info btn-block" name="messages"
+		type="button" onClick="msgs()">Messages</button>
+	</form>
+	<form id="fresh" style="visibility:hidden">
+		<button class="btn btn-md btn-info btn-block" name="messages"
+		type="button" onClick="fresh()">Fresh Requisites</button>
+	</form>
+	<form id="admn" style="visibility:hidden">
+		<button class="btn btn-md btn-info btn-block" name="messages"
+		type="button" onClick="admn()">Add Administrator</button>
+	</form>
 	<span th:utext="${message}"></span>
 	<span th:utext="${welcomeMessage}"></span>
 	
@@ -139,6 +151,26 @@
 	</div>
 	<script>
 		$(document).ready(function(){
+			$.ajax({
+				url: "../user/getUserRole",
+				success: function(data){
+					console.log(data);
+					if(data==1){
+						var a = document.getElementById ( "admn" ) ;
+						a.style.visibility = "visible";
+					}
+					else if(data ==3){
+						var f = document.getElementById ( "fresh" ) ;
+						f.style.visibility = "visible";
+					}
+				},
+				error: function(xhr, ajaxOptions, thrownError){
+					console.log(thrownError);
+
+				}
+			});
+			
+			
 			$(document).on('submit', '#updateForm', function(e) {
 				e.preventDefault();
 				var firstName=document.getElementById("firstName").value;
@@ -346,6 +378,16 @@
    	        		updateFriendsTable(data);
    	        	}
    	    	});
+		}
+		
+		function msgs(){
+			window.location.href = "../Messages.html";	
+		}
+		function fresh(){
+			window.location.href = "../Approve.html";	
+		}
+		function admn(){
+			window.location.href = "../Addadmin.html";	
 		}
 		
 		function rejectFriendshipRequest(e){
