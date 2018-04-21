@@ -88,34 +88,13 @@ public class UserServiceImpl implements UserService{
 	public User findOneByToken(String token){
 		return userRepository.findOneByToken(token);
 	}
+
+	@Override
+	public List<User> findByFirstNameIgnoreCaseStartingWithAndLastNameIgnoreCaseStartingWith(String firstName, String lastName) {
+		// TODO Auto-generated method stub
+		return userRepository.findByFirstNameIgnoreCaseStartingWithAndLastNameIgnoreCaseStartingWith(firstName, lastName);
+	}
+
+
 	
-//	@Override
-//	@Transactional
-//	public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
-//		User user = userRepository.findOneByEmail(userName);
-//		if(user.isActive()){
-//			List<GrantedAuthority> authorities = getUserAuthority(user.getUserType());
-//			return buildUserForAuthentication(user, authorities);
-//		}
-//		return null;
-//	}
-//
-//	private List<GrantedAuthority> getUserAuthority(UserType userRole) {
-//		Set<GrantedAuthority> roles = new HashSet<GrantedAuthority>();
-//		roles.add(new SimpleGrantedAuthority(userRole.getName()));
-//		
-//
-//		List<GrantedAuthority> grantedAuthorities = new ArrayList<GrantedAuthority>(roles);
-//		return grantedAuthorities;
-//	}
-//
-//	private UserDetails buildUserForAuthentication(User user, List<GrantedAuthority> authorities) {
-//		return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), user.isActive(), true, true, true, authorities);
-//	}
-//
-//	@Override
-//	public UserDetails loadUser(String email) {
-//		// TODO Auto-generated method stub
-//		return loadUserByUsername(email);
-//	}
 }

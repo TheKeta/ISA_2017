@@ -104,6 +104,33 @@
 					
 					
 				</form>
+				<form autocomplete="off" id="searchUsersForm" class="form-horizontal" role="form">
+					<h2>Search Users</h2>
+					<div class="form-group">
+						<div class="col-sm-9">
+							<input type="text" id="firstNameSearch"
+								placeholder="First Name" class="form-control" />
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-sm-9">
+							<input type="text" id="lastNameSearch"
+								placeholder="Last Name" class="form-control" />
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-sm-9">
+							<button type="submit" class="btn btn-primary btn-block">Search Users</button>
+						</div>
+					</div>
+					<table class="table table-bordred table-striped" style="border: 1px solid #ddd;" id="userSearchResultsTable"></table>
+					
+				</form>
+				<h2>Friendship Requests</h2>
+				<table class="table table-bordred table-striped" style="border: 1px solid #ddd;" id="requestsTable"></table>
+				
+				<h2>Friends</h2>
+				<table class="table table-bordred table-striped" style="border: 1px solid #ddd;" id="friendsTable"></table>
 			</div>
 		</div>
 	</div>
@@ -184,7 +211,153 @@
        	    	});
     		});
 			
+			$(document).on('submit', '#searchUsersForm', function(e) {
+				e.preventDefault();
+				var firstName=document.getElementById("firstNameSearch").value;
+				var lastName=document.getElementById("lastNameSearch").value;
+				if(firstName.trim()==""){
+					firstName="-1";
+				}
+				if(lastName.trim()==""){
+					lastName="-1";
+				}
+
+				$.ajax({
+       				url: '../user/' + firstName + '/' + lastName,
+       	        	type: "GET",
+       	        	contentType: "application/json",
+       	        	success: function(data){
+       	   		  				if(data.length != 0){
+       	   		  					var a = document.getElementById("userSearchResultsTable");
+       	   		  					a.innerHTML = '';
+       	                 			var i;
+       	                 			for(i=0; i<data.length; i++){
+       	                 				a.innerHTML += '<tr><td><p>' + data[i].email + '</p></td><td><button type="button"  class="btn btn-success btn-sm" onclick="sendFriendshipRequest(\'' + data[i].email + '\')">Send friendship request</button></td></tr>';
+       	                   			}
+				       			}else{
+				       				var a = document.getElementById("userSearchResultsTable");
+				       				a.innerHTML = '';
+				       				alert("Did not find any users");
+				       			}
+       	        			}
+       	    	});
+    		});
+			
+			//lista zahteva
+			$.ajax({
+   				url: '../friendship/requests',
+   	        	type: "GET",
+   	        	contentType: "application/json",
+   	        	success: function(data){
+   	   		  				updateRequestsTable(data);
+   	        		}
+   	    	});
+			
+			$.ajax({
+   				url: '../friendship/friends',
+   	        	type: "GET",
+   	        	contentType: "application/json",
+   	        	success: function(data){
+   	   		  				updateFriendsTable(data);
+   	        		}
+   	    	});
+			
 		});
+		
+		function sendFriendshipRequest(e){
+			var user = new Object();
+			user.email = e;
+			$.ajax({
+   				url: '../friendship',
+   	        	type: "POST",
+   	        	data: JSON.stringify(user),
+   	        	contentType: "application/json",
+   	        	success: function(data){
+   	   		  				if(data != null){
+   	   		  					//window.location.href="../WebProjekat/Index.html";
+   	   		  					alert(data);
+			       			}
+   	        			}
+   	    	});
+		}
+		
+		function updateRequestsTable(data){
+			if(data==null){
+				return false;
+			}
+			if(data.length != 0){
+	  					var a = document.getElementById("requestsTable");
+	  					a.innerHTML = '';
+        			var i;
+        			for(i=0; i<data.length; i++){
+        				a.innerHTML += '<tr><td><p>' + data[i].email + '</p></td><td><button type="button"  class="btn btn-success btn-sm" onclick="acceptFriendshipRequest(\'' + data[i].email + '\')">Accept</button></td><td><button type="button"  class="btn btn-warning btn-sm" onclick="rejectFriendshipRequest(\'' + data[i].email + '\')">Reject</button></td></tr>';
+          			}
+   			}else{
+   				var a = document.getElementById("requestsTable");
+   				a.innerHTML = '';
+   			}
+		}
+		
+		function updateFriendsTable(data){
+			if(data==null){
+				return false;
+			}
+			if(data.length != 0){
+	  					var a = document.getElementById("friendsTable");
+	  					a.innerHTML = '';
+        			var i;
+        			for(i=0; i<data.length; i++){
+        				a.innerHTML += '<tr><td><p>' + data[i].email + '</p></td><td><button type="button"  class="btn btn-warning btn-sm" onclick="unfriend(\'' + data[i].email + '\')">Unfriend</button></td></tr>';
+          			}
+   			}else{
+   				var a = document.getElementById("friendsTable");
+   				a.innerHTML = '';
+   			}
+		}
+		
+		function unfriend(e){
+			var user = new Object();
+			user.email = e;
+			$.ajax({
+   				url: '../friendship/unfriend',
+   	        	type: "PUT",
+   	        	data: JSON.stringify(user),
+   	        	contentType: "application/json",
+   	        	success: function(data){
+   	        		updateFriendsTable(data);
+   	        	}
+   	    	});
+		}
+		
+		
+		function acceptFriendshipRequest(e){
+			var user = new Object();
+			user.email = e;
+			$.ajax({
+   				url: '../friendship/accept',
+   	        	type: "PUT",
+   	        	data: JSON.stringify(user),
+   	        	contentType: "application/json",
+   	        	success: function(data){
+   	        		updateRequestsTable(data);
+   	        		updateFriendsTable(data);
+   	        	}
+   	    	});
+		}
+		
+		function rejectFriendshipRequest(e){
+			var user = new Object();
+			user.email = e;
+			$.ajax({
+   				url: '../friendship/reject',
+   	        	type: "PUT",
+   	        	data: JSON.stringify(user),
+   	        	contentType: "application/json",
+   	        	success: function(data){
+   	        		updateRequestsTable(data);
+   	        	}
+   	    	});
+		}
 	</script>
 </body>
 </html>

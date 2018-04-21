@@ -21,28 +21,17 @@ import com.reservationapp.service.impl.CurrentUserDetailsService;
 //ovde
 @Configuration
 @EnableWebSecurity
-//@Order(SecurityProperties.BASIC_AUTH_ORDER-2)
 public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	@Autowired
     private CurrentUserDetailsService userDetailsService;
-// 
-//	@Autowired
-//	private BCryptPasswordEncoder bCryptPasswordEncoder;
-	
-//	@Override
-//	protected void configure(AuthenticationManagerBuilder auth)
-//			throws Exception {
-//		auth
-//			.userDetailsService(userDetailsService)
-//			.passwordEncoder(bCryptPasswordEncoder);
-//	}
+
 	
     @Override
     protected void configure(HttpSecurity http) throws Exception {
    	
     	http.
 		authorizeRequests()
-			.antMatchers("/").permitAll()
+			.antMatchers("/", "/Home.html").permitAll()
 			.antMatchers("/h2-console", "/h2-console/**").permitAll()
 			.antMatchers("/login", "/confirm").anonymous()
 			.antMatchers("/registration*").anonymous()

@@ -25,4 +25,6 @@ public interface UserService {
 	
 	void delete(List<Long> ids);
 	
+	List<User> findByFirstNameIgnoreCaseStartingWithAndLastNameIgnoreCaseStartingWith(String firstName, String lastName);
+	
 }
