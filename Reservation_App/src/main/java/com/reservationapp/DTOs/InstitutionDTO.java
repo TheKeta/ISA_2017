@@ -21,6 +21,10 @@ public class InstitutionDTO {
 		this.address = institution.getAddress();
 		this.id = institution.getId();
 	}
+	
+	public InstitutionDTO(){
+		
+	}
 
 	public String getName() {
 		return name;

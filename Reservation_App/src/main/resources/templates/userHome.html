@@ -17,6 +17,8 @@
 		<button class="btn btn-md btn-success btn-block" name="userProfile"
 		type="Submit">My Profile</button>
 	</form>
+	<a class="btn btn-info" style="width:100%;" href="../FunZone.html">Fun Zone</a>
+	<a class="btn btn-warning" style="width:100%;" href="../Shows.html">Shows</a>
 	<div class="row" style="padding-top:200px;">
 		<div class="col-sm-4"></div>
 		<div class="col-sm-1">
@@ -72,7 +74,50 @@
   		  				updateHistoryTable(data);
        		}
    		});
+		
+		$.ajax({
+			url: '../home/reservations',
+       	type: "GET",
+       	contentType: "application/json",
+       	success: function(data){
+  		  				updateReservationsTable(data);
+       		}
+   		});
 	});
+	
+	function updateReservationsTable(data){
+		if(data==null){
+			return false;
+		}
+		if(data.length != 0){
+  					var a = document.getElementById("reservationsTable");
+  					a.innerHTML = '<tr><th>ID</th><th>SEAT</th><th>PRICE</th><th>DATE</th><th>cancel</th></tr>';
+    			var i;
+    			for(i=0; i<data.length; i++){
+    				a.innerHTML += '<tr><td>' + data[i].id + '</td><td>' + data[i].seat + '</td><td>' + data[i].price + '</td><td>' + data[i].date + '</td><td><button type="button"  class="btn btn-warning btn-sm" onclick="cancelReservation(\'' + data[i].id + '\')">Cancel</button></td></tr>';
+      			}
+			}else{
+				var a = document.getElementById("reservationsTable");
+				a.innerHTML = '';
+			}
+	}
+	
+	function cancelReservation(id){
+		var reservation = new Object();
+		reservation.id = id;
+		
+		$.ajax({
+			url: '../home/cancelReservation',
+        	type: "PUT",
+        	data: JSON.stringify(reservation),
+        	contentType: "application/json",
+        	success: function(data){
+        		alert(data);
+        		window.location.reload();
+        	}
+		});
+	}
+	
 	
 	function updateHistoryTable(data){
 		if(data==null){
