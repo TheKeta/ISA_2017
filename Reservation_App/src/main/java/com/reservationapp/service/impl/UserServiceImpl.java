@@ -13,8 +13,10 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.reservationapp.model.Requisite;
 import com.reservationapp.model.User;
 import com.reservationapp.model.UserType;
 import com.reservationapp.repository.UserRepository;
@@ -95,6 +97,41 @@ public class UserServiceImpl implements UserService{
 		return userRepository.findByFirstNameIgnoreCaseStartingWithAndLastNameIgnoreCaseStartingWith(firstName, lastName);
 	}
 
-
+	@Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW)
+	public User update(User user) {
+		User req = findOneById(user.getId()); 
+		req.setUserType(user.getUserType());
+		userRepository.save(req);
+		return req;
+	}
 	
+//	@Override
+//	@Transactional
+//	public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
+//		User user = userRepository.findOneByEmail(userName);
+//		if(user.isActive()){
+//			List<GrantedAuthority> authorities = getUserAuthority(user.getUserType());
+//			return buildUserForAuthentication(user, authorities);
+//		}
+//		return null;
+//	}
+//
+//	private List<GrantedAuthority> getUserAuthority(UserType userRole) {
+//		Set<GrantedAuthority> roles = new HashSet<GrantedAuthority>();
+//		roles.add(new SimpleGrantedAuthority(userRole.getName()));
+//		
+//
+//		List<GrantedAuthority> grantedAuthorities = new ArrayList<GrantedAuthority>(roles);
+//		return grantedAuthorities;
+//	}
+//
+//	private UserDetails buildUserForAuthentication(User user, List<GrantedAuthority> authorities) {
+//		return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), user.isActive(), true, true, true, authorities);
+//	}
+//
+//	@Override
+//	public UserDetails loadUser(String email) {
+//		// TODO Auto-generated method stub
+//		return loadUserByUsername(email);
+//	}
 }
