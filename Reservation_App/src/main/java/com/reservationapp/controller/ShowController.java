@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -57,15 +58,15 @@ public class ShowController {
 	}
 	
 	@RequestMapping(method=RequestMethod.POST, consumes="application/json")
-	public ResponseEntity<Show> addShow(@RequestBody Show show){
+	public ResponseEntity<Show> addShow(@ModelAttribute Show show){
 		if(!loggedUser().getUserType().getName().equals("ADMIN")){
 			return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
 		}
-//		try {
-//			show.setPictureDB(show.getPicture().getBytes());
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		}
+		try {
+			show.setPictureDB(show.getPicture().getBytes());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		Show newShow = showService.save(show);
 		
 		return new ResponseEntity<>(newShow, HttpStatus.OK);

@@ -20,29 +20,34 @@ function generateDropdowns(data){
 }
 
 function Create(){
-	var show = new Object();
-	show.name = $("#name").val();
-	show.cast = $("#cast").val();
-	show.description = $("#description").val();
-	show.length = $("#length").val();
 	
-	var type = new Object();
-	type.id = $("#type").val();
-	show.type = type;
+	var show = new FormData();
+	show.append("picture",document.getElementById('picture').files[0]);
+	show.append("name", $("#name").val());
+	show.append("cast", $("#cast").val());
+	show.append("description", $("#description").val());
+	show.append("length", $("#length").val());
 	
-	var genre = new Object();
-	genre.id = $("#genre").val();
-	show.genre = genre;
+	var type = new FormData();
+	type.append("id",$("#type").val());
+	show.append("type", type);
+	
+	var genre = new FormData();
+	genre.append("id", $("#genre").val());
+	show.append("genre", genre);
+	
 	
 	$.ajax({
-		url: "../show",
-		type: "POST",
-		data: JSON.stringify(show),
-		contentType: "application/json",
-		dataType: "json",
-		success: function(show){
-			window.location.href = "../Shows.html";
-		}
+    	url: "../show",
+    	 type: "POST",
+         enctype: 'multipart/form-data',
+         data: show,
+        processData: false, //prevent jQuery from automatically transforming the data into a query string
+        contentType: false,
+        cache: false,
+        success: function (show) {
+        	window.location.href = "../Shows.html"
+        }
 	});
 }
 

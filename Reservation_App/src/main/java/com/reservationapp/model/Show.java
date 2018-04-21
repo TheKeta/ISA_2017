@@ -44,29 +44,27 @@ public class Show implements Serializable {
 	@Column(nullable = false)
 	private int length;
 
-//	@JsonInclude()
-//	@Transient
-//	private MultipartFile picture;
-//
-//	@Column(nullable = true)
-//	@Lob
-//	private byte[] pictureDB;
-//
-//	public byte[] getPictureDB() {
-//		return pictureDB;
-//	}
-//
-//	public void setPictureDB(byte[] pictureDB) {
-//		this.pictureDB = pictureDB;
-//	}
+	@JsonInclude()
+	@Transient
+	private MultipartFile picture;
+
+	@Column(nullable = true)
+	@Lob
+	private byte[] pictureDB;
+
+	public byte[] getPictureDB() {
+		return pictureDB;
+	}
+
+	public void setPictureDB(byte[] pictureDB) {
+		this.pictureDB = pictureDB;
+	}
 
 	public Show() {
 
 	}
 
-	public Show(String name, Genre genre, ShowType type, String description, String cast, int length
-			//, MultipartFile picture
-			) {
+	public Show(String name, Genre genre, ShowType type, String description, String cast, int length , MultipartFile picture) {
 		super();
 		this.name = name;
 		this.genre = genre;
@@ -74,16 +72,16 @@ public class Show implements Serializable {
 		this.length = length;
 		this.cast = cast;
 		this.description = description;
-		//this.picture = picture;
+		this.picture = picture;
 	}
 	
-//	public MultipartFile getPicture() {
-//		return picture;
-//	}
-//
-//	public void setPicture(MultipartFile picture) {
-//		this.picture = picture;
-//	}
+	public MultipartFile getPicture() {
+		return picture;
+	}
+
+	public void setPicture(MultipartFile picture) {
+		this.picture = picture;
+	}
 
 	public String getCast() {
 		return cast;
