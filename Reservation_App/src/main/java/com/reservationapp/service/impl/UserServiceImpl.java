@@ -13,8 +13,10 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.reservationapp.model.Requisite;
 import com.reservationapp.model.User;
 import com.reservationapp.model.UserType;
 import com.reservationapp.repository.UserRepository;
@@ -87,6 +89,14 @@ public class UserServiceImpl implements UserService{
 	@Override
 	public User findOneByToken(String token){
 		return userRepository.findOneByToken(token);
+	}
+	
+	@Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW)
+	public User update(User user) {
+		User req = findOneById(user.getId()); 
+		req.setUserType(user.getUserType());
+		userRepository.save(req);
+		return req;
 	}
 	
 //	@Override

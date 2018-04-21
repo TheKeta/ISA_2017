@@ -17,8 +17,10 @@ import org.springframework.web.bind.annotation.RestController;
 import com.reservationapp.model.CurrentUser;
 import com.reservationapp.model.User;
 import com.reservationapp.model.UserForm;
+import com.reservationapp.model.UserType;
 import com.reservationapp.service.impl.CurrentUserDetailsService;
 import com.reservationapp.service.impl.UserServiceImpl;
+import com.reservationapp.service.impl.UserTypeServiceImpl;
 
 @RestController
 @RequestMapping(value = "/user")
@@ -26,6 +28,9 @@ public class UserController {
 	
 	@Autowired
 	private UserServiceImpl userService;
+	
+	@Autowired
+	private UserTypeServiceImpl userTService;
 	
 	@Autowired
 	private CurrentUserDetailsService currentUserDetailsService;
@@ -55,6 +60,21 @@ public class UserController {
 	public  ResponseEntity<User> getCurrentUser() {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		User user = userService.findOneByEmail(auth.getName());
+		return new ResponseEntity<>(user, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "/role/{email}/{role}", method = RequestMethod.POST)
+	public ResponseEntity<User> change(@PathVariable String email,@PathVariable Long role) {
+		User user = userService.findOneByEmail(email);
+		if (user == null) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+		UserType ut = userTService.findOne(role);
+		if(ut == null) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+		user.setUserType(ut);
+		userService.update(user);
 		return new ResponseEntity<>(user, HttpStatus.OK);
 	}
 	

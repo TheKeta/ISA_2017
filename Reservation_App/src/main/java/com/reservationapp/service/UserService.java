@@ -25,4 +25,6 @@ public interface UserService {
 	
 	void delete(List<Long> ids);
 	
+	User update(User user);
+	
 }
