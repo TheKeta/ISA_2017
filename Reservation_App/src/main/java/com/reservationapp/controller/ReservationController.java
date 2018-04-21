@@ -135,6 +135,7 @@ public class ReservationController {
 		}
 		return new ResponseEntity<>(new ReservationsSum(reservations), HttpStatus.OK);
 	}
+
 	
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<Reservation> delete(@PathVariable Long id) {

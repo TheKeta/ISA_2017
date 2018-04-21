@@ -13,6 +13,7 @@ import com.reservationapp.model.Hall;
 import com.reservationapp.model.Institution;
 import com.reservationapp.model.Reservation;
 import com.reservationapp.model.Seat;
+import com.reservationapp.model.User;
 import com.reservationapp.repository.ReservationRepository;
 import com.reservationapp.service.ReservationService;
 
@@ -108,4 +109,9 @@ public class ReservationServiceImpl implements ReservationService{
 		}
 		return reservations;
 	}
+
+	public List<Reservation> findByUser(User user) {
+		return reservationRepository.findByUser(user);
+	}
+
 }
