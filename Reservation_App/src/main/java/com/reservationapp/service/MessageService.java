@@ -17,4 +17,8 @@ public interface MessageService {
 	
 	void delete(List<Long> ids);
 	
+	List<Message> findRMSG(Long id);
+	
+	List<Message> findSMSG(Long id);
+	
 }

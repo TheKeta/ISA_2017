@@ -63,12 +63,16 @@ public class BidController {
 			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 			User user = userService.findOneByEmail(auth.getName());
 			if(user!=null) {
-				bid.setBiddersID(user.getId());
-				req.setPrice(bid.getPrice());
-				bid.setReservation(true);
-				
-				Bid bidd = bidService.save(bid);
-				return new ResponseEntity<>(bidd, HttpStatus.CREATED);
+				if(req.getPrice()<bid.getPrice()) {
+					bid.setBiddersID(user.getId());
+					req.setPrice(bid.getPrice());
+					bid.setReservation(false);
+					
+					req = reqService.save(req);
+					
+					Bid bidd = bidService.save(bid);
+					return new ResponseEntity<>(bidd, HttpStatus.CREATED);
+				}
 			}
 		}
 		return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
@@ -83,22 +87,19 @@ public class BidController {
 			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 			User user = userService.findOneByEmail(auth.getName());
 			if(user!=null) {
-				if(req.getPrice()<bid.getPrice()) {
 					bid.setBiddersID(user.getId());
-					req.setPrice(bid.getPrice());
-					bid.setReservation(false);
-					
+					bid.setReservation(true);
+					bid.setPrice(req.getPrice());
 					Bid bidd = bidService.save(bid);
-					req = reqService.save(req);
 					
 					Message message = new Message();
 					message.setReciverID(bidd.getBiddersID());
 					message.setSenderID(bidd.getBiddersID());
 					message.setRead(false);
-					message.setText("You can collect your item: "+req.getName()+" at reception. ");
+					message.setText("You can collect your item: \""+req.getName()+"\" at reception. ");
 					messageService.save(message);
 					return new ResponseEntity<>(bidd, HttpStatus.CREATED);
-				}
+				
 			}
 		}
 		return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
@@ -117,18 +118,19 @@ public class BidController {
 			//treba obavestiti sve o ovome;
 			// i postaviti rekvizit na neaktivan
 			Requisite re = reqService.findOne(newBid.getItemsID());
+			User kupac = userService.findOneById(newBid.getBiddersID());
 			Message message = new Message();
 			message.setReciverID(newBid.getBiddersID());
-			message.setSenderID(re.getCreator());
+			message.setSenderID(newBid.getBiddersID());
 			message.setRead(false);
-			message.setText("Your bid for "+re.getName()+" is selected as best, please proceed to make arrangements with seller. ");
+			message.setText("Your bid for \""+re.getName()+"\" is selected as best, please proceed to make arrangements with seller. Email:"+user.getEmail());
 			messageService.save(message);
 			
 			Message message1 = new Message();
 			message1.setReciverID(re.getCreator());
-			message1.setSenderID(newBid.getBiddersID());
+			message1.setSenderID(re.getCreator());
 			message1.setRead(false);
-			message1.setText("Please proceed to make arrangements with buyer.(item: "+ re.getName() +")");
+			message1.setText("Please proceed to make arrangements with buyer.(item: "+ re.getName() +"). Email:"+kupac.getEmail());
 			messageService.save(message1);
 			
 			
@@ -140,7 +142,7 @@ public class BidController {
 						if(!l2.contains(bi.getBiddersID())) {
 							Message message3 = new Message();
 							message3.setReciverID(bi.getBiddersID());
-							message3.setSenderID(re.getCreator());
+							message3.setSenderID(bi.getBiddersID());
 							message3.setRead(false);
 							message3.setText("Your bid for item "+re.getName()+" was not accepted not accepted. ");
 							messageService.save(message3);

@@ -57,5 +57,14 @@ public class MessageServiceImpl implements MessageService {
 		
 	}
 	
+	@Override
+	public List<Message> findRMSG(Long id){
+		return messageRepository.findRMSG(id);
+	}
+	
+	@Override
+	public List<Message> findSMSG(Long id){
+		return messageRepository.findSMSG(id);
+	}
 
 }
