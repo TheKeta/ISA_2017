@@ -1,7 +1,5 @@
 package test.constants;
 
-import java.util.Date;
-
 public class BidConstants {
 	public static final Long NEW_ITEMSID = 1L;
 	public static final Long NEW_BIDDERSID = 1L;
