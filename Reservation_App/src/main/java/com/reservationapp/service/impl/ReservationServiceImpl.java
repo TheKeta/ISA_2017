@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.reservationapp.model.Event;
@@ -19,7 +20,7 @@ import com.reservationapp.service.ReservationService;
 
 
 @Service
-@Transactional
+@Transactional(readOnly = true)
 public class ReservationServiceImpl implements ReservationService{
 
 	@Autowired
@@ -49,16 +50,19 @@ public class ReservationServiceImpl implements ReservationService{
 	}
 
 	@Override
+	@Transactional(readOnly = false)
 	public Reservation save(Reservation reservation) {
 		return reservationRepository.save(reservation);
 	}
 
 	@Override
+	@Transactional(readOnly = false)
 	public List<Reservation> save(List<Reservation> reservation) {
 		return reservationRepository.saveAll(reservation);
 	}
 
 	@Override
+	@Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW)
 	public Reservation delete(Long id) {
 		Reservation reservation = reservationRepository.findById(id).get();
 		if(reservation == null){
@@ -70,6 +74,7 @@ public class ReservationServiceImpl implements ReservationService{
 	}
 
 	@Override
+	@Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW)
 	public void delete(List<Long> ids) {
 		for(Long id : ids){
 			this.delete(id);
