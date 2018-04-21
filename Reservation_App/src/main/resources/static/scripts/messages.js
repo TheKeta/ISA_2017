@@ -102,3 +102,27 @@ function createRequisiteElementt(msg, name){
 		}
 	});
 }
+
+function send(){
+	if($("#email").val()=="" || $("#message").val()==""){
+		alert("Enter all fields properly");
+		return;
+	}
+	var data = new Object();
+	data.text = $("#message").val();
+	
+	$.ajax({
+    	url: "../message/send/"+$("#email").val(),
+		data: JSON.stringify(data),
+		type: "POST",
+		contentType: "application/json",
+		dataType: "json",
+        success: function (data) {
+        	window.location.href = "../Messages.html";
+        },
+        error: function (e) {
+        	alert("Enter all fields properly. (Image is not required)")
+            console.log(e.responseText);
+        }
+    });
+}
