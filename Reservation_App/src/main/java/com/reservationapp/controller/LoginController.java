@@ -78,7 +78,7 @@ public class LoginController {
 //			bindingResult
 //					.rejectValue("email", "error.user",
 //							"There is already a user registered with the email provided");
-			modelAndView.addObject("error", "Wrong username or password");
+			modelAndView.addObject("message", "Wrong username or password");
 			modelAndView.setViewName("login");
 			return modelAndView;
 		}
