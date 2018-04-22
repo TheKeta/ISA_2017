@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.reservationapp.model.History;
 import com.reservationapp.model.User;
@@ -11,6 +12,7 @@ import com.reservationapp.repository.HistoryRepository;
 import com.reservationapp.service.HistoryService;
 
 @Service
+@Transactional
 public class HistoryServiceImpl implements HistoryService{
 	
 	@Autowired

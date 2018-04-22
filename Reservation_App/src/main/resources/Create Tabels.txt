@@ -10,13 +10,13 @@ INSERT INTO GENRE VALUES(2, 'Comedy');
 INSERT INTO GENRE VALUES(3, 'Horror');
 
 
-INSERT INTO USER_TYPE VALUES('1', 'ADMIN');
-INSERT INTO USER_TYPE VALUES('2', 'VISITOR');
-INSERT INTO USER_TYPE VALUES('3', 'ADMINFZ');
+INSERT INTO USER_TYPE VALUES('1', 'ADMIN', '0');
+INSERT INTO USER_TYPE VALUES('2', 'VISITOR', '0');
+INSERT INTO USER_TYPE VALUES('3', 'ADMINFZ', '0');
 
-insert into user values('1', 'TRUE', 'subotica', 'a@a', 'Stefan', 'Radanovic', 'admin', 0, 'tkn', '1');
-insert into user values('2', 'TRUE', 'subotica', 'aa@a', 'Stefan', 'Radanovic', 'admin' , 0, 'tkn', '2');
-insert into user values('3', 'TRUE', 'subotica', 'aaa@a', 'Stefan', 'Radanovic', 'admin',  0, 'tkn', '3');
+insert into user values('1', 'TRUE', 'subotica', 'a@a', 'Stefan', 'Radanovic', 'admin', 0, 'tkn1', '0', '1');
+insert into user values('2', 'TRUE', 'novi sad', 'stefanradanovic@gmail.com', 'Stefan', 'Radanovic', 'admin' , 0, 'tkn2', '0', '2');
+insert into user values('3', 'TRUE', 'subotica', 'stefanradanovic9@gmail.com', 'Dejan', 'Besic', 'admin',  0, 'tkn3', '0', '3');
 
 
 INSERT INTO INSTITUTION VALUES(1, 'New York', 'Description 1', 'Name1', 3, 1); 

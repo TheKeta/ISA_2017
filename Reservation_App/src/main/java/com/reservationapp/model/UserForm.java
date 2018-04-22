@@ -1,8 +1,21 @@
 package com.reservationapp.model;
 
+import javax.persistence.Version;
+
 import org.hibernate.validator.constraints.NotEmpty;
 
 public class UserForm {
+	
+	@Version
+	private Long version;
+	
+	public Long getVersion() {
+		return version;
+	}
+
+	public void setVersion(Long version) {
+		this.version = version;
+	}
 	@NotEmpty
 	private String email = "";
 

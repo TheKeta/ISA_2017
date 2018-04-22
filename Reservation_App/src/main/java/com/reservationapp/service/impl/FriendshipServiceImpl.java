@@ -47,7 +47,6 @@ public class FriendshipServiceImpl implements FriendshipService{
 		return friendshipRepository.findAll();
 	}
 
-	@Override
 	public Friendship save(Friendship friendship) {
 		// TODO Auto-generated method stub
 		return friendshipRepository.save(friendship);
