@@ -19,17 +19,17 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
-import com.reservationapp.model.Hall;
-import com.reservationapp.model.Seat;
-import com.reservationapp.model.SeatType;
+import com.reservationapp.model.Genre;
+import com.reservationapp.model.Show;
+import com.reservationapp.model.ShowType;
 
 import main.TestUtil;
 import test.constants.EventConstants;
-import test.constants.SeatConstants;
+import test.constants.ShowConstants;
 
-public class SeatControllerTest {
+public class ShowControllerTest {
 	
-private static final String URL_PREFIX = "/seat";
+private static final String URL_PREFIX = "/event";
 	
 
 	private MediaType contentType = new MediaType(MediaType.APPLICATION_JSON.getType(),
@@ -45,36 +45,41 @@ private static final String URL_PREFIX = "/seat";
 	public void setup() {
 		this.mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
 	}
-	
 
 	@Test
-	public void testGetSeats()throws Exception {
-		this.mockMvc.perform(get(URL_PREFIX + "/getSeats/" + EventConstants.DB_ID)).andExpect(status().isOk())
+	public void testGetShows() throws Exception {
+		this.mockMvc.perform(get(URL_PREFIX + "/getShows")).andExpect(status().isOk())
 		.andExpect(content().contentType(contentType)).andExpect(jsonPath("$", hasSize(2)))
-		.andExpect(jsonPath("$.[*].seats").value(SeatConstants.DB_SEATS))
-		.andExpect(jsonPath("$.[*].halls").value(SeatConstants.DB_HALLS));
+		.andExpect(jsonPath("$.[*].show.id").value(ShowConstants.DB_ID))
+		.andExpect(jsonPath("$.[*].show.name").value(ShowConstants.DB_NAME))
+		.andExpect(jsonPath("$.[*].show.genre").value(ShowConstants.DB_GENRE))
+		.andExpect(jsonPath("$.[*].show.type").value(ShowConstants.DB_TYPE))
+		.andExpect(jsonPath("$.[*].show.description").value(ShowConstants.DB_DESCRIPTION))
+		.andExpect(jsonPath("$.[*].show.cast").value(ShowConstants.DB_CAST))
+		.andExpect(jsonPath("$.[*].show.length").value(ShowConstants.DB_LENGTH))
+		.andExpect(jsonPath("$.[*].rating").value(ShowConstants.DB_RATING));
 	}
 
 	@Test
-	public void testGetSeat() throws Exception{
-		this.mockMvc.perform(get(URL_PREFIX + "/" + EventConstants.DB_ID)).andExpect(status().isOk())
+	public void testGetShow() throws Exception{
+		this.mockMvc.perform(get(URL_PREFIX + "/" + ShowConstants.DB_ID)).andExpect(status().isOk())
 		.andExpect(content().contentType(contentType))
-		.andExpect(jsonPath("$.[*].id").value(SeatConstants.DB_ID))
-		.andExpect(jsonPath("$.[*].row").value(SeatConstants.DB_ROW))
-		.andExpect(jsonPath("$.[*].seatNumber").value(SeatConstants.DB_SEAT_NUMBER))
-		.andExpect(jsonPath("$.[*].hall").value(SeatConstants.DB_HALL))
-		.andExpect(jsonPath("$.[*].seatType").value(SeatConstants.DB_SEAT_TYPE));
+		.andExpect(jsonPath("$.[*].types").value(ShowConstants.DB_TYPES))
+		.andExpect(jsonPath("$.[*].genres").value(ShowConstants.DB_GENRES))
+		.andExpect(jsonPath("$.[*].show").value(ShowConstants.DB_SHOW));
 	}
 
+
 	@Test
-	public void testAddSeat() throws Exception {
-		Seat seat = new Seat();
-		seat.setHall(new Hall());
-		seat.setRow(1);
-		seat.setSeatNumber(1);
-		seat.setSeatType(new SeatType());
-		
-		String json = TestUtil.json(seat);
+	public void testAddShow() throws Exception{
+		Show show = new Show();
+		show.setCast("asd");
+		show.setDescription("asd");
+		show.setGenre(new Genre());
+		show.setLength(1);
+		show.setType(new ShowType());
+		show.setId(ShowConstants.DB_ID);
+		String json = TestUtil.json(show);
 		this.mockMvc.perform(post(URL_PREFIX).content(json)).andExpect(status().isOk());
 	}
 

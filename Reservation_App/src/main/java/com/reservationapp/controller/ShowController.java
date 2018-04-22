@@ -115,32 +115,25 @@ public class ShowController {
 	public ResponseEntity<Show> addShow(@ModelAttribute Show show, @PathVariable Long genreId, @PathVariable Long typeId){
 		Genre genre = genreService.findOne(genreId);
 		ShowType type = showTypeService.findOne(typeId);
-		System.out.println("asd");
 		if(!loggedUser().getUserType().getName().equals("ADMIN")){
 			return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
 		}
 		try {
-			System.out.println("asd 1");
 			if(show.getPicture() == null){
 				Show s = null;
-				System.out.println("asd 2");
 				if(show.getId() != null){
-					System.out.println("asd 3");
 					s = showService.findOne(show.getId());	
 				}
 				if(s != null){
-					System.out.println("asd 4");
 					show.setPictureDB(s.getPictureDB());	
 				}
 			}else{
-				System.out.println("asd 5");
 				show.setPictureDB(show.getPicture().getBytes());
 			}
 
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		System.out.println("asd 6");
 		show.setGenre(genre);
 		show.setType(type);
 		show.setPicture(null);
